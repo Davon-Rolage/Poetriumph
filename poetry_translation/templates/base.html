@@ -1,0 +1,80 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Poetriumph</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" >
+
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+
+  <!-- navigation bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div class="navbar-brand"><a href="{% url 'translation' %}"><img src="{% static 'images/logo.png' %}"
+            style="max-width: 120px;" alt="logo"></a></div>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-top: 10px;">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item {% if request.path == '/' %} active {% endif %}">
+            <a class="nav-link" href="{% url 'translation' %}">Перевод стихов</a>
+          </li>
+          <li class="nav-item {% if request.path == '/poem_list/' %} active {% endif %}">
+            <a class="nav-link" href="{% url 'poem_list' %}">Список поэзий</a>
+          </li>
+          <li class="nav-item {% if request.path == '/about/' %} active {% endif %}">
+            <a class="nav-link" href="{% url 'about' %}">О нас</a>
+          </li>
+          <li class="nav-item {% if request.path == '/support-us/' %} active {% endif %}">
+            <a class="nav-link" href="{% url 'support-us' %}">Пожертвовать</a>
+          </li>
+          <li class="nav-item">
+            <a class="button_premium" href="{% url 'premium' %}">Премиум</a>
+          </li>
+        </ul>
+        </ul>
+
+        <!-- search -->
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  {% block content %}
+
+  {% endblock %}
+
+  <div class="container">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <p class="col-md-4 mb-0 text-muted">&copy; 2023 Poetriumph, Newa Fun Solutions</p>
+
+      <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+      </ul>
+    </footer>
+  </div>
+
+</body>
+
+</html>

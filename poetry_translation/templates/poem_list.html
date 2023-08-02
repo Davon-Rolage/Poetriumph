@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<ul>
+{% for poem in object_list %}
+    <li class="poem">
+        <a href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

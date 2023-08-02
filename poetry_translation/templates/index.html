@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    
+    
+    
+</style>
+
+<div class="container-fluid">
+    <h1 style="text-align: center;">Перевод стихов</h1>
+    <p class="amet_text">Скопируй сюда свои стихи или что-то такое</p>
+
+    <div class="contact_section2">
+        <div class="row">
+            <div class="col-md-6">
+                <form id='form' action="" method="post">
+                    {% csrf_token %}
+
+                    <div class="translation-settings-container">
+                      
+                      <select style="flex: 1" name="source_lang" class="form-select" aria-select="С какого языка...">
+                        {% for language in supported_languages %}
+                          <option value="{{ language.0 }}" {% if language.0 == source_lang %}selected{% endif %}>{{ language.1 }}</option>
+                        {% endfor %}
+                      </select>
+
+                      <!-- A simple right arrow -> -->
+                      <svg style="margin-left: 10px; margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                      </svg>
+
+                      <select style="flex: 1; margin-right: 5px;" name="target_lang" class="form-select" aria-select="На какой язык...">
+                        {% for language in supported_languages|slice:"1:" %}
+                        <option value="{{ language.0 }}" {% if language.0 == target_lang %}selected{% endif %}>{{ language.1 }}</option>
+                        {% endfor %}
+                      </select>
+                    
+                      <select style="flex: 1;" name="language_engine" class="language_engines form-select" aria-select="Сервис перевода...">
+                        {% for engine in language_engines %}
+                          <option value="{{ engine.0 }}" {% if engine.0 == language_engine %}selected{% endif %}>{{ engine.1 }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    
+                    <div class="user_text_section" style="margin-top: 15px;">
+                        <textarea required class="massage_text" placeholder="Текст стиха" rows="10" id="original" name="user_prompt">{{ user_prompt }}</textarea>
+                    </div>
+                    <button type="submit" id="button_translate" class="btn btn-primary" style="margin-top: 10px;">Перевести</button>
+                    
+            </div>
+            </form>
+
+            <div class="col-md-6">
+                <form action="{% url 'save_translation' %}" method="post">
+                    {% csrf_token %}
+            
+                    <input type="hidden" name="language_engine" value="{{ language_engine }}">
+                    <input type="hidden" name="source_lang" value="{{ source_lang }}">
+                    <input type="hidden" name="target_lang" value="{{ target_lang }}">
+            
+                    <button id="button_save_translation" type="submit" class="btn btn-outline-success"><span class="bi bi-share"></span>Сохранить перевод</button>
+            
+                    <button id="button_download" class="btn btn-outline-primary">Скачать перевод</button>
+            
+                    <button disabled type="button" class="btn btn-outline-primary"><span class="bi bi-share"></span>Поделиться</button>
+            
+                    <div class="user_text_section" style="margin-top: 15px;">
+                        <textarea required class="massage_text translation_text" placeholder="Здесь будет ваш перевод" rows="10" name="translation_text">{{ translation|safe }}</textarea>
+                    </div>
+                    <input type="hidden" name="user_prompt" value="{{ user_prompt }}">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const textareas = document.querySelectorAll("textarea");
+    textareas.forEach(textarea => {
+      textarea.addEventListener("keyup", () => resize(textarea));
+      document.addEventListener("DOMContentLoaded", () => resize(textarea));
+    });
+    
+    function resize(textarea) {
+      textarea.style.height = "auto";
+      let scHeight = textarea.scrollHeight;    
+      textarea.style.height = `${scHeight+5}px`;
+    }
+  
+  // Script for a download button
+    document.getElementById('button_download').addEventListener('click', function() {
+    let translation = document.querySelector(".translation_text").textContent;
+    let filename = translation.split(' ').slice(0, 5).join(' ');
+
+    if (translation) {
+      let element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(translation));
+      element.setAttribute('download', filename);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+  });
+  
+  </script>
+  
+{% endblock %}
