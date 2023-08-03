@@ -43,7 +43,7 @@ def translate_gpt(source_lang, target_lang, user_prompt):
     messages=[
         {'role':'system', 'content':ai_role}, 
         {'role':'user', 'content':user_prompt},
-    ]
+    ],
 )
     answer = completion.choices[0].message.content
     return answer

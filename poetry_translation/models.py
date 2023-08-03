@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from poetry_translation.config import LANGUAGE_ENGINES, SUPPORTED_LANGUAGES
 
@@ -15,4 +16,5 @@ class Poem(models.Model):
     target_lang = models.CharField(choices=SUPPORTED_LANGUAGES, max_length=20)
     language_engine = models.CharField(choices=LANGUAGE_ENGINES, max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    updated_at = models.DateTimeField(default=timezone.now)
+    

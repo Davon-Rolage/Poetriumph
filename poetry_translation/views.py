@@ -77,7 +77,7 @@ class PremiumView(View):
 class PoemListView(ListView):
     template_name = 'poem_list.html'
     model = Poem
-    paginate_by = 10
+    paginate_by = 100
     
     def get_queryset(self):
         return self.model.objects.all()
@@ -99,7 +99,6 @@ class SaveTranslation(DetailView):
         user_prompt = request.POST.get('user_prompt')
         title = ' '.join(user_prompt.split(' ', 5)[:5])
 
-        # Create a new Poem object and save it to the database
         poem = Poem.objects.create(
             title=title,
             user_text=user_prompt,
@@ -116,26 +115,11 @@ class SaveTranslation(DetailView):
 class UpdateTranslation(DetailView):
     model = Poem
     
-    def post(self, request):
-        print(f'''POEM OK''')
-        # poem = self.model.objects.filter(pk=self.kwargs['pk'])
-        poem = self.model.objects.get(pk=self.kwargs['pk'])
+    def post(self, request, poem_id):
+        Poem.objects.filter(pk=poem_id).update(
+            user_text=request.POST.get('user_prompt'),
+            text=request.POST.get('translation_text'),
+            title=request.POST.get('title'),
+        )
+        return HttpResponseRedirect(reverse('poem_detail', args=(poem_id,)) + '?status_success=true')
         
-        poem.title = request.POST.get('title')
-        poem.user_prompt = request.POST.get('user_prompt')
-        poem.translation_text = request.POST.get('translation_text')
-        poem.language_engine = request.POST.get('language_engine')
-        poem.source_lang = request.POST.get('source_lang')
-        poem.target_lang = request.POST.get('target_lang')
-        poem.save()
-
-        # poem = Poem.objects.update(
-        #     title=title,
-        #     user_text=user_prompt,
-        #     text=translation_text,
-        #     source_lang=source_lang,
-        #     target_lang=target_lang,
-        #     language_engine=language_engine
-        # )
-
-        return HttpResponseRedirect(reverse('poem_detail', args=[poem.pk]))
