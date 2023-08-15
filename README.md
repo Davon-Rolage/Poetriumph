@@ -1,6 +1,5 @@
 # README for Poetorium Django Project
-Poetorium is a Django project that allows users to translate poems from one language to another and save them to database.<br>
-It uses PostgreSQL database.
+Poetorium is a Django project that allows users to translate poems from one language to another and save them to the PostgreSQL database.
 ## Installation
 1. Create a virtual environment with `python -m venv venv`
 1. Activate the virtual environment with `venv\scripts\activate`
@@ -14,16 +13,14 @@ postgres_user=<your_postgresql_username>
 postgres_password=<your_postgresql_password>
 ```
 5. In the project's settings `poetriumph/settings.py`, change the `DATABASES` variable to match your name of the `HOST` and `PORT`.
+1. Create a superuser with `python manage.py createsuperuser`
 1. Make migrations and migrate:
 ```
 python manage.py makemigrations
 python manage.py migrate
 ```
 7. Set `DEBUG` to `False` before deploying to production.
-8. Run server:
-```
-python manage.py runserver
-```
+8. Run server with `python manage.py runserver`
 
 ## Premium Feature Implementation
 To implement premium features for users, follow these steps:
