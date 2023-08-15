@@ -5,7 +5,7 @@ It uses PostgreSQL database.
 1. Create a virtual environment with `python -m venv venv`
 1. Activate the virtual environment with `venv\scripts\activate`
 1. Install required dependencies with `python -m pip install -r requirements.txt`
-1. Create a `.env` file which contains environment variables in the root directory of your project . Add the following variables:
+1. Create a `.env` file which contains environment variables in the root directory of your project. Add the following variables:
 ```
 SECRET_KEY=<your_django_secret_key>
 OPEN_API_KEY=<your_openai_api_key>
