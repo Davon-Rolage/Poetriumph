@@ -1,10 +1,27 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="generic-container">
-    <h1>Поддержите нас</h1>
-    <p>
-        Есть много способов, но основной - ваша любовь.
-    </p>
-</div>
+<div class="container-fluid">
+    <h1>Support us</h1>
+    <p>If you like what we do, consider supporting us =)</p>
+    <div class="row">
+      <div class="col-md-2 col-sm-6">
+        <a href="https://boosty.to/davon.rolage/donate">
+          <img src="{% static 'images/logo_boosty.svg' %}" class="img-fluid" style="max-width: 162px;">
+        </a>
+      </div>
+      <div class="col-md-2 col-sm-6">
+        <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="davon.rolage" data-color="#FFDD00" data-emoji=""  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff"></script>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-sm-6">
+        <img src="{% static 'images/qr_boosty.png' %}" class="img-fluid" style="max-width: 162px;">
+      </div>
+      <div class="col-md-2 col-sm-6">
+        <img src="{% static 'images/qr_buy_coffee.png' %}" class="img-fluid" style="max-width: 162px;">
+      </div>
+    </div>
+  </div>
 {% endblock %}

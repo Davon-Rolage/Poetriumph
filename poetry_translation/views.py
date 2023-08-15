@@ -1,12 +1,10 @@
-import os
 from django.http import HttpResponseRedirect
-
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import View, ListView, DetailView
-from .models import Poem
+from django.views.generic import DetailView, ListView, View
 
 from .config import *
+from .models import Poem
 from .utils import translate, translate_gpt
 
 
@@ -14,11 +12,15 @@ class TranslationFormView(View):
     template_name = 'index.html'
 
     def get(self, request):
+        supported_languages = SUPPORTED_LANGUAGES
+        if not request.user.is_premium:
+            supported_languages = supported_languages[:4]
+            
         context = {
             'source_lang': 'auto',
             'target_lang': 'english',
             'language_engine': SUPPORTED_LANGUAGES[0],
-            'supported_languages': SUPPORTED_LANGUAGES,
+            'supported_languages': supported_languages,
             'language_engines': LANGUAGE_ENGINES,
         }
         return render(request, self.template_name, context)
@@ -72,7 +74,10 @@ class PremiumView(View):
     template_name = 'premium.html'
 
     def get(self, request):
-        return render(request, self.template_name)
+        context = {
+            'premium_features': PREMIUM_FEATURES
+        }
+        return render(request, self.template_name, context)
 
 class PoemListView(ListView):
     template_name = 'poem_list.html'
@@ -98,6 +103,8 @@ class SaveTranslation(DetailView):
         target_lang = request.POST.get('target_lang')
         user_prompt = request.POST.get('user_prompt')
         title = ' '.join(user_prompt.split(' ', 5)[:5])
+        if title.strip() == '':
+            title = ' '.join(translation_text.split(' ', 5)[:5])
 
         poem = Poem.objects.create(
             title=title,
@@ -122,4 +129,3 @@ class UpdateTranslation(DetailView):
             title=request.POST.get('title'),
         )
         return HttpResponseRedirect(reverse('poem_detail', args=(poem_id,)) + '?status_success=true')
-        

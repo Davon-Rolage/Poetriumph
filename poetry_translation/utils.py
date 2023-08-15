@@ -1,20 +1,18 @@
 import os
+
 import openai
-from .config import AI_ROLE
-from deep_translator import (GoogleTranslator,
-                             ChatGptTranslator,
-                             MicrosoftTranslator,
-                             PonsTranslator,
-                             LingueeTranslator,
-                             MyMemoryTranslator,
-                             YandexTranslator,
-                             PapagoTranslator,
-                             DeeplTranslator,
-                             QcriTranslator,
-                             single_detection,
-                             batch_detection,
-                             exceptions)
+import requests.exceptions
+from deep_translator import (ChatGptTranslator, DeeplTranslator,
+                             GoogleTranslator, LingueeTranslator,
+                             MicrosoftTranslator, MyMemoryTranslator,
+                             PapagoTranslator, PonsTranslator, QcriTranslator,
+                             YandexTranslator, batch_detection, exceptions,
+                             single_detection)
+from django.http import HttpResponse
 from dotenv import load_dotenv
+
+from .config import AI_ROLE
+
 load_dotenv()
 
 openai.api_key = os.environ.get('OPENAI_API_KEY')
@@ -32,8 +30,12 @@ def translate(language_engine, source_lang, target_lang, user_prompt, proxies):
         target=target_lang,
         proxies=proxies
     )
-    translated = translator.translate(user_prompt)
-    return translated if language_engine != ChatGptTranslator else translated.strip('"')
+    try:
+        translated = translator.translate(user_prompt)
+        return translated if language_engine != ChatGptTranslator else translated.strip('"')
+    
+    except requests.exceptions.ConnectionError:
+        return 'Oh no! Check your internet connection!'
 
 
 def translate_gpt(source_lang, target_lang, user_prompt):

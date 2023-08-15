@@ -13,18 +13,18 @@
   <div class="container-sm" style="margin-left: 20px;">
     <h class="display-6">Сервис перевода - {{ poem.language_engine }}<br>{{ poem.source_lang }} -> {{ poem.target_lang }}</h>
     <div class="row" style="margin-top: 20px">
-      <label for="massage_title">Название текста</label>
+      <label for="message_title">Название текста</label>
       <input required type="text" class="form-control" name="title" value="{{ poem.title }}"
-        style="width: 300px; padding-left: 15px" id="massage_title" placeholder="Название текста">
+        style="width: 300px; padding-left: 15px" id="message_title" placeholder="Название текста">
     </div>
     <div class="row">
       <div class="col">
         Оригинальный текст
-        <textarea required type="text" class="massage_text" rows="10" name="user_prompt">{{ poem.user_text|safe }}</textarea>
+        <textarea required type="text" class="message_text" rows="10" name="user_prompt">{{ poem.user_text|safe }}</textarea>
       </div>
       <div class="col">
         Перевод
-        <textarea required type="text" class="massage_text" rows="10" name="translation_text">{{ poem.text|safe }}</textarea>
+        <textarea required type="text" class="message_text" rows="10" name="translation_text">{{ poem.text|safe }}</textarea>
       </div>
     </div>
     
