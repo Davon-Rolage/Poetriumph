@@ -2,8 +2,9 @@
 
 {% block content %}
 <div class="container-fluid">
+    <h1>Error!</h1>
     <h class="display-4">
-        Apparently, rate limit is exceeded. Try again in a few minutes.
+        {{ error_message }}
     </h>
 </div>
 {% endblock %}

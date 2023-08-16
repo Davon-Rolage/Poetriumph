@@ -38,8 +38,8 @@ def translate(language_engine, source_lang, target_lang, user_prompt, proxies):
     except requests.exceptions.ConnectionError:
         return 'Oh no! Check your internet connection!'
     
-    except RateLimitError:
-        return render(template_name='errors/error_rate_limit.html')
+    except Exception as e:
+        return render(template_name='error.html', context={'error_message': str(e)})
 
 
 def translate_gpt(source_lang, target_lang, user_prompt):
@@ -52,8 +52,8 @@ def translate_gpt(source_lang, target_lang, user_prompt):
             {'role':'user', 'content':user_prompt},
         ],
     )
-    except RateLimitError:
-        return render(template_name='errors/error_rate_limit.html')
+    except Exception as e:
+        return render(template_name='error.html', context={'error_message': str(e)})
     
     answer = completion.choices[0].message.content
     return answer
