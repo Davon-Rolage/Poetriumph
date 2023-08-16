@@ -1,0 +1,99 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Poetriumph</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+  <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+
+<!-- Add a background image -->
+  <style>
+    body {
+      background-image: url('{% static "images/background.jpg" %}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      opacity: 0.95;
+    }
+  </style>
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+    crossorigin="anonymous"></script>
+
+  <!-- navigation bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div class="navbar-brand"><a href="{% url 'translation' %}"><img src="{% static 'images/logo.png' %}"
+            alt="logo"></a>
+      </div>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item {% if request.path == '/' %} active {% endif %}">
+            <a class="nav-link" href="{% url 'translation' %}">Poem Translation</a>
+          </li>
+          <li class="nav-item {% if request.path == '/poem_list/' %} active {% endif %}">
+            <a class="nav-link" href="{% url 'poem_list' %}">Poem List</a>
+          </li>
+          <li class="nav-item {% if request.path == '/about/' %} active {% endif %}">
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+          </li>
+          <li class="nav-item {% if request.path == '/support-us/' %} active {% endif %}">
+            <a class="nav-link" href="{% url 'support-us' %}">Support Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="button_premium" href="{% url 'premium' %}">Premium</a>
+          </li>
+          <li>
+            <div class="user_authentication">
+              {% if user.is_authenticated %}
+              Hi {% if user.is_premium %}<img src="{% static 'images/premium_badge.png' %}" alt="premium_badge">{% endif %}
+              {{ user.username }}!
+              <br><a href="{% url 'logout' %}">Log out</a>
+                {% if user.is_staff %}
+                  <a href="/admin/" style="text-decoration: none;">&#9881;Admin</a>
+                {% endif %}
+              {% else %}
+              <a href="{% url 'login' %}">Log In</a>
+              <a href="{% url 'signup' %}">Sign Up</a>
+              {% endif %}
+            </div>
+          </li>
+        </ul>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  {% block content %}
+
+  {% endblock %}
+
+  <div class="container-fluid">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <p class="col-md-4 mb-0" style="color: aliceblue;">&copy; 2023 Poetorium, Newa Fun Solutions</p>
+      <!-- <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
+      </ul> -->
+    </footer>
+  </div>
+
+</body>
+
+</html>

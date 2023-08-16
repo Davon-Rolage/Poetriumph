@@ -9,7 +9,7 @@ from .utils import translate, translate_gpt
 
 
 class TranslationFormView(View):
-    template_name = 'index.html'
+    template_name = 'poetry_translation/index.html'
 
     def get(self, request):
         supported_languages = SUPPORTED_LANGUAGES
@@ -57,30 +57,30 @@ class TranslationFormView(View):
         return render(request, self.template_name, context)
 
 class AboutView(View):
-    template_name = 'about.html'
+    template_name = 'poetry_translation/about.html'
 
     def get(self, request):
         return render(request, self.template_name)
 
 
 class SupportUsView(View):
-    template_name = 'support_us.html'
+    template_name = 'poetry_translation/support_us.html'
 
     def get(self, request):
         return render(request, self.template_name)
 
 
 class PremiumView(View):
-    template_name = 'premium.html'
+    template_name = 'poetry_translation/premium.html'
 
     def get(self, request):
         context = {
-            'premium_features': PREMIUM_FEATURES
+            'poetry_translation/premium_features': PREMIUM_FEATURES
         }
         return render(request, self.template_name, context)
 
 class PoemListView(ListView):
-    template_name = 'poem_list.html'
+    template_name = 'poetry_translation/poem_list.html'
     model = Poem
     paginate_by = 100
     
@@ -89,7 +89,7 @@ class PoemListView(ListView):
     
 
 class PoemDetailView(DetailView):
-    template_name = 'poem_detail.html'
+    template_name = 'poetry_translation/poem_detail.html'
     model = Poem
 
 

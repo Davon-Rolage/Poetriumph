@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+  .row > * {
+    padding-left: 0;
+  }
+</style>
+
+<form action="{% url 'update_translation' poem.id %}" method="post">
+  {% csrf_token %}
+  <div class="container-fluid" style="margin-left: 0px; background-color: aliceblue; padding-bottom: 10px; padding-left: 30px;">
+    <h class="display-6">Сервис перевода - {{ poem.language_engine }}<br>{{ poem.source_lang }} -> {{ poem.target_lang }}</h>
+    <div class="row" style="margin-top: 20px">
+      <h class="display-6" for="message_title">Название текста</h>
+      <input required type="text" class="form-control" name="title" value="{{ poem.title }}"
+        style="width: 300px; padding-left: 15px" id="message_title" placeholder="Название текста">
+    </div>
+    <div class="row">
+      <div class="col">
+        Оригинальный текст
+        <textarea required type="text" class="message_text" rows="10" name="user_prompt">{{ poem.user_text|safe }}</textarea>
+      </div>
+      <div class="col">
+        Перевод
+        <textarea required type="text" class="message_text" rows="10" name="translation_text">{{ poem.text|safe }}</textarea>
+      </div>
+    </div>
+    
+    <div class="row">
+    <div class="col">
+    <button class="btn btn-success" type="submit" style="margin-top: 10px; width: 200px">Сохранить</button>
+  </div>
+  <div class="col">
+
+    <div id="success-alert" class="alert alert-success" role="alert" style="display: none; padding: 6px; margin-top: 10px;">
+      Изменения были успешно сохранены!
+    </div>
+    </div>
+  </div>
+
+  </div>
+  
+</form>
+
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const statusSuccess = urlParams.get('status_success');
+
+// Check if the 'status_success' parameter is present and has a truthy value
+if (statusSuccess) {
+  // Show the success alert
+  const successAlert = document.getElementById('success-alert');
+  successAlert.style.display = 'block';
+
+  // Hide the success alert after 3 seconds
+  setTimeout(function() {
+    successAlert.style.display = 'none';
+  }, 3000);
+}
+</script>
+
+{% endblock %}
