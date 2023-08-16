@@ -44,13 +44,12 @@
     align-items: center;
     height: 40px;
     width: 168px;
-    margin-left: 4px;
-    margin-right: 4px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .button_premium:hover {
     background-position: right center;
-    /* change the direction of the change here */
     color: #fff;
     text-decoration: none;
 }
@@ -65,5 +64,4 @@
 
 .user_authentication {
     line-height: 20px;
-    margin-left: 35px;
 }

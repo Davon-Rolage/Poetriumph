@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="container-fluid" style="background-color: aliceblue; padding: 40px; ;">
     <h class="display-6">List of All Saved Poems</h>
 
     {% if user.username == 'nebula' %}
@@ -10,7 +10,7 @@
         list (admin)</a>
     {% endif %}
     <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search" id="searchBox"
-        onkeyup="search()">
+        onkeyup="search()" style="margin-top: 10px; margin-bottom: 10px;">
     <div class="poems_list">
         <ol>
             {% for poem in object_list %}

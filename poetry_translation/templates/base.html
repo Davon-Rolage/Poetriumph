@@ -12,14 +12,14 @@
   <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
 
 <!-- Add a background image -->
-  <!-- <style>
+  <style>
     body {
-      /* background-image: url('{% static "images/background.jpeg" %}');
+      background-image: url('{% static "images/background.jpg" %}');
       background-repeat: no-repeat;
       background-size: cover;
-      opacity: 0.9; */
+      opacity: 0.95;
     }
-  </style> -->
+  </style>
 </head>
 
 <body>
@@ -62,8 +62,12 @@
               Hi {% if user.is_premium %}<img src="{% static 'images/premium_badge.png' %}" alt="premium_badge">{% endif %}
               {{ user.username }}!
               <br><a href="{% url 'logout' %}">Log out</a>
+                {% if user.is_staff %}
+                  <a href="/admin/" style="text-decoration: none;">&#9881;Admin</a>
+                {% endif %}
               {% else %}
               <a href="{% url 'login' %}">Log In</a>
+              <a href="{% url 'signup' %}">Sign Up</a>
               {% endif %}
             </div>
           </li>
@@ -79,8 +83,7 @@
 
   <div class="container-fluid">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-      <p class="col-md-4 mb-0 text-muted">&copy; 2023 Poetorium, Newa Fun Solutions</p>
-
+      <p class="col-md-4 mb-0" style="color: aliceblue;">&copy; 2023 Poetorium, Newa Fun Solutions</p>
       <!-- <ul class="nav col-md-4 justify-content-end">
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>

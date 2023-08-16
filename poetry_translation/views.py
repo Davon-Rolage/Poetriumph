@@ -13,7 +13,7 @@ class TranslationFormView(View):
 
     def get(self, request):
         supported_languages = SUPPORTED_LANGUAGES
-        if not request.user.is_premium:
+        if not (request.user.is_authenticated and request.user.is_premium):
             supported_languages = supported_languages[:4]
             
         context = {

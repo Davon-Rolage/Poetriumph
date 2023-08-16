@@ -8,7 +8,6 @@ from deep_translator import (ChatGptTranslator, DeeplTranslator,
                              PapagoTranslator, PonsTranslator, QcriTranslator,
                              YandexTranslator, batch_detection, exceptions,
                              single_detection)
-from django.http import HttpResponse
 from dotenv import load_dotenv
 
 from .config import AI_ROLE

@@ -3,17 +3,17 @@
 {% block content %}
 
 <style>
-  .row>* {
+  .row > * {
     padding-left: 0;
   }
 </style>
 
 <form action="{% url 'update_translation' poem.id %}" method="post">
   {% csrf_token %}
-  <div class="container-sm" style="margin-left: 20px;">
+  <div class="container-fluid" style="margin-left: 0px; background-color: aliceblue; padding-bottom: 10px; padding-left: 30px;">
     <h class="display-6">Сервис перевода - {{ poem.language_engine }}<br>{{ poem.source_lang }} -> {{ poem.target_lang }}</h>
     <div class="row" style="margin-top: 20px">
-      <label for="message_title">Название текста</label>
+      <h class="display-6" for="message_title">Название текста</h>
       <input required type="text" class="form-control" name="title" value="{{ poem.title }}"
         style="width: 300px; padding-left: 15px" id="message_title" placeholder="Название текста">
     </div>
@@ -30,7 +30,7 @@
     
     <div class="row">
     <div class="col">
-    <button class="btn btn-outline-success" type="submit" style="margin-top: 10px; width: 200px">Сохранить</button>
+    <button class="btn btn-success" type="submit" style="margin-top: 10px; width: 200px">Сохранить</button>
   </div>
   <div class="col">
 
