@@ -1,6 +1,8 @@
 import os
+from django.shortcuts import render
 
 import openai
+from openai.error import *
 import requests.exceptions
 from deep_translator import (ChatGptTranslator, DeeplTranslator,
                              GoogleTranslator, LingueeTranslator,
@@ -35,17 +37,23 @@ def translate(language_engine, source_lang, target_lang, user_prompt, proxies):
     
     except requests.exceptions.ConnectionError:
         return 'Oh no! Check your internet connection!'
+    
+    except RateLimitError:
+        return render('errors/error_rate_limit.html')
 
 
 def translate_gpt(source_lang, target_lang, user_prompt):
     ai_role = AI_ROLE.format(source_lang=source_lang, target_lang=target_lang)
-    completion = openai.ChatCompletion.create(
-    model='gpt-3.5-turbo',
-    messages=[
-        {'role':'system', 'content':ai_role}, 
-        {'role':'user', 'content':user_prompt},
-    ],
-)
+    try:
+        completion = openai.ChatCompletion.create(
+        model='gpt-3.5-turbo',
+        messages=[
+            {'role':'system', 'content':ai_role}, 
+            {'role':'user', 'content':user_prompt},
+        ],
+    )
+    except RateLimitError:
+        return render('errors/error_rate_limit.html')
+    
     answer = completion.choices[0].message.content
     return answer
-
