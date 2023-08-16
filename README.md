@@ -8,9 +8,9 @@ Poetorium is a Django project that allows users to translate poems from one lang
 ```
 SECRET_KEY="your_django_secret_key"
 OPEN_API_KEY="your_openai_api_key"
-psql_db="name_of_postgresql_database"
-postgres_user="your_postgresql_username"
-postgres_password="your_postgresql_password"
+POSTGRES_DB="name_of_postgresql_database"
+POSTGRES_USER="your_postgresql_username"
+POSTGRES_PASSWORD="your_postgresql_password"
 ```
 5. In the project's settings `poetriumph/settings.py`, change the `DATABASES` variable to match your name of the `HOST` and `PORT`.
 1. Create a superuser with `python manage.py createsuperuser`
