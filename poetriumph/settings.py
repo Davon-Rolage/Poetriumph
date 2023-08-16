@@ -59,9 +59,9 @@ WSGI_APPLICATION = 'poetriumph.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('psql_db'),
-        'USER': os.environ.get('postgres_user'),
-        'PASSWORD': os.environ.get('postgres_password'),
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
         'HOST': 'localhost',
         'PORT': 5432,
     }
