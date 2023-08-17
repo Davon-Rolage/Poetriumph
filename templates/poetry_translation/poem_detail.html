@@ -10,38 +10,65 @@
 
 <form action="{% url 'update_translation' poem.id %}" method="post">
   {% csrf_token %}
-  <div class="container-fluid" style="margin-left: 0px; background-color: aliceblue; padding-bottom: 10px; padding-left: 30px;">
-    <h class="display-6">Сервис перевода - {{ poem.language_engine }}<br>{{ poem.source_lang }} -> {{ poem.target_lang }}</h>
+  <div class="container-fluid"
+    style="margin-left: 0px; background-color: aliceblue; padding-bottom: 10px; padding-left: 30px;">
+    <h class="display-6">Translation Service - {{ poem.language_engine }}<br>{{ poem.source_lang }} -> {{ poem.target_lang }}</h>
     <div class="row" style="margin-top: 20px">
-      <h class="display-6" for="message_title">Название текста</h>
+      <div class="col">
+      <h class="display-6" for="message_title">Title</h>
       <input required type="text" class="form-control" name="title" value="{{ poem.title }}"
-        style="width: 300px; padding-left: 15px" id="message_title" placeholder="Название текста">
-    </div>
-    <div class="row">
-      <div class="col">
-        Оригинальный текст
-        <textarea required type="text" class="message_text" rows="10" name="user_prompt">{{ poem.user_text|safe }}</textarea>
+        style="width: 300px; padding-left: 15px" id="message_title" placeholder="Poem's title..."
+        {% if not user.username == poem.saved_by %}readonly{% endif %}>
       </div>
       <div class="col">
-        Перевод
-        <textarea required type="text" class="message_text" rows="10" name="translation_text">{{ poem.text|safe }}</textarea>
+        <h class="display-6" for="message_author">Author</h>
+        <input type="text" class="form-control" name="author" value="{{ poem.author }}"
+          style="width: 300px; padding-left: 15px" id="message_author" placeholder="Poem's author..."
+          {% if not user.username == poem.saved_by %}readonly{% endif %}>
       </div>
+      <div class="col">
+        <h class="display-6" for="message_saved_by">Saved by</h>
+        <input type="text" class="form-control" name="saved_by" value="{{ poem.saved_by }}"
+          style="width: 300px; padding-left: 15px;" id="message_saved_by" placeholder="Saved by..."" readonly>
+      </div>
+      <div class="col"></div>
+      <div class="col"></div>
+      <div class="col"></div>
     </div>
     
     <div class="row">
-    <div class="col">
-    <button class="btn btn-success" type="submit" style="margin-top: 10px; width: 200px">Сохранить</button>
-  </div>
-  <div class="col">
-
-    <div id="success-alert" class="alert alert-success" role="alert" style="display: none; padding: 6px; margin-top: 10px;">
-      Изменения были успешно сохранены!
+      <div class="col">
+        <h class="display-6">
+          Original Text
+        </h>
+        <textarea required style='margin-top: 10px' type="text" class="message_text" rows="10"
+          name="original_text" {% if not user.username == poem.saved_by %}readonly{% endif %}>{{ poem.original_text|safe }}</textarea>
+      </div>
+      <div class="col">
+        <h class="display-6">
+          Translation
+        </h>
+        <textarea required style='margin-top: 10px' type="text" class="message_text" rows="10"
+          name="translation_text" {% if not user.username == poem.saved_by %}readonly{% endif %}>{{ poem.translation|safe }}</textarea>
+      </div>
     </div>
+
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-success" type="submit" style="margin-top: 10px; width: 200px" {% if not user.username == poem.saved_by %}disabled{% endif %}>
+          Save Changes
+        </button>
+      </div>
+      <div class="col">
+        <div id="success-alert" class="alert alert-success" role="alert"
+          style="display: none; padding: 6px; margin-top: 10px;">
+          Changes saved!
+        </div>
+      </div>
     </div>
-  </div>
 
   </div>
-  
+
 </form>
 
 <script>

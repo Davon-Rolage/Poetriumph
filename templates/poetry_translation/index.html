@@ -2,12 +2,6 @@
 
 {% block content %}
 
-<style>
-    
-    
-    
-</style>
-
 <div class="container-fluid">
   <h1 style="text-align: center; margin-bottom: 0;">Poem Translation</h1>
   <p style="font-size: 24px;">Insert your poem and choose translation engine.</p>
@@ -45,7 +39,7 @@
                   </div>
                   
                   <div class="user_text_section" style="margin-top: 15px;">
-                      <textarea required class="message_text" placeholder="Insert your poem..." rows="10" id="original" name="user_prompt">{{ user_prompt }}</textarea>
+                      <textarea required class="message_text" placeholder="Insert your poem..." rows="10" id="original" name="original_text">{{ original_text }}</textarea>
                   </div>                    
           </div>
           </form>
@@ -57,18 +51,18 @@
                   <input type="hidden" name="language_engine" value="{{ language_engine }}">
                   <input type="hidden" name="source_lang" value="{{ source_lang }}">
                   <input type="hidden" name="target_lang" value="{{ target_lang }}">
-          
-                  <button id="button_save_translation" type="submit" class="btn btn-success"><span class="bi bi-share"></span>Save Translation</button>
-          
+
                   <!-- A download button -->
-                  <button id="button_download" class="btn btn-outline-primary">Download</button>
+                  <input type="button" id="button_download" class="btn btn-outline-primary" value="Download">
           
-                  <button type="button" class="btn btn-outline-primary" {% if not user.is_premium %}disabled{% endif %}><span class="bi bi-share"></span>Share</button>
-          
+                  <button id="button_save_translation" type="submit" class="btn btn-success" {% if not user.is_authenticated %}disabled{% endif%}><span class="bi bi-share"></span>Save to Library</button>
+
+                  <input type="button" class="btn btn-outline-primary" {% if not user.is_premium %}disabled{% endif %} value="Share"><span class="bi bi-share"></span>
+
                   <div class="user_text_section" style="margin-top: 15px;">
-                      <textarea required class="message_text translation_text" placeholder="Your translation will be here..." rows="10" name="translation_text">{{ translation|safe }}</textarea>
+                      <textarea required class="message_text translation_text" placeholder="Your translation will be here..." rows="10" name="translation">{{ translation|safe }}</textarea>
                   </div>
-                  <input type="hidden" name="user_prompt" value="{{ user_prompt }}">
+                  <input type="hidden" name="original_text" value="{{ original_text }}">
               </form>
           </div>
       </div>

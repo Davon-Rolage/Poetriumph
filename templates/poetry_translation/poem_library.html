@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container-fluid" style="background-color: aliceblue; padding: 40px; ;">
-    <h class="display-6">List of All Saved Poems</h>
+<div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
+    <h class="display-6">Poem Library</h>
 
-    {% if user.username == 'nebula' %}
+    {% if user.is_staff %}
     <br>
-    <a class="btn btn-secondary" href="/admin/poetry_translation/poem/" role="button" style="margin: 10px;">Change the
-        list (admin)</a>
+    <a class="btn btn-secondary" href="/admin/poetry_translation/poem/" role="button" style="margin: 10px;">Change the list (moderator)</a>
     {% endif %}
+    
     <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search" id="searchBox"
         onkeyup="search()" style="margin-top: 10px; margin-bottom: 10px;">
     <div class="poems_list">

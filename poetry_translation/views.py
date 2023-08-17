@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import DetailView, ListView, View
 
+from accounts.models import CustomUser
+
 from .config import *
 from .models import Poem
 from .utils import translate, translate_gpt
@@ -29,24 +31,24 @@ class TranslationFormView(View):
         language_engine = request.POST.get('language_engine')
         source_lang = request.POST.get('source_lang')
         target_lang = request.POST.get('target_lang')
-        user_prompt = request.POST.get('user_prompt')
+        original_text = request.POST.get('original_text')
 
-        if language_engine == 'ChatGpt_Bot':
+        if language_engine == 'ChatGpt_Poet':
             translation = translate_gpt(
                 source_lang,
                 target_lang,
-                user_prompt
+                original_text
             )
         else:
             translation = translate(
             language_engine,
             source_lang,
             target_lang,
-            user_prompt,
+            original_text,
             proxies=None
         )            
         context = {
-            'user_prompt': user_prompt,
+            'original_text': original_text,
             'translation': translation,
             'supported_languages': SUPPORTED_LANGUAGES,
             'language_engines': LANGUAGE_ENGINES,
@@ -55,6 +57,7 @@ class TranslationFormView(View):
             'language_engine': language_engine,
         }
         return render(request, self.template_name, context)
+
 
 class AboutView(View):
     template_name = 'poetry_translation/about.html'
@@ -79,13 +82,22 @@ class PremiumView(View):
         }
         return render(request, self.template_name, context)
 
+
 class PoemListView(ListView):
-    template_name = 'poetry_translation/poem_list.html'
+    template_name = 'poetry_translation/poem_library.html'
     model = Poem
     paginate_by = 100
     
     def get_queryset(self):
         return self.model.objects.all()
+    
+    
+class MyLibraryView(ListView):
+    template_name = 'poetry_translation/my_library.html'
+    model = Poem
+    
+    def get_queryset(self):
+        return self.model.objects.filter(saved_by=self.request.user.username)
     
 
 class PoemDetailView(DetailView):
@@ -97,35 +109,65 @@ class SaveTranslation(DetailView):
     model = Poem
 
     def post(self, request):
-        translation_text = request.POST.get('translation_text')
-        language_engine = request.POST.get('language_engine')
+        original_text = request.POST.get('original_text')
+        translation = request.POST.get('translation')
         source_lang = request.POST.get('source_lang')
         target_lang = request.POST.get('target_lang')
-        user_prompt = request.POST.get('user_prompt')
-        title = ' '.join(user_prompt.split(' ', 5)[:5])
+        language_engine = request.POST.get('language_engine')
+        title = ' '.join(original_text.split(' ', 5)[:5])
         if title.strip() == '':
-            title = ' '.join(translation_text.split(' ', 5)[:5])
+            title = ' '.join(translation.split(' ', 5)[:5])
 
         poem = Poem.objects.create(
             title=title,
-            user_text=user_prompt,
-            text=translation_text,
+            original_text=original_text,
+            translation=translation,
             source_lang=source_lang,
             target_lang=target_lang,
-            language_engine=language_engine
+            language_engine=language_engine,
+            saved_by=request.user.username
         )
         context = {
             'poem': poem
         }
         return HttpResponseRedirect(reverse('poem_detail', args=[poem.pk]), context)
 
+
 class UpdateTranslation(DetailView):
     model = Poem
     
     def post(self, request, poem_id):
         Poem.objects.filter(pk=poem_id).update(
-            user_text=request.POST.get('user_prompt'),
-            text=request.POST.get('translation_text'),
+            original_text=request.POST.get('original_text'),
+            translation=request.POST.get('translation_text'),
             title=request.POST.get('title'),
+            author=request.POST.get('author'),
+            saved_by=request.user.username
         )
         return HttpResponseRedirect(reverse('poem_detail', args=(poem_id,)) + '?status_success=true')
+
+
+class GetPremiumView(View):
+    model = CustomUser
+    
+    def post(self, request):
+        user = request.user
+        if user.is_authenticated:
+            CustomUser.objects.filter(username=user.username).update(is_premium=True)
+        return HttpResponseRedirect(reverse('premium'))
+
+
+class CancelPremiumView(View):
+    model = CustomUser
+    
+    def post(self, request):
+        user = request.user
+        CustomUser.objects.filter(username=user.username).update(is_premium=False)
+        return HttpResponseRedirect(reverse('premium'))
+
+
+class NewFeaturesView(View):
+    template_name = 'poetry_translation/new_features.html'
+    
+    def get(self, request):
+        return render(request, self.template_name)

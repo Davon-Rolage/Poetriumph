@@ -10,8 +10,10 @@ class Poem(models.Model):
         ordering = ('-pk', )
 
     title = models.CharField(max_length=50, default='Untitled')
-    user_text = models.TextField()
-    text = models.TextField()
+    author = models.CharField(max_length=50, blank=True, default='')
+    saved_by = models.CharField(max_length=50, default='Anonymous')
+    original_text = models.TextField()
+    translation = models.TextField()
     source_lang = models.CharField(choices=SUPPORTED_LANGUAGES, max_length=30)
     target_lang = models.CharField(choices=SUPPORTED_LANGUAGES, max_length=30)
     language_engine = models.CharField(choices=LANGUAGE_ENGINES, max_length=30)

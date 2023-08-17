@@ -1,8 +1,6 @@
 import os
-from django.shortcuts import render
 
 import openai
-from openai.error import *
 import requests.exceptions
 from deep_translator import (ChatGptTranslator, DeeplTranslator,
                              GoogleTranslator, LingueeTranslator,
@@ -10,7 +8,9 @@ from deep_translator import (ChatGptTranslator, DeeplTranslator,
                              PapagoTranslator, PonsTranslator, QcriTranslator,
                              YandexTranslator, batch_detection, exceptions,
                              single_detection)
+from django.http import HttpResponse
 from dotenv import load_dotenv
+from openai.error import *
 
 from .config import AI_ROLE
 
@@ -18,7 +18,7 @@ load_dotenv()
 
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 
-def translate(language_engine, source_lang, target_lang, user_prompt, proxies):
+def translate(language_engine, source_lang, target_lang, original_text, proxies):
     lang_engine_map = {
         "GoogleTranslator": GoogleTranslator,
         "ChatGptTranslator": ChatGptTranslator,
@@ -32,28 +32,28 @@ def translate(language_engine, source_lang, target_lang, user_prompt, proxies):
         proxies=proxies
     )
     try:
-        translated = translator.translate(user_prompt)
+        translated = translator.translate(original_text)
         return translated if language_engine != ChatGptTranslator else translated.strip('"')
     
     except requests.exceptions.ConnectionError:
-        return 'Oh no! Check your internet connection!'
+        return HttpResponse('Oh no! Check your internet connection!')
     
     except Exception as e:
-        return render(template_name='error.html', context={'error_message': str(e)})
+        return HttpResponse(str(e))
 
 
-def translate_gpt(source_lang, target_lang, user_prompt):
+def translate_gpt(source_lang, target_lang, original_text):
     ai_role = AI_ROLE.format(source_lang=source_lang, target_lang=target_lang)
     try:
         completion = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=[
             {'role':'system', 'content':ai_role}, 
-            {'role':'user', 'content':user_prompt},
+            {'role':'user', 'content':original_text},
         ],
     )
     except Exception as e:
-        return render(template_name='error.html', context={'error_message': str(e)})
+        return HttpResponse(str(e))
     
     answer = completion.choices[0].message.content
     return answer

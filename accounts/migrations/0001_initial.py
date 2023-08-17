@@ -10,10 +10,6 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('auth', '0014_remove_user_is_premium'),
-    ]
-
     operations = [
         migrations.CreateModel(
             name='CustomUser',

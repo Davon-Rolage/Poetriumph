@@ -44,14 +44,17 @@
           <li class="nav-item {% if request.path == '/' %} active {% endif %}">
             <a class="nav-link" href="{% url 'translation' %}">Poem Translation</a>
           </li>
-          <li class="nav-item {% if request.path == '/poem_list/' %} active {% endif %}">
-            <a class="nav-link" href="{% url 'poem_list' %}">Poem List</a>
+          <li class="nav-item {% if request.path == '/poem_library/' %} active {% endif %}">
+            <a class="nav-link" href="{% url 'poem_library' %}">Poem Library</a>
+          </li>
+          <li class="nav-item {% if request.path == '/my_library/' %} active {% endif %}">
+            <a class="nav-link" href="{% url 'my_library' %}">My Library</a>
           </li>
           <li class="nav-item {% if request.path == '/about/' %} active {% endif %}">
             <a class="nav-link" href="{% url 'about' %}">About</a>
           </li>
-          <li class="nav-item {% if request.path == '/support-us/' %} active {% endif %}">
-            <a class="nav-link" href="{% url 'support-us' %}">Support Us</a>
+          <li class="nav-item {% if request.path == '/support_us/' %} active {% endif %}">
+            <a class="nav-link" href="{% url 'support_us' %}">Support Us</a>
           </li>
           <li class="nav-item">
             <a class="button_premium" href="{% url 'premium' %}">Premium</a>
@@ -69,8 +72,13 @@
               <a href="{% url 'login' %}">Log In</a>
               <a href="{% url 'signup' %}">Sign Up</a>
               {% endif %}
-            </div>
-          </li>
+            </li>
+            <li>
+              <div class="new_features" style="margin-left: 10px">
+                <a class="btn btn-outline-info" href="{% url 'new_features' %}">New Features</a>
+              </div>
+            </li>
+          </div>
         </ul>
         </ul>
       </div>
@@ -78,22 +86,13 @@
   </nav>
 
   {% block content %}
-
   {% endblock %}
 
   <div class="container-fluid">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-      <p class="col-md-4 mb-0" style="color: aliceblue;">&copy; 2023 Poetorium, Newa Fun Solutions</p>
-      <!-- <ul class="nav col-md-4 justify-content-end">
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
-      </ul> -->
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
+      <p class="col-md-4 mb-0" style="color: aliceblue;">&copy; 2023 Poetorium, Newa Fun Solutions. All Rights Reserved</p>
     </footer>
   </div>
 
 </body>
-
 </html>

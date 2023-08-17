@@ -2,33 +2,46 @@
 
 {% block content %}
 {% if not user.is_premium %}
-<div class="container-fluid" style="background-color: #DCE2F0;">
+<div class="container-fluid" style="background-color: aliceblue; padding: 40px;">
     <h1 style="color: #50586C;">Premium</h1>
     <p style="color: #50586C;">
         What you get with premium:
     </p>
     <ol>
-        {% for feature in premium_features %}
         <li class="feature">
-            {{ feature }}
+            Expanded Language Options: Premium users can translate poetry between a wider range of languages
         </li>
-        {% endfor %}
+        <li class="feature">
+            You can share your translations with the world
+        </li>
+        <li class="feature">
+            You get your own premium badge on your profile
+        </li>
+        <li class="feature">
+            And many more...
+        </li>
     </ol>
 
-
-    <button style="background-color: #50586C; margin: 20px; padding: 20px; color: #DCE2F0; border-radius: 20px">
-        Try out for free
-    </button>
-    <br>
-    BTC:
-    <br>
-    ETH:
-    <br>
-    USDT:
+    <form action="{% url 'get_premium' %}" method="post" id="premium-form">
+        {% csrf_token %}
+        <div class="stage">
+            <button class="button_get_premium" type="submit" onclick="submitForm()">
+                Try out for free!
+            </button>
+        </div>
+    </form>
 </div>
+
+<script>
+    function submitForm() {
+        window.open('https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=Duran', '_blank');
+        document.getElementById("premium-form").submit();
+    }
+</script>
+
 {% else %}
-<div class="container-fluid" style="background-color: #DCE2F0;">
-    <h1 style="color: #50586C;">You are a premium user!</h1>
+<div class="container-fluid" style="background-color: aliceblue; padding: 40px;">
+    <h1 style="color: #50586C;">Never give up, premium user {{ user.username }}!</h1>
     <div class="thank_you_premium" style="font-size: 24;">
         <p>Hey there, {{ user.username }}!</p>
         <p>We just wanted to drop a quick note to say thank you for upgrading to the premium version of our app! We're
@@ -43,6 +56,13 @@
         Best regards,<br>
         Poetorium Team
     </div>
+    <form action="{% url 'cancel_premium' %}" method="post">
+        {% csrf_token %}
+        <button style="margin-top: 20px;" class="btn btn-outline-danger" type="submit">
+            Cancel Premium Status
+        </button>
+    </form>
 </div>
+
 {% endif %}
 {% endblock %}

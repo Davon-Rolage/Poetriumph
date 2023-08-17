@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container-fluid" style="background-color: aliceblue; padding: 40px; ;">
-    <h class="display-6">List of All Saved Poems</h>
 
-    {% if user.username == 'nebula' %}
-    <br>
-    <a class="btn btn-secondary" href="/admin/poetry_translation/poem/" role="button" style="margin: 10px;">Change the
-        list (admin)</a>
-    {% endif %}
+{% if not user.is_authenticated %}
+<div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
+    <h class="display-6">Hi! Apparently you're not logged in. Sign in and try again.</h>
+</div>
+{% else %}
+<div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
+    <h class="display-6">My Library</h>
+    <p>Number of Poems: {{ object_list|length }}</p>
     <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search" id="searchBox"
         onkeyup="search()" style="margin-top: 10px; margin-bottom: 10px;">
     <div class="poems_list">
@@ -21,6 +22,7 @@
         </ol>
     </div>
 </div>
+{% endif %}
 
 <script>
     function search() {
