@@ -1,12 +1,89 @@
-{% extends "base.html" %}
-
+{% extends 'base.html' %}
 {% block content %}
-<div class="container-fluid" style="background-color: aliceblue; padding-bottom: 10px;">
-    <h2>Log In</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Log In</button>
-    </form>
+{% load static %}
+
+<style>
+	body {
+		opacity: 1;
+	}
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
+<div class="container-fluid">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-12 col-md-9 col-lg-7 col-xl-6">
+				<div class="container bg-white rounded mt-2 mb-2 px-0" style="border-radius: 10px !important;">
+					<div class="pt-3" style="text-align: center;">
+						<h1><strong>Login</strong></h1>
+					</div>
+
+					<div class="pt-3 pb-3">
+						<form method="post">
+							{% csrf_token %}
+							<!-- User Name Input -->
+							<div class="form-group row justify-content-center px-3">
+								<div class="col-9 px-0">
+									{{ form.username }}
+								</div>
+							</div>
+
+							<!-- Password Input -->
+							<div class="form-group row justify-content-center px-3">
+								<div class="col-9 px-0">
+									{{ form.password }}
+								</div>
+							</div>
+
+							<!-- CheckBox Remember Me-->
+							<div class="form-group row justify-content-center px-3">
+								<div class="col-9">
+									<div class="row">
+										<div class="col-6 px-0">
+											<div class="custom-control custom-checkbox mb-3">
+												<input name="remember-me" id="customCheck1" type="checkbox"
+													class="custom-control-input checkbox-muted">
+												<label for="customCheck1"
+													class="custom-control-label text-muted">Remember Me</label>
+											</div>
+										</div>
+										<!-- Forgot Password Link -->
+										<div class="col-6 px-0 text-right">
+											<span><a href="#" class="text-danger"><b>Forgot Password?</b></a></span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							
+							<!-- Login Button -->
+							<div class="form-group row justify-content-center">
+								<div class="col-3 px-3">
+									<input type="submit" value="Login" class="btn btn-block btn-info">
+								</div>
+							</div>
+
+							{% if form.errors %}
+							<div class="alert alert-danger" role="alert">
+								{% for error in form.username.errors %}
+									{{ error }}
+								{% endfor %}
+							</div>
+							{% endif %}
+							
+						</form>
+					</div>
+
+					<!-- Register Now -->
+					<div class="pt-2">
+						<div class="row justify-content-center" style="padding: 10px; text-align: center;">
+							<h5>Don't have an account?<span><a href="{% url 'signup' %}" class="text-danger"> Register Now!</a></span></h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </div>
 {% endblock %}

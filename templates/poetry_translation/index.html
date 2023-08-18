@@ -41,11 +41,11 @@
                   <div class="user_text_section" style="margin-top: 15px;">
                       <textarea required class="message_text" placeholder="Insert your poem..." rows="10" id="original" name="original_text">{{ original_text }}</textarea>
                   </div>                    
+                </form>
           </div>
-          </form>
 
           <div class="col-md-6">
-              <form action="{% url 'save_translation' %}" method="post">
+              <form id='save-form' action="{% url 'save_translation' %}" method="post">
                   {% csrf_token %}
           
                   <input type="hidden" name="language_engine" value="{{ language_engine }}">
@@ -53,14 +53,12 @@
                   <input type="hidden" name="target_lang" value="{{ target_lang }}">
 
                   <!-- A download button -->
-                  <input type="button" id="button_download" class="btn btn-outline-primary" value="Download">
+                  <input type="button" onclick="return validateForm()" id="button_download" class="btn btn-outline-primary" value="Download">
           
-                  <button id="button_save_translation" type="submit" class="btn btn-success" {% if not user.is_authenticated %}disabled{% endif%}><span class="bi bi-share"></span>Save to Library</button>
-
-                  <input type="button" class="btn btn-outline-primary" {% if not user.is_premium %}disabled{% endif %} value="Share"><span class="bi bi-share"></span>
+                  <button onclick="return validateForm()" id="button_save_translation" type="submit" class="btn btn-success" {% if not user.is_authenticated %}disabled{% endif%}><span class="bi bi-share"></span>Save to Library</button>
 
                   <div class="user_text_section" style="margin-top: 15px;">
-                      <textarea required class="message_text translation_text" placeholder="Your translation will be here..." rows="10" name="translation">{{ translation|safe }}</textarea>
+                      <textarea readonly required class="message_text translation_text" placeholder="Your translation will be here..." rows="10" name="translation">{{ translation|safe }}</textarea>
                   </div>
                   <input type="hidden" name="original_text" value="{{ original_text }}">
               </form>
@@ -68,6 +66,24 @@
       </div>
   </div>
 </div>
+
+<script>
+  function validateForm() {
+    var textarea = document.querySelector('.translation_text');
+    if (textarea.value.trim() === '') {
+      alert('Fields must not be empty.');
+      return false;
+    }
+    return true;
+  }
+
+  var form = document.querySelector('save-form');
+  form.addEventListener('submit', function(event) {
+    if (!validateForm()) {
+      event.preventDefault();
+    }
+  });
+</script>
 
 <script>
     const textareas = document.querySelectorAll("textarea");

@@ -77,10 +77,7 @@ class PremiumView(View):
     template_name = 'poetry_translation/premium.html'
 
     def get(self, request):
-        context = {
-            'poetry_translation/premium_features': PREMIUM_FEATURES
-        }
-        return render(request, self.template_name, context)
+        return render(request, self.template_name)
 
 
 class PoemListView(ListView):
@@ -145,6 +142,14 @@ class UpdateTranslation(DetailView):
             saved_by=request.user.username
         )
         return HttpResponseRedirect(reverse('poem_detail', args=(poem_id,)) + '?status_success=true')
+    
+
+class DeleteTranslation(DetailView):
+    model = Poem
+    
+    def post(self, request, poem_id):
+        Poem.objects.filter(pk=poem_id).delete()
+        return HttpResponseRedirect(reverse('my_library'))
 
 
 class GetPremiumView(View):

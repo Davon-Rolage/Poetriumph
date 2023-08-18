@@ -2,12 +2,94 @@
 
 {% block title %}Sign Up{% endblock %}
 {% block content %}
-<div class="container-fluid" style="background-color: aliceblue; padding-bottom: 10px;">
-  <h2>Sign Up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Sign Up</button>
-  </form>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
+<div class="container-fluid">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+        <div class="container bg-white rounded mt-2 mb-2 px-0" style="border-radius: 10px !important;">
+          <div class="pt-3" style="text-align: center;">
+            <h1><strong>Register</strong></h1>
+          </div>
+
+          <div class="pt-3 pb-3">
+            <form method="post">
+              {% csrf_token %}
+              <!-- User Name Input -->
+              <div class="form-group row justify-content-center px-3">
+                <div class="col-9 px-0">
+                  {{ form.username }}
+                  {% for error in form.username.errors %}
+                    <p class="text-danger">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- email Input -->
+              <div class="form-group row justify-content-center px-3">
+                <div class="col-9 px-0">
+                  {{ form.email }}
+                  {% for error in form.email.errors %}
+                    <p class="text-danger">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Password Input -->
+              <div class="form-group row justify-content-center px-3">
+                <div class="col-9 px-0">
+                  {{ form.password1 }}
+                  {% for error in form.password1.errors %}
+                    <p class="text-danger">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Password confirmation input -->
+              <div class="form-group row justify-content-center px-3">
+                <div class="col-9 px-0">
+                  {{ form.password2 }}
+                  {% for error in form.password2.errors %}
+                    <p class="text-danger">{{ error }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- Login Button -->
+              <div class="form-group row justify-content-center">
+                <div class="col-3 px-3">
+                  <input type="submit" value="Register" class="btn btn-block btn-info">
+                </div>
+              </div>
+
+            </form>
+            
+          </div>
+          
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Registration prerequisites</h5>
+                <ul>
+                  <li>Username must contain only letters, digits and @ . + - _ only.</li>
+                  <li>Username must be at least 3 characters and no more than 15.</li>
+                  <li>Your password can't be too similar to your other personal information.</li>
+                  <li>Your password must contain at least 8 characters.</li>
+                  <li>Your password can't be a commonly used password.</li>
+                  <li>Your password can't be entirely numeric.</li>
+                </ul>
+            </div>
+          </div>
+
+            <!-- Register Now -->
+            <div class="pt-2">
+              <div class="row justify-content-center" style="padding: 10px; text-align: center;">
+                <h5>Already have an account?<span><a href="{% url 'login' %}" class="text-danger"> Log in now!</a></span></h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

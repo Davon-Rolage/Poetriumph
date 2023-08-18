@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% if not user.is_authenticated %}
+<div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
+    <h class="display-6">Premium is only available for registered users. <a href="{% url 'login' %}">Sign in</a> and try again.</h>
+</div>
+{% else %}
 {% if not user.is_premium %}
 <div class="container-fluid" style="background-color: aliceblue; padding: 40px;">
     <h1 style="color: #50586C;">Premium</h1>
@@ -10,9 +15,6 @@
     <ol>
         <li class="feature">
             Expanded Language Options: Premium users can translate poetry between a wider range of languages
-        </li>
-        <li class="feature">
-            You can share your translations with the world
         </li>
         <li class="feature">
             You get your own premium badge on your profile
@@ -64,5 +66,6 @@
     </form>
 </div>
 
+{% endif %}
 {% endif %}
 {% endblock %}

@@ -8,16 +8,28 @@
   <title>Poetriumph</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+
+
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
   <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
 
-<!-- Add a background image -->
   <style>
     body {
       background-image: url('{% static "images/background.jpg" %}');
       background-repeat: no-repeat;
       background-size: cover;
       opacity: 0.95;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    footer {
+      margin-top: auto;
     }
   </style>
 </head>
@@ -69,8 +81,8 @@
                   <a href="/admin/" style="text-decoration: none;">&#9881;Admin</a>
                 {% endif %}
               {% else %}
-              <a href="{% url 'login' %}">Log In</a>
-              <a href="{% url 'signup' %}">Sign Up</a>
+              <a href="{% url 'login' %}">Login</a>
+              <a href="{% url 'signup' %}">Register</a>
               {% endif %}
             </li>
             <li>
@@ -88,11 +100,22 @@
   {% block content %}
   {% endblock %}
 
-  <div class="container-fluid">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
       <p class="col-md-4 mb-0" style="color: aliceblue;">&copy; 2023 Poetorium, Newa Fun Solutions. All Rights Reserved</p>
     </footer>
-  </div>
-
 </body>
+
+<script>
+  const textareas = document.querySelectorAll("textarea");
+    textareas.forEach(textarea => {
+      textarea.addEventListener("keyup", () => resize(textarea));
+      document.addEventListener("DOMContentLoaded", () => resize(textarea));
+    });
+    
+    function resize(textarea) {
+      textarea.style.height = "auto";
+      let scHeight = textarea.scrollHeight;    
+      textarea.style.height = `${scHeight+5}px`;
+    }
+</script>
 </html>

@@ -4,42 +4,65 @@
 
 {% if not user.is_authenticated %}
 <div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
-    <h class="display-6">Hi! Apparently you're not logged in. Sign in and try again.</h>
+    <h class="display-6">To see your library, you need to <a href="{% url 'login' %}">sign in</a>.</h>
 </div>
 {% else %}
+
 <div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
     <h class="display-6">My Library</h>
-    <p>Number of Poems: {{ object_list|length }}</p>
+    <p>
+        Total number of Poems: {{ object_list|length }}
+    </p>
+    
     <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search" id="searchBox"
         onkeyup="search()" style="margin-top: 10px; margin-bottom: 10px;">
     <div class="poems_list">
-        <ol>
-            {% for poem in object_list %}
-            <li class="poem">
-                <a href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a>
-            </li>
-            {% endfor %}
-        </ol>
+
+        <table class="table table-hover" id="poems-table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                    <th scope="col">Language</th>
+                    <th scope="col">Saved by</th>
+                    <th scope="col">Created at</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for poem in object_list %}
+                <tr class="poem">
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td><a href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a></td>
+                    <td>{{ poem.author }}</td>
+                    <td>{{ poem.source_lang }}</td>
+                    <td>{{ poem.saved_by }}</td>
+                    <td>{{ poem.created_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
-{% endif %}
 
 <script>
     function search() {
-        let query = document.getElementById("searchBox").value.toLowerCase();
-        let poems = document.getElementsByClassName("poem");
+    let query = document.getElementById("searchBox").value.toLowerCase();
+    let poems = document.getElementsByClassName("poem");
 
-        // Loop through each poem and hide/show based on the search query
-        for (let i = 0; i < poems.length; i++) {
-            let poem = poems[i];
-            let title = poem.getElementsByTagName("a")[0].innerText.toLowerCase();
-            if (title.includes(query)) {
-                poem.style.display = "block";
-            } else {
-                poem.style.display = "none";
-            }
+    // Loop through each poem and hide/show based on the search query
+    for (let i = 0; i < poems.length; i++) {
+        let poem = poems[i];
+        let title = poem.getElementsByTagName("a")[0].innerText.toLowerCase();
+        if (title.includes(query)) {
+            poem.style.display = "table-row";
+        } else {
+            poem.style.display = "none";
         }
     }
+}
 </script>
+
+{% endif %}
 
 {% endblock %}

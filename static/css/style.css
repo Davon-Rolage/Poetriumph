@@ -31,7 +31,7 @@
 }
 
 .nav-item>a:not(.button_premium):hover {
-    color: rgb(76, 174, 255);
+    color: rgb(76, 174, 255) !important;
 }
 
 .button_premium {
@@ -70,7 +70,6 @@
 .user_authentication {
     line-height: 20px;
 }
-
 
 .stage {
     box-sizing: border-box;
@@ -145,10 +144,11 @@
     }
   }
 
-footer {
-  position: fixed;
-  bottom: 0;
-  padding-bottom: 0;
-  width: 99%;
+.placeicon {
+	font-family: fontawesome;
 }
-  
+
+.custom-control-label::before {
+	background-color: #dee2e6;
+	border: #dee2e6;     
+}

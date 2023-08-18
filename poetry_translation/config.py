@@ -1,9 +1,3 @@
-PREMIUM_FEATURES = [
-    'Expanded Language Options: Premium users can translate poetry between a wider range of languages',
-    'You can share your translations with the world',
-    'You get your own premium badge on your profile',
-    'And many more...',
-]
 SUPPORTED_LANGUAGES = (
     ('auto', 'Detect language'),
     ('english', 'English'),

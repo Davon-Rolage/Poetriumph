@@ -8,10 +8,9 @@
   }
 </style>
 
+<div class="container-fluid" style="margin-left: 0px; background-color: aliceblue; padding-bottom: 10px; padding-left: 30px;">
 <form action="{% url 'update_translation' poem.id %}" method="post">
   {% csrf_token %}
-  <div class="container-fluid"
-    style="margin-left: 0px; background-color: aliceblue; padding-bottom: 10px; padding-left: 30px;">
     <h class="display-6">Translation Service - {{ poem.language_engine }}<br>{{ poem.source_lang }} -> {{ poem.target_lang }}</h>
     <div class="row" style="margin-top: 20px">
       <div class="col">
@@ -59,17 +58,36 @@
           Save Changes
         </button>
       </div>
+
       <div class="col">
         <div id="success-alert" class="alert alert-success" role="alert"
-          style="display: none; padding: 6px; margin-top: 10px;">
-          Changes saved!
-        </div>
+        style="display: none; padding: 6px; margin-top: 10px;">
+        Changes saved!
+      </div>
+      <div class="col"></div>
       </div>
     </div>
+  </form>
 
+  <div class="row" style="margin-top: 5px">
+    <form id="delete-form" action="{% url 'delete_translation' poem.id %}" method="post">
+      {% csrf_token %}
+      <button onclick="return confirmDelete()" {% if not user.username == poem.saved_by %}disabled{% endif %} class="btn btn-outline-danger"
+        style="width: 200px;">Delete</button>
+    </form>
   </div>
+</div>
 
-</form>
+<script>
+  function confirmDelete() {
+    if (confirm("Are you sure you want to delete the poem?")) {
+      document.getElementById("delete-form").submit();
+      return true;
+    } else {
+      return false;
+    }
+  }
+</script>
 
 <script>
 const urlParams = new URLSearchParams(window.location.search);

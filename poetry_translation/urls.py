@@ -12,6 +12,7 @@ urlpatterns = [
     path('poems/', PoemListView.as_view(), name='poem_library'),
     path('poems/<int:pk>/', PoemDetailView.as_view(), name='poem_detail'),
     path('poems/update_translation/<int:poem_id>', UpdateTranslation.as_view(), name='update_translation'),
+    path('poems/delete-translation/<int:poem_id>', DeleteTranslation.as_view(), name='delete_translation'),
     path('my-library/', MyLibraryView.as_view(), name='my_library'),
     path('get-premium/', GetPremiumView.as_view(), name='get_premium'),
     path('cancel-premium/', CancelPremiumView.as_view(), name='cancel_premium'),
