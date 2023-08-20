@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}Sign Up{% endblock %}
 {% block content %}
@@ -9,7 +10,7 @@
       <div class="col-12 col-md-9 col-lg-7 col-xl-6">
         <div class="container bg-white rounded mt-2 mb-2 px-0" style="border-radius: 10px !important;">
           <div class="pt-3" style="text-align: center;">
-            <h1><strong>Register</strong></h1>
+            <h1><strong>{% trans "Register" %}</strong></h1>
           </div>
 
           <div class="pt-3 pb-3">
@@ -58,7 +59,7 @@
               <!-- Login Button -->
               <div class="form-group row justify-content-center">
                 <div class="col-3 px-3">
-                  <input type="submit" value="Register" class="btn btn-block btn-info">
+                  <input type="submit" value="{% trans 'Register' %}" class="btn btn-block btn-info">
                 </div>
               </div>
 
@@ -68,22 +69,22 @@
           
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Registration prerequisites</h5>
-                <ul>
-                  <li>Username must contain only letters, digits and @ . + - _ only.</li>
-                  <li>Username must be at least 3 characters and no more than 15.</li>
-                  <li>Your password can't be too similar to your other personal information.</li>
-                  <li>Your password must contain at least 8 characters.</li>
-                  <li>Your password can't be a commonly used password.</li>
-                  <li>Your password can't be entirely numeric.</li>
-                </ul>
+              <h5 class="card-title">{% trans 'Registration prerequisites' %}</h5>
+              <ul>
+                <li>{% trans 'Username must contain only letters, digits and' %} @ . + - _</li>
+                <li>{% trans 'Username must be at least 3 characters and no more than 15.' %}</li>
+                <li>{% trans "Your password can't be too similar to your other personal information." %}</li>
+                <li>{% trans 'Your password must contain at least 8 characters.' %}</li>
+                <li>{% trans "Your password can't be a commonly used password." %}</li>
+                <li>{% trans "Your password can't be entirely numeric." %}</li>
+              </ul>
             </div>
           </div>
 
             <!-- Register Now -->
             <div class="pt-2">
               <div class="row justify-content-center" style="padding: 10px; text-align: center;">
-                <h5>Already have an account?<span><a href="{% url 'login' %}" class="text-danger"> Log in now!</a></span></h5>
+                <h5>{% trans "Already have an account?" %}<span><a href="{% url 'login' %}" class="text-danger"> {% trans "Sign in now!" %}</a></span></h5>
               </div>
             </div>
           </div>

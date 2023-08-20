@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 
 <div class="container-fluid">
-  <h1 style="text-align: center; margin-bottom: 0;">Poem Translation</h1>
-  <p style="font-size: 24px;">Insert your poem and choose translation engine.</p>
+  <h1 style="text-align: center; margin-bottom: 0;">{% trans "Poem Translation" %}</h1>
+  <p style="font-size: 24px; padding-left: 40px;">{% trans "Insert your poem and choose translation engine." %}</p>
 
   <div class="contact_section2">
       <div class="row">
@@ -35,11 +36,11 @@
                         <option value="{{ engine.0 }}" {% if engine.0 == language_engine %}selected{% endif %}>{{ engine.1 }}</option>
                       {% endfor %}
                     </select>
-                  <button type="submit" id="button_translate" class="btn btn-primary" style="margin-left: 10px;">Translate</button>
+                  <button type="submit" id="button_translate" class="btn btn-primary" style="margin-left: 10px;">{% trans "Translate" %}</button>
                   </div>
                   
                   <div class="user_text_section" style="margin-top: 15px;">
-                      <textarea required class="message_text" placeholder="Insert your poem..." rows="10" id="original" name="original_text">{{ original_text }}</textarea>
+                      <textarea required class="message_text" placeholder='{% trans "Insert your poem..." %}' rows="10" id="original" name="original_text">{{ original_text }}</textarea>
                   </div>                    
                 </form>
           </div>
@@ -53,12 +54,12 @@
                   <input type="hidden" name="target_lang" value="{{ target_lang }}">
 
                   <!-- A download button -->
-                  <input type="button" onclick="return validateForm()" id="button_download" class="btn btn-outline-primary" value="Download">
+                  <input type="button" onclick="return validateForm()" id="button_download" class="btn btn-outline-primary" value="{% trans 'Download' %}">
           
-                  <button onclick="return validateForm()" id="button_save_translation" type="submit" class="btn btn-success" {% if not user.is_authenticated %}disabled{% endif%}><span class="bi bi-share"></span>Save to Library</button>
+                  <button onclick="return validateForm()" id="button_save_translation" type="submit" class="btn btn-success" {% if not user.is_authenticated %}disabled{% endif%}><span class="bi bi-share"></span>{% trans "Save to Library" %}</button>
 
                   <div class="user_text_section" style="margin-top: 15px;">
-                      <textarea readonly required class="message_text translation_text" placeholder="Your translation will be here..." rows="10" name="translation">{{ translation|safe }}</textarea>
+                      <textarea readonly required class="message_text translation_text" placeholder="{% trans 'Your translation will be here...' %}" rows="10" name="translation">{{ translation|safe }}</textarea>
                   </div>
                   <input type="hidden" name="original_text" value="{{ original_text }}">
               </form>

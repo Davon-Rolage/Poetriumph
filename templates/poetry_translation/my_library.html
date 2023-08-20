@@ -1,33 +1,34 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 
 {% if not user.is_authenticated %}
 <div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
-    <h class="display-6">To see your library, you need to <a href="{% url 'login' %}">sign in</a>.</h>
+    <h class="display-6">{% trans 'To see your library, you need to' %} <a href="{% url "login" %}">{% trans 'sign in' %}</a>.</h>
 </div>
 {% else %}
 
 <div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
-    <h class="display-6">My Library</h>
+    <h class="display-6">{% trans "My Library" %}</h>
     <p>
-        Total number of Poems: {{ object_list|length }}
+        {% trans "Total number of Poems:" %} {{ object_list|length }}
     </p>
     
-    <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search" id="searchBox"
+    <input class="form-control mr-sm-2" type="text" placeholder="{% trans 'Search...' %}" aria-label="Search" id="searchBox"
         onkeyup="search()" style="margin-top: 10px; margin-bottom: 10px;">
     <div class="poems_list">
 
         <table class="table table-hover" id="poems-table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Author</th>
-                    <th scope="col">Language</th>
-                    <th scope="col">Saved by</th>
-                    <th scope="col">Created at</th>
-                </tr>
+                    <th scope="col">{% trans '#' %}</th>
+                    <th scope="col">{% trans 'Title' %}</th>
+                    <th scope="col">{% trans 'Author' %}</th>
+                    <th scope="col">{% trans 'Language' %}</th>
+                    <th scope="col">{% trans 'Saved by' %}</th>
+                    <th scope="col">{% trans 'Created at' %}</th>
+                  </tr>
             </thead>
             <tbody>
                 {% for poem in object_list %}
@@ -64,5 +65,4 @@
 </script>
 
 {% endif %}
-
 {% endblock %}

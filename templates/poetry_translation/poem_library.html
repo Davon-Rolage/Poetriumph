@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 <style>
@@ -8,30 +9,30 @@
 </style>
 
 <div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
-    <h class="display-6">Poem Library</h>
+    <h class="display-6">{% trans "Poem Library" %}</h>
 
     {% if user.is_staff %}
     <br>
-    <a class="btn btn-secondary" href="/admin/poetry_translation/poem/" role="button" style="margin: 10px;">Change the list (moderator)</a>
+    <a class="btn btn-secondary" href="/admin/poetry_translation/poem/" role="button" style="margin: 10px;">{% trans "Change the list (moderator)" %}</a>
     {% endif %}
     <p>
-        Total number of Poems: {{ object_list|length }}
+        {% trans "Total number of Poems:" %} {{ object_list|length }}
     </p>
     
-    <input class="form-control mr-sm-2" type="text" placeholder="Search..." aria-label="Search" id="searchBox"
+    <input class="form-control mr-sm-2" type="text" placeholder="{% trans 'Search...' %}" aria-label="Search" id="searchBox"
         onkeyup="search()" style="margin-top: 10px; margin-bottom: 10px;">
     <div class="poems_list">
 
         <table class="table table-hover" id="poems-table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Author</th>
-                    <th scope="col">Language Engine</th>
-                    <th scope="col">Saved by</th>
-                    <th scope="col">Created at</th>
-                </tr>
+                    <th scope="col">{% trans '#' %}</th>
+                    <th scope="col">{% trans 'Title' %}</th>
+                    <th scope="col">{% trans 'Author' %}</th>
+                    <th scope="col">{% trans 'Language Engine' %}</th>
+                    <th scope="col">{% trans 'Saved by' %}</th>
+                    <th scope="col">{% trans 'Created at' %}</th>
+                  </tr>
             </thead>
             <tbody>
                 {% for poem in object_list %}

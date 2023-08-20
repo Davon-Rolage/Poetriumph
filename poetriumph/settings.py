@@ -29,6 +29,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -92,7 +93,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Asia/Tbilisi'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -115,3 +116,6 @@ LOGOUT_REDIRECT_URL = "/"
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR / 'locale'),
+]

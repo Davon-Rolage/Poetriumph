@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
-    <h class="display-6">About Poetorium</h>
+    <h class="display-6">{% trans "About Poetorium" %}</h>
     <p style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; font-size: 30px;">
+    {% blocktranslate %}
         Poetorium is a project that allows users to translate poetry from one language to another. 
         It is designed to provide a user-friendly platform for enhancing translation skills and exploring poetry from different cultures.
+    {% endblocktranslate %}
     </p>
 </div>
 {% endblock %}

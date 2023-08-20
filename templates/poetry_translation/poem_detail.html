@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 
@@ -11,24 +12,24 @@
 <div class="container-fluid" style="margin-left: 0px; background-color: aliceblue; padding-bottom: 10px; padding-left: 30px;">
 <form action="{% url 'update_translation' poem.id %}" method="post">
   {% csrf_token %}
-    <h class="display-6">Translation Service - {{ poem.language_engine }}<br>{{ poem.source_lang }} -> {{ poem.target_lang }}</h>
+    <h class="display-6">{% trans "Translation Service" %} - {{ poem.language_engine }}<br>{{ poem.source_lang }} -> {{ poem.target_lang }}</h>
     <div class="row" style="margin-top: 20px">
       <div class="col">
-      <h class="display-6" for="message_title">Title</h>
+      <h class="display-6" for="message_title">{% trans "Title" %}</h>
       <input required type="text" class="form-control" name="title" value="{{ poem.title }}"
-        style="width: 300px; padding-left: 15px" id="message_title" placeholder="Poem's title..."
+        style="width: 300px; padding-left: 15px" id="message_title" placeholder="{% trans 'Poem\'s title...' %}"
         {% if not user.username == poem.saved_by %}readonly{% endif %}>
       </div>
       <div class="col">
-        <h class="display-6" for="message_author">Author</h>
+        <h class="display-6" for="message_author">{% trans "Author" %}</h>
         <input type="text" class="form-control" name="author" value="{{ poem.author }}"
-          style="width: 300px; padding-left: 15px" id="message_author" placeholder="Poem's author..."
+          style="width: 300px; padding-left: 15px" id="message_author" placeholder="{% trans 'Poem\'s author...' %}"
           {% if not user.username == poem.saved_by %}readonly{% endif %}>
       </div>
       <div class="col">
-        <h class="display-6" for="message_saved_by">Saved by</h>
+        <h class="display-6" for="message_saved_by">{% trans "Saved by" %}</h>
         <input type="text" class="form-control" name="saved_by" value="{{ poem.saved_by }}"
-          style="width: 300px; padding-left: 15px;" id="message_saved_by" placeholder="Saved by..."" readonly>
+          style="width: 300px; padding-left: 15px;" id="message_saved_by" placeholder="{% trans 'Saved by' %}" readonly>
       </div>
       <div class="col"></div>
       <div class="col"></div>
@@ -38,14 +39,14 @@
     <div class="row">
       <div class="col">
         <h class="display-6">
-          Original Text
+          {% trans "Original Text" %}
         </h>
         <textarea required style='margin-top: 10px' type="text" class="message_text" rows="10"
           name="original_text" {% if not user.username == poem.saved_by %}readonly{% endif %}>{{ poem.original_text|safe }}</textarea>
       </div>
       <div class="col">
         <h class="display-6">
-          Translation
+          {% trans "Translation" %}
         </h>
         <textarea required style='margin-top: 10px' type="text" class="message_text" rows="10"
           name="translation_text" {% if not user.username == poem.saved_by %}readonly{% endif %}>{{ poem.translation|safe }}</textarea>
@@ -55,14 +56,14 @@
     <div class="row">
       <div class="col">
         <button class="btn btn-success" type="submit" style="margin-top: 10px; width: 200px" {% if not user.username == poem.saved_by %}disabled{% endif %}>
-          Save Changes
+          {% trans "Save Changes" %}
         </button>
       </div>
 
       <div class="col">
         <div id="success-alert" class="alert alert-success" role="alert"
         style="display: none; padding: 6px; margin-top: 10px;">
-        Changes saved!
+        {% trans "Changes saved!" %}
       </div>
       <div class="col"></div>
       </div>
@@ -73,7 +74,7 @@
     <form id="delete-form" action="{% url 'delete_translation' poem.id %}" method="post">
       {% csrf_token %}
       <button onclick="return confirmDelete()" {% if not user.username == poem.saved_by %}disabled{% endif %} class="btn btn-outline-danger"
-        style="width: 200px;">Delete</button>
+        style="width: 200px;">{% trans "Delete" %}</button>
     </form>
   </div>
 </div>

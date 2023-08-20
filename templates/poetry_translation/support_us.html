@@ -1,33 +1,50 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 <style>
   .row {
     margin-top: 5px;
-    max-width: 220px;
+    max-width: 300px;
+  }
+  .img-download {
+    color: aliceblue; 
+  }
+  .img-download:hover {
+    color: rgb(167, 214, 255);
   }
 </style>
 <div class="container-fluid" style="padding-left: 25px">
-  <h1>Support us</h1>
-  <p>If you like what we do, consider supporting us =)</p>
-  <div class="rows" style="margin-left: 40px;">
+  <h1 style="margin-bottom: 0">{% trans "Support us" %}</h1>
+  <p style="font-size: 20px">{% trans "If you like what we do, consider supporting us =)" %}</p>
+  <div class="rows">
+
+    
+    <div class="row">
+      <img src="{% static 'images/qr_boosty.png' %}" class="img-fluid" style="max-width: 162px;">
+    </div>
+    
     <div class="row">
       <a href="https://boosty.to/davon.rolage/donate">
         <img src="{% static 'images/logo_boosty.svg' %}" class="img-fluid" style="max-width: 162px;">
       </a>
     </div>
-    <div class="row">
-      <img src="{% static 'images/qr_boosty.png' %}" class="img-fluid" style="max-width: 162px;">
-    </div>
-    <div class="row">
-      <a href="https://www.buymeacoffee.com/davon.rolage" target="_blank"><img
-          src="{% static 'images/logo_coffee.png' %}" alt="Buy Me A Coffee"
-          style="height: 60px !important;width: 217px !important;"></a>
-    </div>
+    
     <div class="row">
       <img src="{% static 'images/qr_buy_coffee.png' %}" class="img-fluid" style="max-width: 162px;">
     </div>
+    
+    <div class="row">
+      <a href="https://www.buymeacoffee.com/davon.rolage" target="_blank"><img
+          src="{% static 'images/logo_coffee.png' %}" alt="Buy Me A Coffee"
+          style="min-height: 60px !important;min-width: 217px !important;"></a>
+    </div>
+
+    <div class="row" style="margin-top: 30px;">
+      <a href="{% static 'images/background_16x9.jpg' %}" class="img-download" download>{% trans "Download this background image" %}</a>
+    </div>
+
   </div>
 </div>
 {% endblock %}

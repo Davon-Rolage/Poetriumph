@@ -1,34 +1,35 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 {% if not user.is_authenticated %}
 <div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
-    <h class="display-6">Premium is only available for registered users. <a href="{% url 'login' %}">Sign in</a> and try again.</h>
+    <h class="display-6">{% trans "Premium is only available for registered users." %} <a href="{% url 'login' %}">{% trans "Sign in " %}</a>{% trans "and try again." %}</h>
 </div>
 {% else %}
 {% if not user.is_premium %}
 <div class="container-fluid" style="background-color: aliceblue; padding: 40px;">
-    <h1 style="color: #50586C;">Premium</h1>
+    <h1 style="color: #50586C;">{% trans "Premium" %}</h1>
     <p style="color: #50586C;">
-        What you get with premium:
+        {% trans "What you get with premium:" %}
     </p>
     <ol>
         <li class="feature">
-            Expanded Language Options: Premium users can translate poetry between a wider range of languages
+            {% trans "Expanded Language Options: Premium users can translate poetry between a wider range of languages" %}
         </li>
         <li class="feature">
-            You get your own premium badge on your profile
+            {% trans "You get your own premium badge on your profile" %}
         </li>
         <li class="feature">
-            And many more...
+            {% trans "And many more..." %}
         </li>
     </ol>
 
     <form action="{% url 'get_premium' %}" method="post" id="premium-form">
         {% csrf_token %}
         <div class="stage">
-            <button class="button_get_premium" type="submit" onclick="submitForm()">
-                Try out for free!
+            <button class="button_get_premium" style="line-height: 25px;" type="submit" onclick="submitForm()">
+                {% trans "Try out for free!" %}
             </button>
         </div>
     </form>
@@ -44,24 +45,15 @@
 {% else %}
 <div class="container-fluid" style="background-color: aliceblue; padding: 40px;">
     <h1 style="color: #50586C;">Never give up, premium user {{ user.username }}!</h1>
-    <div class="thank_you_premium" style="font-size: 24;">
-        <p>Hey there, {{ user.username }}!</p>
-        <p>We just wanted to drop a quick note to say thank you for upgrading to the premium version of our app! We're
-            thrilled to have you as a premium user and hope you're enjoying all the extra features.</p>
-        <p>Your support means a lot to us and helps us continue to improve and develop new features that meet your
-            needs. We're committed to providing the best user experience possible, and your decision to invest in the
-            premium version motivates us to work even harder.</p>
-        <p>If you have any feedback or suggestions for future updates, we'd love to hear them! We value your opinion and
-            want to make sure we're meeting your expectations.</p>
-        <p>Once again, thank you for choosing our premium version. We appreciate you and hope you continue to enjoy
-            using our app.</p>
-        Best regards,<br>
-        Poetorium Team
+    <div class="thank_you_premium" style="font-size: 32px;">
+        <p>
+            {% trans "Thanks for upgrading to premium! Enjoy all the features we have to offer!" %}
+        </p>
     </div>
     <form action="{% url 'cancel_premium' %}" method="post">
         {% csrf_token %}
         <button style="margin-top: 20px;" class="btn btn-outline-danger" type="submit">
-            Cancel Premium Status
+            {% trans "Cancel Premium Status" %}
         </button>
     </form>
 </div>

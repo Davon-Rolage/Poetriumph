@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.translation import gettext as _
 from django.views.generic import DetailView, ListView, View
 
 from accounts.models import CustomUser

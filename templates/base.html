@@ -1,5 +1,6 @@
 <!doctype html>
 {% load static %}
+{% load i18n %}
 <html lang="en">
 
 <head>
@@ -12,6 +13,10 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
@@ -30,6 +35,11 @@
 
     footer {
       margin-top: auto;
+    }
+    /* country's flag icon settings */
+    a > img {
+      max-width: 20px;
+      vertical-align: text-bottom;
     }
   </style>
 </head>
@@ -53,41 +63,67 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item {% if request.path == '/' %} active {% endif %}">
-            <a class="nav-link" href="{% url 'translation' %}">Poem Translation</a>
-          </li>
-          <li class="nav-item {% if request.path == '/poem_library/' %} active {% endif %}">
-            <a class="nav-link" href="{% url 'poem_library' %}">Poem Library</a>
-          </li>
-          <li class="nav-item {% if request.path == '/my_library/' %} active {% endif %}">
-            <a class="nav-link" href="{% url 'my_library' %}">My Library</a>
-          </li>
-          <li class="nav-item {% if request.path == '/about/' %} active {% endif %}">
-            <a class="nav-link" href="{% url 'about' %}">About</a>
-          </li>
-          <li class="nav-item {% if request.path == '/support_us/' %} active {% endif %}">
-            <a class="nav-link" href="{% url 'support_us' %}">Support Us</a>
+          <div class="btn-group" style="margin-left: 10px; margin-right: 10px;">
+            <button type="button" style="min-width: 105px; max-height: 40px" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {% if request.LANGUAGE_CODE == 'en' %}
+                English
+              {% elif request.LANGUAGE_CODE == 'es' %}
+                Español
+              {% elif request.LANGUAGE_CODE == 'ru' %}
+                Русский
+              <!-- Add new languages here -->
+              {% endif %}
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/en"><img src="{% static 'images/flags/usa.png' %}" alt="flag_usa"> {% trans "English" %}</a>
+              <a class="dropdown-item" href="/es"><img src="{% static 'images/flags/spain.png' %}" alt="flag_spain"> {% trans "Spanish" %}</a>
+              <a class="dropdown-item" href="/ru"><img src="{% static 'images/flags/russia.png' %}" alt="flag_russia"> {% trans "Russian" %}</a>
+              <!-- Add new languages here -->
+
+            </div>
+          </div>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'translation' %}">{% trans "Poem Translation" %}</a>
           </li>
           <li class="nav-item">
-            <a class="button_premium" href="{% url 'premium' %}">Premium</a>
+            <a class="nav-link" href="{% url 'poem_library' %}">{% trans "Poem Library" %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'my_library' %}">{% trans "My Library" %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">{% trans "About" %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'support_us' %}">{% trans "Support Us" %}</a>
+          </li>
+          <li class="nav-item">
+            <a class="button_premium" href="{% url 'premium' %}">{% trans "Premium" %}</a>
           </li>
           <li>
             <div class="user_authentication">
               {% if user.is_authenticated %}
-              Hi {% if user.is_premium %}<img src="{% static 'images/premium_badge.png' %}" alt="premium_badge">{% endif %}
-              {{ user.username }}!
-              <br><a href="{% url 'logout' %}">Log out</a>
-                {% if user.is_staff %}
-                  <a href="/admin/" style="text-decoration: none;">&#9881;Admin</a>
-                {% endif %}
-              {% else %}
-              <a href="{% url 'login' %}">Login</a>
-              <a href="{% url 'signup' %}">Register</a>
+                {% trans "Hi" %} {% if user.is_premium %}<img src="{% static 'images/premium_badge.png' %}" alt="premium_badge">{% endif %}
+                {{ user.username }}!
+                <br>
+                <a href="#">{% trans "My Profile" %}</a>
+                ·
+                <a href="{% url 'logout' %}">{% trans "Log out" %}</a>
+                  {% if user.is_staff %}
+                    <a href="/admin/" style="text-decoration: none;">&#9881;{% trans "Admin" %}</a>
+                  {% endif %}
+                {% else %}
+                <div class="login_register" style="margin-top: 8px;">
+                  <a href="{% url 'login' %}">{% trans "Login" %}</a>
+                  ·
+                  <a href="{% url 'signup' %}">{% trans "Register" %}</a>
+                </div>
               {% endif %}
             </li>
-            <li>
-              <div class="new_features" style="margin-left: 10px">
-                <a class="btn btn-outline-info" href="{% url 'new_features' %}">New Features</a>
+
+            <li {% if not user.is_staff%}hidden{% endif %}>
+              <div class="new_features">
+                <a class="btn btn-outline-info" href="{% url 'new_features' %}" style="margin-left: 10px">{% trans "New Features" %}</a>
               </div>
             </li>
           </div>
@@ -101,7 +137,7 @@
   {% endblock %}
 
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
-      <p class="col-md-4 mb-0" style="color: aliceblue;">&copy; 2023 Poetorium, Newa Fun Solutions. All Rights Reserved</p>
+      <p class="col-md-4 mb-0" style="color: aliceblue;">&copy; 2023 Poetorium, Newa Fun Solutions. {% trans "All Rights Reserved" %}</p>
     </footer>
 </body>
 

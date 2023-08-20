@@ -21,3 +21,24 @@ python manage.py migrate
 ```
 7. Set `DEBUG` to `False` before deploying to production.
 8. Run server with `python manage.py runserver`
+## Add a new language interface
+1. Add a folder for a new language with `django-admin makemessages -l <language-code>`
+<br>For example, if you want to add French, enter `django-admin makemessages -l fr`
+* [Full list of languages and language codes (Wikipedia)](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+2. Go to `locale/<language-code>/LC_MESSAGES/django.po`. That's the file with translations.
+1. Fill the empty space of every `msgstr` with the translation. For example:
+```
+#: .\poetry_translation\config.py:4
+msgid "Detect language"
+msgstr "Détecter la langue"
+```
+4. Compile all translations with `python manage.py compilemessages`@
+1. Update `base.html` to add the new language to the dropdown menu. Change `language_code` with your language:
+```html
+...
+{% elif request.LANGUAGE_CODE == '<language_code>' %}
+Language
+...
+<a class="dropdown-item" href="/<lang_code>"><img src="{% static 'images/flags/<country>.png' %}" alt="flag_<country>"> {% trans "<Language>" %}</a>
+```
+6. Don't forget to add a country's flag icon to `static/images/flags/`
