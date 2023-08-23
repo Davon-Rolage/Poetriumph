@@ -1,8 +1,8 @@
-# README for Poetorium Django Project
-Poetorium is a Django project that allows users to translate poems from one language to another and save them to the PostgreSQL database.
+# Poetriumph Django Project
+Poetriumph is a Django project that allows users to translate poems from one language to another and save them to the PostgreSQL database.
 ## Installation
 1. Create a virtual environment with `python -m venv venv`
-1. Activate the virtual environment with `venv\scripts\activate`
+1. Activate it with `venv\scripts\activate`
 1. Install required dependencies with `python -m pip install -r requirements.txt`
 1. Create a `.env` file which contains environment variables in the root directory of your project. Add the following variables:
 ```
@@ -25,7 +25,7 @@ python manage.py migrate
 1. Add a folder for a new language with `django-admin makemessages -l <language-code>`
 <br>For example, if you want to add French, enter `django-admin makemessages -l fr`
 * [Full list of languages and language codes (Wikipedia)](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
-2. Go to `locale/<language-code>/LC_MESSAGES/django.po`. That's the file with translations.
+2. Go to the file with translations: `locale/<language-code>/LC_MESSAGES/django.po`.
 1. Fill the empty space of every `msgstr` with the translation. For example:
 ```
 #: .\poetry_translation\config.py:4
