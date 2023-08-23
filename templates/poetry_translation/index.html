@@ -10,10 +10,14 @@
   <div class="contact_section2">
       <div class="row">
           <div class="col-md-6">
+
+              <!-- Form to translate the poem -->
               <form id='form' action="" method="post">
                   {% csrf_token %}
 
                   <div class="translation-settings-container">
+                    
+                    <!-- Source Language dropdown list -->
                     <select style="flex: 1" name="source_lang" class="form-select" aria-select="Source Language">
                       {% for language in supported_languages %}
                         <option value="{{ language.0 }}" {% if language.0 == source_lang %}selected{% endif %}>{{ language.1 }}</option>
@@ -25,12 +29,14 @@
                       <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                     </svg>
 
+                    <!-- Target Language dropdown list -->
                     <select style="flex: 1; margin-right: 5px;" name="target_lang" class="form-select" aria-select="Target Language">
                       {% for language in supported_languages|slice:"1:" %}
                       <option value="{{ language.0 }}" {% if language.0 == target_lang %}selected{% endif %}>{{ language.1 }}</option>
                       {% endfor %}
                     </select>
                   
+                    <!-- Language engine dropdown list -->
                     <select style="flex: 1;" name="language_engine" class="language_engines form-select" aria-select="Translation Service">
                       {% for engine in language_engines %}
                         <option value="{{ engine.0 }}" {% if engine.0 == language_engine %}selected{% endif %}>{{ engine.1 }}</option>
@@ -39,6 +45,7 @@
                   <button type="submit" id="button_translate" class="btn btn-primary" style="margin-left: 10px;">{% trans "Translate" %}</button>
                   </div>
                   
+                  <!-- Original text textarea -->
                   <div class="user_text_section" style="margin-top: 15px;">
                       <textarea required class="message_text" placeholder='{% trans "Insert your poem..." %}' rows="10" id="original" name="original_text">{{ original_text }}</textarea>
                   </div>                    
@@ -46,6 +53,7 @@
           </div>
 
           <div class="col-md-6">
+              <!-- Form to save the poem tot the library -->
               <form id='save-form' action="{% url 'save_translation' %}" method="post">
                   {% csrf_token %}
           
@@ -55,9 +63,17 @@
 
                   <!-- A download button -->
                   <input type="button" onclick="return validateForm()" id="button_download" class="btn btn-outline-primary" value="{% trans 'Download' %}">
-          
-                  <button onclick="return validateForm()" id="button_save_translation" type="submit" class="btn btn-success" {% if not user.is_authenticated %}disabled{% endif%}><span class="bi bi-share"></span>{% trans "Save to Library" %}</button>
 
+                  <!-- Save to library button -->
+                  {% if not user.is_authenticated %}
+                  <span class="tt d-inline-block" tabindex="0" data-toggle="tooltip" title="{% trans 'Sign in to save to library!' %}">
+                    <button disabled onclick="return validateForm()" style="pointer-events: none;" id="button_save_translation" type="submit" class="btn btn-success">{% trans "Save to Library" %}</button>
+                  </span>
+                  {% else %}
+                  <button onclick="return validateForm()" id="button_save_translation" type="submit" class="btn btn-success">{% trans "Save to Library" %}</button>
+                  {% endif %}
+
+                  <!-- Translation textarea -->
                   <div class="user_text_section" style="margin-top: 15px;">
                       <textarea readonly required class="message_text translation_text" placeholder="{% trans 'Your translation will be here...' %}" rows="10" name="translation">{{ translation|safe }}</textarea>
                   </div>
@@ -68,39 +84,17 @@
   </div>
 </div>
 
+<!-- Check if translation text is empty, do nothing if it is -->
 <script>
   function validateForm() {
     var textarea = document.querySelector('.translation_text');
-    if (textarea.value.trim() === '') {
-      alert('Fields must not be empty.');
-      return false;
-    }
-    return true;
+    return textarea.value.trim() !== '';
   }
-
-  var form = document.querySelector('save-form');
-  form.addEventListener('submit', function(event) {
-    if (!validateForm()) {
-      event.preventDefault();
-    }
-  });
 </script>
 
+<!-- Script for a download button -->
 <script>
-    const textareas = document.querySelectorAll("textarea");
-    textareas.forEach(textarea => {
-      textarea.addEventListener("keyup", () => resize(textarea));
-      document.addEventListener("DOMContentLoaded", () => resize(textarea));
-    });
-    
-    function resize(textarea) {
-      textarea.style.height = "auto";
-      let scHeight = textarea.scrollHeight;    
-      textarea.style.height = `${scHeight+5}px`;
-    }
-  
-  // Script for a download button
-    document.getElementById('button_download').addEventListener('click', function() {
+  document.getElementById('button_download').addEventListener('click', function () {
     let translation = document.querySelector(".translation_text").textContent;
     let filename = translation.split(' ').slice(0, 5).join(' ');
 
@@ -114,7 +108,6 @@
       document.body.removeChild(element);
     }
   });
-  
-  </script>
+</script>
   
 {% endblock %}

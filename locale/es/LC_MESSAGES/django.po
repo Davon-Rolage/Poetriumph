@@ -16,208 +16,206 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
-"%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: .\accounts\forms.py:51
 msgid "Username cannot contain spaces"
-msgstr "Имя пользователя не может содержать пробелы"
+msgstr "El nombre de usuario no puede contener espacios"
 
 #: .\accounts\forms.py:54
 msgid "Username contains invalid characters"
-msgstr "Имя пользователя содержит недопустимые символы"
+msgstr "El nombre de usuario contiene caracteres inválidos"
 
 #: .\accounts\forms.py:58
 msgid "Username is too short"
-msgstr "Имя пользователя слишком короткое"
+msgstr "El nombre de usuario es demasiado corto"
 
 #: .\accounts\forms.py:62
 msgid "Username is too long"
-msgstr "Имя пользователя слишком длинное"
+msgstr "El nombre de usuario es demasiado largo"
 
 #: .\accounts\forms.py:66
 msgid "Email contains invalid characters"
-msgstr "Адрес электронной почты содержит недопустимые символы"
+msgstr "El correo electrónico contiene carácteres inválidos"
 
 #: .\accounts\forms.py:108
 msgid "Invalid username or password"
-msgstr "Неправильное имя пользователя или пароль"
+msgstr "Nombre de usuario o contraseña inválidos"
 
 #: .\poetry_translation\config.py:4
 msgid "Detect language"
-msgstr "Определить язык"
+msgstr "Detectar idioma"
 
 #: .\poetry_translation\config.py:5 .\templates\base.html:95
 msgid "English"
-msgstr "Английский"
+msgstr "Inglés"
 
 #: .\poetry_translation\config.py:6 .\templates\base.html:99
 msgid "Russian"
-msgstr "Русский"
+msgstr "Ruso"
 
 #: .\poetry_translation\config.py:7 .\templates\base.html:97
 msgid "Spanish"
-msgstr "Испанский"
+msgstr "Español"
 
 #: .\poetry_translation\config.py:8
 msgid "Italian"
-msgstr "Итальянский"
+msgstr "Italiano"
 
 #: .\poetry_translation\config.py:9
 msgid "French"
-msgstr "Французский"
+msgstr "Francés"
 
 #: .\poetry_translation\config.py:10
 msgid "German"
-msgstr "Немецкий"
+msgstr "Alemán"
 
 #: .\poetry_translation\config.py:11
 msgid "Hindi"
-msgstr "Хинди"
+msgstr "Hindi"
 
 #: .\poetry_translation\config.py:12
 msgid "Arabic"
-msgstr "Арабский"
+msgstr "Árabe"
 
 #: .\poetry_translation\config.py:13
 msgid "Portuguese"
-msgstr "Португальский"
+msgstr "Portugués"
 
 #: .\poetry_translation\config.py:14
 msgid "Japanese"
-msgstr "Японский"
+msgstr "Japonés"
 
 #: .\poetry_translation\config.py:15
 msgid "Korean"
-msgstr "Корейский"
+msgstr "Coreano"
 
 #: .\poetry_translation\config.py:16
 msgid "Chinese Simplified"
-msgstr "Китайский (упр.)"
+msgstr "Chino simpl."
 
 #: .\poetry_translation\config.py:17
 msgid "Chinese Traditional"
-msgstr "Китайский (трад.)"
+msgstr "Chino trad."
 
 #: .\poetry_translation\config.py:18
 msgid "Turkish"
-msgstr "Турецкий"
+msgstr "Turco"
 
 #: .\poetry_translation\config.py:19
 msgid "Indonesian"
-msgstr "Индонезийский"
+msgstr "Indonesio"
 
 #: .\poetry_translation\config.py:22
 msgid "Google Translator"
-msgstr "Google Переводчик"
+msgstr "Traductor de Google"
 
 #: .\poetry_translation\config.py:23
 msgid "ChatGPT Translator"
-msgstr "ChatGPT Переводчик"
+msgstr "Traductor de ChatGPT"
 
 #: .\poetry_translation\config.py:24
 msgid "ChatGPT Poet"
-msgstr "ChatGPT Поэт"
+msgstr "Poeta de ChatGPT"
 
 #: .\poetry_translation\forms.py:46 .\poetry_translation\forms.py:140
 msgid "Title..."
-msgstr "Название..."
+msgstr "Título..."
 
 #: .\poetry_translation\forms.py:56 .\poetry_translation\forms.py:149
 msgid "Author..."
-msgstr "Автор..."
+msgstr "Autor..."
 
 #: .\poetry_translation\forms.py:67 .\poetry_translation\forms.py:160
 msgid "Saved by..."
-msgstr "Кем сохранено..."
+msgstr "Guardado por"
 
 #: .\poetry_translation\forms.py:86 .\poetry_translation\forms.py:177
 msgid "Original text..."
-msgstr "Исходный текст..."
+msgstr "Texto original..."
 
 #: .\poetry_translation\forms.py:96 .\poetry_translation\forms.py:186
 msgid "Translation text..."
-msgstr "Текст перевода..."
+msgstr "Traducción..."
 
 #: .\poetry_translation\forms.py:204
 msgid "Source and target languages cannot be the same."
-msgstr "Исходный и целевой языки не могут совпадать."
+msgstr "Los idiomas de origen y destino no pueden ser los mismos."
 
 #: .\poetry_translation\views.py:141
 msgid "The poem has been successfully updated."
-msgstr "Текст был успешно обновлен."
+msgstr "El poema ha sido actualizado exitosamente."
 
 #: .\poetry_translation\views.py:148
 msgid "The poem has been successfully deleted."
-msgstr "Текст был успешно удален."
+msgstr "El poema ha sido eliminado exitosamente."
 
 #: .\poetry_translation\views.py:179
 msgid "You have earned a badge! Check out your profile!"
-msgstr "Вы получили новый значок! Проверьте свой профиль!"
+msgstr "¡Ha ganado una insignia! ¡Eche un vistazo a su perfil!"
 
 #: .\templates\base.html:106 .\templates\poetry_translation\index.html:7
 msgid "Poem Translation"
-msgstr "Перевод стихов"
+msgstr "Traduccíon de poemas"
 
 #: .\templates\base.html:109
 #: .\templates\poetry_translation\poem_library.html:12
 msgid "Poem Library"
-msgstr "Библиотека"
+msgstr "Biblioteca de poemas"
 
 #: .\templates\base.html:112 .\templates\poetry_translation\my_library.html:21
 msgid "My Library"
-msgstr "Моя библиотека"
+msgstr "Mi biblioteca"
 
 #: .\templates\base.html:115
 msgid "About"
-msgstr "О нас"
+msgstr "Sobre nosotros"
 
 #: .\templates\base.html:118
 msgid "Support Us"
-msgstr "Поддержите нас"
+msgstr "Apóyenos"
 
 #: .\templates\base.html:121 .\templates\poetry_translation\premium.html:12
 msgid "Premium"
-msgstr "Премиум"
+msgstr "Premium"
 
 #: .\templates\base.html:126
 msgid "Hi"
-msgstr "Привет,"
+msgstr "Hola"
 
 #: .\templates\base.html:129
 msgid "My Profile"
-msgstr "Мой профиль"
+msgstr "Mi perfil"
 
 #: .\templates\base.html:131
 msgid "Log out"
-msgstr "Выйти"
+msgstr "Cerrar sesión"
 
 #: .\templates\base.html:133
 msgid "Admin"
-msgstr "Админ"
+msgstr "Admin"
 
 #: .\templates\base.html:137 .\templates\registration\login.html:20
 #: .\templates\registration\login.html:63
 msgid "Login"
-msgstr "Вход"
+msgstr "Iniciar sesión"
 
 #: .\templates\base.html:139 .\templates\registration\signup.html:13
 #: .\templates\registration\signup.html:62
 msgid "Register"
-msgstr "Регистрация"
+msgstr "Registrarse"
 
 #: .\templates\base.html:146
 msgid "New Features"
-msgstr "Новые фичи"
+msgstr "Nuevas funciones"
 
 #: .\templates\base.html:168
 msgid "All Rights Reserved"
-msgstr "Все права защищены"
+msgstr "Todos los derechos reservados"
 
 #: .\templates\poetry_translation\about.html:6
 msgid "About Poetorium"
-msgstr "О проекте Poetorium"
+msgstr "Acerca de Poetorium"
 
 #: .\templates\poetry_translation\about.html:8
 msgid ""
@@ -229,318 +227,320 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"        Poetorium - это проект, позволяющий пользователям переводить поэзию "
-"с одного языка на другой. \n"
-"        Он представляет из себя удобную платформу для улучшения навыков "
-"перевода и изучения поэзий разных культур.\n"
+"        Poetorium es un proyecto que permite a los usuarios traducir poesía "
+"de un idioma a otro. \n"
+"        Está diseñado para proporcionar una plataforma amigable para mejorar "
+"las habilidades de traducción y explorar la poesía de diferentes culturas.\n"
 "    "
 
 #: .\templates\poetry_translation\index.html:8
 msgid "Insert your poem and choose translation engine."
-msgstr "Вставьте свой стих и выберите сервис перевода."
+msgstr "Inserte su poema y eliga servicio de traducción."
 
 #: .\templates\poetry_translation\index.html:42
 msgid "Translate"
-msgstr "Перевести"
+msgstr "Traducir"
 
 #: .\templates\poetry_translation\index.html:47
 msgid "Insert your poem..."
-msgstr "Вставьте свой стих..."
+msgstr "Inserte su poema..."
 
 #: .\templates\poetry_translation\index.html:61
 msgid "Download"
-msgstr "Скачать"
+msgstr "Descargar"
 
 #: .\templates\poetry_translation\index.html:65
 msgid "Sign in to save to library!"
-msgstr "Авторизуйтесь, чтобы сохранить в библиотеку"
+msgstr "¡Inicie sesión para guardar en la biblioteca!"
 
 #: .\templates\poetry_translation\index.html:66
 #: .\templates\poetry_translation\index.html:69
 msgid "Save to Library"
-msgstr "Сохранить в библиотеку"
+msgstr "Guardar en la biblioteca"
 
 #: .\templates\poetry_translation\index.html:74
 msgid "Your translation will be here..."
-msgstr "Ваш перевод будет здесь..."
+msgstr "Su traducción estará aquí..."
 
 #: .\templates\poetry_translation\my_library.html:16
 msgid "To see your library, you need to"
-msgstr "Чтобы увидеть свою библиотеку, вам необходимо"
+msgstr "Para ver su biblioteca, necesita"
 
 #: .\templates\poetry_translation\my_library.html:16
 msgid "sign in"
-msgstr "авторизоваться"
+msgstr "iniciar sesión"
 
 #: .\templates\poetry_translation\my_library.html:22
 #: .\templates\poetry_translation\poem_library.html:19
 msgid "Total number of Poems:"
-msgstr "Общее число стихов:"
+msgstr "Número total de poemas:"
 
 #: .\templates\poetry_translation\my_library.html:29
 #: .\templates\poetry_translation\poem_library.html:26
 msgid "#"
-msgstr "№ п/п"
+msgstr "#"
 
 #: .\templates\poetry_translation\my_library.html:30
 #: .\templates\poetry_translation\poem_detail.html:59
 #: .\templates\poetry_translation\poem_library.html:27
 #: .\templates\poetry_translation\poem_update.html:87
 msgid "Title"
-msgstr "Название"
+msgstr "Título"
 
 #: .\templates\poetry_translation\my_library.html:31
 #: .\templates\poetry_translation\poem_detail.html:65
 #: .\templates\poetry_translation\poem_library.html:28
 #: .\templates\poetry_translation\poem_update.html:93
 msgid "Author"
-msgstr "Автор"
+msgstr "Autor"
 
 #: .\templates\poetry_translation\my_library.html:32
 msgid "Language"
-msgstr "Язык"
+msgstr "Idioma"
 
 #: .\templates\poetry_translation\my_library.html:33
 #: .\templates\poetry_translation\poem_library.html:31
 msgid "Created at"
-msgstr "Дата создания"
+msgstr "Creado en"
 
 #: .\templates\poetry_translation\my_library.html:34
 msgid "Is hidden"
-msgstr "Видимость"
+msgstr "Oculto"
 
 #: .\templates\poetry_translation\my_library.html:45
 msgid "Hidden"
-msgstr "Скрыто"
+msgstr "Oculto"
 
 #: .\templates\poetry_translation\my_profile.html:20
 msgid "Welcome"
-msgstr "Добро пожаловать"
+msgstr "Bienvenido(a)"
 
 #: .\templates\poetry_translation\my_profile.html:35
 #: .\templates\poetry_translation\my_profile.html:65
 msgid "Total number of poems:"
-msgstr "Общее число стихов:"
+msgstr "Número total de poemas:"
 
 #: .\templates\poetry_translation\my_profile.html:38
 msgid "Date joined:"
-msgstr "Дата создания аккаунта:"
+msgstr "Fecha de registro:"
 
 #: .\templates\poetry_translation\my_profile.html:42
 msgid "You have premium status"
-msgstr "У вас есть премиум-статус"
+msgstr "Tiene estado premium"
 
 #: .\templates\poetry_translation\my_profile.html:46
 msgid "You have free status."
-msgstr "У вас нет премиума."
+msgstr "Tiene estado gratuito."
 
 #: .\templates\poetry_translation\my_profile.html:46
 msgid "Upgrade to Premium"
-msgstr "Активировать премиум"
+msgstr "Actualizar a Premium"
 
 #: .\templates\poetry_translation\my_profile.html:68
 msgid "You have premium status!"
-msgstr "У вас есть премиум-статус!"
+msgstr "Tiene estado premium!"
 
 #: .\templates\poetry_translation\my_profile.html:72
 msgid "Save your first poem to the library!"
-msgstr "Сохрани свой первый стих в библиотеку!"
+msgstr "¡Guarda su primer poema en la biblioteca!"
 
 #: .\templates\poetry_translation\my_profile.html:77
 msgid "Have 5 poems saved to your library."
-msgstr "В вашей библиотеке есть не менее 5 стихов."
+msgstr "Tiene 5 poemas guardados en su biblioteca."
 
 #: .\templates\poetry_translation\my_profile.html:82
 msgid "Have 20 poems saved to your library."
-msgstr "В вашей библиотеке есть не менее 20 стихов."
+msgstr "Tiene 20 poemas guardados en su biblioteca."
 
 #: .\templates\poetry_translation\my_profile.html:87
 msgid "Have 50 poems saved to your library."
-msgstr "В вашей библиотеке есть не менее 50 стихов."
+msgstr "Tiene 50 poemas guardados en su biblioteca."
 
 #: .\templates\poetry_translation\my_profile.html:92
 msgid "Have 100 poems saved to your library."
-msgstr "В вашей библиотеке есть не менее 100 стихов."
+msgstr "Tiene 100 poemas guardados en su biblioteca."
 
 #: .\templates\poetry_translation\new_features.html:6
 msgid "Features to be added"
-msgstr "Будущие фичи"
+msgstr "Características por añadir"
 
 #: .\templates\poetry_translation\poem_detail.html:14
 msgid "This poem is hidden by its author."
-msgstr "Автор предпочел скрыть данный стих."
+msgstr "Este poema está oculto por su autor."
 
 #: .\templates\poetry_translation\poem_detail.html:23
 msgid "Translation Service"
-msgstr "Сервис перевода"
+msgstr "Servicio de traducción"
 
 #: .\templates\poetry_translation\poem_detail.html:46
 msgid "Change Poem"
-msgstr "Изменить"
+msgstr "Cambiar poema"
 
 #: .\templates\poetry_translation\poem_detail.html:71
 #: .\templates\poetry_translation\poem_library.html:30
 #: .\templates\poetry_translation\poem_update.html:99
 msgid "Saved by"
-msgstr "Кем сохранено"
+msgstr "Guardado por"
 
 #: .\templates\poetry_translation\poem_detail.html:81
 #: .\templates\poetry_translation\poem_update.html:51
 msgid "Hide from Poem Library"
-msgstr "Скрыть из общей библиотеки"
+msgstr "Ocultar de la biblioteca de poemas"
 
 #: .\templates\poetry_translation\poem_detail.html:90
 #: .\templates\poetry_translation\poem_update.html:109
 msgid "Original Text"
-msgstr "Оригинальный текст"
+msgstr "Texto original"
 
 #: .\templates\poetry_translation\poem_detail.html:96
 #: .\templates\poetry_translation\poem_update.html:115
 msgid "Translation"
-msgstr "Перевод"
+msgstr "Traducción"
 
 #: .\templates\poetry_translation\poem_library.html:16
 msgid "Change the list (moderator)"
-msgstr "Изменить список (модератор)"
+msgstr "Cambiar la lista (moderador)"
 
 #: .\templates\poetry_translation\poem_library.html:29
 msgid "Target Language"
-msgstr "Язык перевода"
+msgstr "Lengua meta"
 
 #: .\templates\poetry_translation\poem_update.html:14
 msgid "You are not authorized to edit this poem."
-msgstr "У вас нет полномочий редактировать этот текст."
+msgstr "No está autorizado(a) para editar este poema."
 
 #: .\templates\poetry_translation\poem_update.html:24
 #: .\venv\Lib\site-packages\django\forms\formsets.py:499
 msgid "Delete"
-msgstr "Удалить"
+msgstr "Borrar"
 
 #: .\templates\poetry_translation\poem_update.html:35
 msgid "Updated at"
-msgstr "Дата обновления"
+msgstr "Actualizado en"
 
 #: .\templates\poetry_translation\poem_update.html:70
 msgid "Save Changes"
-msgstr "Сохранить изменения"
+msgstr "Guardar cambios"
 
 #: .\templates\poetry_translation\premium.html:7
 msgid "Premium is only available for registered users."
-msgstr "Премиум доступен только для зарегистрированных пользователей."
+msgstr "Premium solo está disponible para usuarios registrados."
 
 #: .\templates\poetry_translation\premium.html:7
 msgid "Sign in"
-msgstr "Авторизуйтесь"
+msgstr "Inicie sesión"
 
 #: .\templates\poetry_translation\premium.html:7
 msgid "and try again."
-msgstr "и попробуйте снова"
+msgstr "e intente de nuevo."
 
 #: .\templates\poetry_translation\premium.html:14
 msgid "What you get with premium:"
-msgstr "Что вы получите с премиумом:"
+msgstr "Lo que obtiene con premium:"
 
 #: .\templates\poetry_translation\premium.html:18
 msgid "Premium users can translate poetry between a wider range of languages"
 msgstr ""
-"Премиум-пользователи могут переводить тексты между более широким диапазоном "
-"языков"
+"Los usuarios Premium pueden traducir poesía entre una gama más amplia de "
+"idiomas"
 
 #: .\templates\poetry_translation\premium.html:21
 msgid "You can save your poems to the library and edit them"
-msgstr "Вы сможете сохранять свои тексты в библиотеку и редактировать их"
+msgstr "Puede guardar sus poemas en la biblioteca y editarlos"
 
 #: .\templates\poetry_translation\premium.html:24
 msgid "You get your own premium badge on your profile"
-msgstr "Вы получите свой собственный премиум-значок на своем профиле"
+msgstr "Obtiene su propia insignia premium en su perfil"
 
 #: .\templates\poetry_translation\premium.html:27
 msgid "You will be able to earn badges for saving poems"
-msgstr "Вы сможете получать значки за сохранение стихов"
+msgstr "Podrá ganar insignias por guardar poemas"
 
 #: .\templates\poetry_translation\premium.html:30
 msgid "And many more..."
-msgstr "И многое другое..."
+msgstr "Y mucho más..."
 
 #: .\templates\poetry_translation\premium.html:38
 msgid "Try out for free!"
-msgstr "Попробуй бесплатно!"
+msgstr "¡Pruébelo gratis!"
 
 #: .\templates\poetry_translation\premium.html:56
 msgid ""
 "Thanks for upgrading to premium! Enjoy all the features we have to offer!"
 msgstr ""
-"Спасибо за обновление до премиум уровня! Наслаждайтесь всеми функциями, "
-"которые мы можем предложить!"
+"Gracias por actualizar a Premium. ¡Disfrute de todas las características que "
+"tenemos para ofrecer!"
 
 #: .\templates\poetry_translation\premium.html:62
 msgid "Cancel Premium Status"
-msgstr "Отменить премиум статус"
+msgstr "Cancelar estado premium"
 
 #: .\templates\poetry_translation\support_us.html:19
 msgid "Support us"
-msgstr "Поддержите нас"
+msgstr "Apóyenos"
 
 #: .\templates\poetry_translation\support_us.html:20
 msgid "If you like what we do, consider supporting us =)"
-msgstr "Если вам нравится то, что мы делаем, поддержите нас =)"
+msgstr "Si le gusta lo que hacemos, considere apoyarnos =)"
 
 #: .\templates\poetry_translation\support_us.html:45
 msgid "Download this background image"
-msgstr "Скачать это фоновое изображение"
+msgstr "Descargar esta imagen de fondo"
 
 #: .\templates\registration\login.html:49
 msgid "Remember Me"
-msgstr "Запомнить меня"
+msgstr "Recuérdame"
 
 #: .\templates\registration\login.html:54
 msgid "Forgot Password?"
-msgstr "Забыли пароль?"
+msgstr "¿Olvidó su contraseña?"
 
 #: .\templates\registration\login.html:81
 msgid "Don't have an account?"
-msgstr "Нет аккаунта?"
+msgstr "¿No tiene una cuenta?"
 
 #: .\templates\registration\login.html:81
 msgid "Register Now!"
-msgstr "Зарегистрируйся сейчас!"
+msgstr "Regístrese ahora"
 
 #: .\templates\registration\signup.html:73
 msgid "Already have an account?"
-msgstr "Уже есть аккаунт?"
+msgstr "¿Ya tiene una cuenta?"
 
 #: .\templates\registration\signup.html:73
 msgid "Sign in now!"
-msgstr "Войдите сейчас"
+msgstr "¡Inicie sesión ahora!"
 
 #: .\templates\registration\signup.html:79
 msgid "Registration prerequisites"
-msgstr "Требования к имени пользователя и паролю"
+msgstr "Requisitos de registro"
 
 #: .\templates\registration\signup.html:81
 msgid "Only latin letters are allowed."
-msgstr "Разрешены только латинские буквы."
+msgstr "Solo se permiten letras latinas."
 
 #: .\templates\registration\signup.html:82
 msgid "Username must contain only letters, digits and"
-msgstr "Имя пользователя должно содержать только буквы, цифры и"
+msgstr "El nombre de usuario debe contener solo letras, dígotos y"
 
 #: .\templates\registration\signup.html:83
 msgid "Username must be at least 3 characters and no more than 15."
-msgstr "Имя пользователя должно быть не менее 3 символов и не более 15."
+msgstr "El nombre de usuario debe tener al menos 3 carácteres y no más de 15."
 
 #: .\templates\registration\signup.html:84
 msgid "Your password can't be too similar to your other personal information."
-msgstr "Ваш пароль не должен быть слишком похож на другую личную информацию."
+msgstr ""
+"Su contraseña no puede ser demasiado similar a otra información personal "
+"suya."
 
 #: .\templates\registration\signup.html:85
 msgid "Your password must contain at least 8 characters."
-msgstr "Ваш пароль должен содержать не менее 8 символов."
+msgstr "Su contraseña debe tener al menos 8 carácteres."
 
 #: .\templates\registration\signup.html:86
 msgid "Your password can't be a commonly used password."
-msgstr "Ваш пароль не может быть широко используемым паролем."
+msgstr "Su contraseña no puede ser una contraseña comúnmente utilizada."
 
 #: .\templates\registration\signup.html:87
 msgid "Your password can't be entirely numeric."
-msgstr "Ваш пароль не может быть полностью числовым."
+msgstr "Su contraseña no puede ser completamente numérica."

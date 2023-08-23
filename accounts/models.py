@@ -7,6 +7,18 @@ class CustomUser(AbstractUser):
         default=False,
         help_text='Designates whether the user is a premium user.'
     )
+    token = models.CharField(max_length=36, blank=True)
     
     def __str__(self):
         return self.username
+    
+    
+class MyProfile(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    poem_count = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.user.username
+    
+    
+    

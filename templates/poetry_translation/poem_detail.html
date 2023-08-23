@@ -9,102 +9,103 @@
   }
 </style>
 
+{% if poem.is_hidden and not user.username == poem.saved_by %}
+<div class="container-fluid" style="margin-left: 0px; background-color: aliceblue; text-align: center; padding-bottom: 10px; padding-left: 30px;">
+  <h class="display-6">{% trans 'This poem is hidden by its author.' %}</h>
+</div>
+{% else %}
 <div class="container-fluid" style="margin-left: 0px; background-color: aliceblue; padding-bottom: 10px; padding-left: 30px;">
-<form action="{% url 'update_translation' poem.id %}" method="post">
-  {% csrf_token %}
-    <h class="display-6">{% trans "Translation Service" %} - {{ poem.language_engine }}<br>{{ poem.source_lang }} -> {{ poem.target_lang }}</h>
+  <form action="{% url 'poem_update' poem.id %}" method="post">
+    {% csrf_token %}
+
+    <!-- Hidden input for redirecting to poem_update -->
+    <input type="text" hidden value="1" name="edit">
+
+    <!-- Language engine -->
+    <h class="display-6">{% trans "Translation Service" %} - {{ poem.language_engine }}</h>
+    <div class="row" hidden>{{ form.language_engine }}</div>
+
+    <div class="row" style="max-width: fit-content; margin-top: 10px;">
+    
+      <!-- Source language -->
+      <div class="col">
+        <input hidden type="text" value="{{ form.souce_lang.value }}" name="souce_lang">
+        {{ form.source_lang }}
+      </div>
+    
+      <!-- A simple right arrow -> -->
+      <div class="col my-auto"><svg style="margin-left: 10px; margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" /></svg></div>
+    
+      <!-- Target language -->
+      <div class="col">
+        <input hidden type="text" value="{{ form.target_lang.value }}" name="target_lang">
+        {{ form.target_lang }}
+      </div>
+    
+      <!-- If user is poem's author, show the Change button -->
+      {% if user.username == poem.saved_by %}
+      <div class="col">
+        <button class="btn btn-primary" type="submit">{% trans "Change Poem" %}</button>
+      </div>
+      {% endif %}
+    
+    </div>
+
+    <!-- Updated at (hidden) -->
+    <div class="col" hidden>{{ form.updated_at }}</div>
+
     <div class="row" style="margin-top: 20px">
+
+      <!-- Title -->
       <div class="col">
-      <h class="display-6" for="message_title">{% trans "Title" %}</h>
-      <input required type="text" class="form-control" name="title" value="{{ poem.title }}"
-        style="width: 300px; padding-left: 15px" id="message_title" placeholder="{% trans 'Poem\'s title...' %}"
-        {% if not user.username == poem.saved_by %}readonly{% endif %}>
+        <h class="display-6" for="title">{% trans "Title" %}</h>
+        {{ form.title|safe }}
       </div>
+
+      <!-- Author -->
       <div class="col">
-        <h class="display-6" for="message_author">{% trans "Author" %}</h>
-        <input type="text" class="form-control" name="author" value="{{ poem.author }}"
-          style="width: 300px; padding-left: 15px" id="message_author" placeholder="{% trans 'Poem\'s author...' %}"
-          {% if not user.username == poem.saved_by %}readonly{% endif %}>
+        <h class="display-6" for="author">{% trans "Author" %}</h>
+        {{ form.author|safe }}
       </div>
+
+      <!-- Saved By (user) -->
       <div class="col">
-        <h class="display-6" for="message_saved_by">{% trans "Saved by" %}</h>
-        <input type="text" class="form-control" name="saved_by" value="{{ poem.saved_by }}"
-          style="width: 300px; padding-left: 15px;" id="message_saved_by" placeholder="{% trans 'Saved by' %}" readonly>
+        <h class="display-6" for="saved_by">{% trans "Saved by" %}</h>
+        {{ form.saved_by|safe }}
       </div>
-      <div class="col"></div>
+
+      <!-- Is hidden from library -->
+      <div class="col-lg-2 col-md-3 col-sm-6 form-check form-switch" style="margin-left: 45px; position: relative;">
+        <div style="position: absolute; bottom: 0;">
+          {{ form.is_hidden|safe }}
+          <input hidden type="text" value="{{ form.is_hidden.value }}" name="is_hidden">
+          <label class="form-check-label" for="flexSwitchCheckDefault">{% trans "Hide from Poem Library" %}</label>
+        </div>
+      </div>
+
       <div class="col"></div>
       <div class="col"></div>
     </div>
-    
+
     <div class="row">
+      
+      <!-- Original text -->
       <div class="col">
         <h class="display-6">
           {% trans "Original Text" %}
         </h>
-        <textarea required style='margin-top: 10px' type="text" class="message_text" rows="10"
-          name="original_text" {% if not user.username == poem.saved_by %}readonly{% endif %}>{{ poem.original_text|safe }}</textarea>
+        {{ form.original_text|safe }}
       </div>
+
+      <!-- Translation text -->
       <div class="col">
         <h class="display-6">
           {% trans "Translation" %}
         </h>
-        <textarea required style='margin-top: 10px' type="text" class="message_text" rows="10"
-          name="translation_text" {% if not user.username == poem.saved_by %}readonly{% endif %}>{{ poem.translation|safe }}</textarea>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col">
-        <button class="btn btn-success" type="submit" style="margin-top: 10px; width: 200px" {% if not user.username == poem.saved_by %}disabled{% endif %}>
-          {% trans "Save Changes" %}
-        </button>
-      </div>
-
-      <div class="col">
-        <div id="success-alert" class="alert alert-success" role="alert"
-        style="display: none; padding: 6px; margin-top: 10px;">
-        {% trans "Changes saved!" %}
-      </div>
-      <div class="col"></div>
+        {{ form.translation|safe }}
       </div>
     </div>
   </form>
-
-  <div class="row" style="margin-top: 5px">
-    <form id="delete-form" action="{% url 'delete_translation' poem.id %}" method="post">
-      {% csrf_token %}
-      <button onclick="return confirmDelete()" {% if not user.username == poem.saved_by %}disabled{% endif %} class="btn btn-outline-danger"
-        style="width: 200px;">{% trans "Delete" %}</button>
-    </form>
-  </div>
 </div>
-
-<script>
-  function confirmDelete() {
-    if (confirm("Are you sure you want to delete the poem?")) {
-      document.getElementById("delete-form").submit();
-      return true;
-    } else {
-      return false;
-    }
-  }
-</script>
-
-<script>
-const urlParams = new URLSearchParams(window.location.search);
-const statusSuccess = urlParams.get('status_success');
-
-// Check if the 'status_success' parameter is present and has a truthy value
-if (statusSuccess) {
-  // Show the success alert
-  const successAlert = document.getElementById('success-alert');
-  successAlert.style.display = 'block';
-
-  // Hide the success alert after 3 seconds
-  setTimeout(function() {
-    successAlert.style.display = 'none';
-  }, 3000);
-}
-</script>
-
+{% endif %}
 {% endblock %}

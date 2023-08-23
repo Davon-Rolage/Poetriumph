@@ -1,10 +1,11 @@
-from django.contrib.auth.forms import UserChangeForm, UserCreationForm, PasswordChangeForm
-from django import forms
-from django.forms import ValidationError
-from django.forms.utils import ErrorList
-from django.utils.safestring import mark_safe
-from django.contrib.auth import authenticate
 from string import ascii_letters, digits
+
+from django import forms
+from django.contrib.auth import authenticate
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.forms import ValidationError
+from django.utils.safestring import mark_safe
+from django.utils.translation import gettext as _
 
 from .models import CustomUser
 
@@ -48,22 +49,22 @@ class CustomUserCreationForm(UserCreationForm):
         # Check if username contains invalid characters
         if username and not all(char in username_allowed_chars for char in username):
             if username and ' ' in username:
-                self.add_error('username', ValidationError('Username cannot contain spaces'))
+                self.add_error('username', ValidationError(_('Username cannot contain spaces')))
                 self.fields['username'].widget.attrs.update({'class': 'form-control border-danger placeicon'})
             else:
-                self.add_error('username', ValidationError('Username contains invalid characters'))
+                self.add_error('username', ValidationError(_('Username contains invalid characters')))
                 self.fields['username'].widget.attrs.update({'class': 'form-control border-danger placeicon'})
             
         if username and len(username) < 3:
-            self.add_error('username', ValidationError('Username is too short'))
+            self.add_error('username', ValidationError(_('Username is too short')))
             self.fields['username'].widget.attrs.update({'class': 'form-control border-danger placeicon'})
             
         if username and len(username) > 15:
-            self.add_error('username', ValidationError('Username is too long'))
+            self.add_error('username', ValidationError(_('Username is too long')))
             self.fields['username'].widget.attrs.update({'class': 'form-control border-danger placeicon'})
         
         if email and '@' not in email:
-            self.add_error('email', ValidationError('Email contains invalid characters'))
+            self.add_error('email', ValidationError(_('Email contains invalid characters')))
             self.fields['email'].widget.attrs.update({'class': 'form-control border-danger placeicon'})
             
         if password1 and len(password1) < 8:
@@ -105,20 +106,6 @@ class CustomUserLoginForm(forms.Form):
         password = cleaned_data.get('password')
         user = authenticate(username=username, password=password)
         if user is None:
-            self.add_error('username', ValidationError('Invalid username or password'))
+            self.add_error('username', ValidationError(_('Invalid username or password')))
         return cleaned_data
-    
-
-class CustomUserPasswordRecoveryForm(forms.Form):
-    username = forms.CharField(required=True, max_length=15, widget=forms.TextInput(
-        attrs={
-            'class': 'form-control border-info placeicon',
-            'placeholder': mark_safe('&#xf007; &nbsp; Username'),
-        }
-    ))
-    email = forms.EmailField(required=True, widget=forms.EmailInput(
-        attrs={
-            'class': 'form-control border-info placeicon',
-            'placeholder': mark_safe('&#xf0e0; &nbsp; Email'),
-        }
-    ))
+  

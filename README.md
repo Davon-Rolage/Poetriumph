@@ -32,7 +32,7 @@ python manage.py migrate
 msgid "Detect language"
 msgstr "Détecter la langue"
 ```
-4. Compile all translations with `python manage.py compilemessages`@
+4. Compile all translations with `python manage.py compilemessages`
 1. Update `base.html` to add the new language to the dropdown menu. Change `language_code` with your language:
 ```html
 ...

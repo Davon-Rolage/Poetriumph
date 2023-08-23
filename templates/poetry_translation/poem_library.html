@@ -19,17 +19,14 @@
         {% trans "Total number of Poems:" %} {{ object_list|length }}
     </p>
     
-    <input class="form-control mr-sm-2" type="text" placeholder="{% trans 'Search...' %}" aria-label="Search" id="searchBox"
-        onkeyup="search()" style="margin-top: 10px; margin-bottom: 10px;">
     <div class="poems_list">
-
         <table class="table table-hover" id="poems-table">
             <thead>
                 <tr>
                     <th scope="col">{% trans '#' %}</th>
                     <th scope="col">{% trans 'Title' %}</th>
                     <th scope="col">{% trans 'Author' %}</th>
-                    <th scope="col">{% trans 'Language Engine' %}</th>
+                    <th scope="col">{% trans 'Target Language' %}</th>
                     <th scope="col">{% trans 'Saved by' %}</th>
                     <th scope="col">{% trans 'Created at' %}</th>
                   </tr>
@@ -40,7 +37,7 @@
                     <th scope="row">{{ forloop.counter }}</th>
                     <td class="clickable" onclick="window.location='{% url 'poem_detail' poem.id %}'"><a href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a></td>
                     <td>{{ poem.author }}</td>
-                    <td>{{ poem.language_engine }}</td>
+                    <td>{{ poem.target_lang }}</td>
                     <td>{{ poem.saved_by }}</td>
                     <td>{{ poem.created_at }}</td>
                 </tr>
@@ -49,23 +46,5 @@
         </table>
     </div>
 </div>
-
-<script>
-    function search() {
-    let query = document.getElementById("searchBox").value.toLowerCase();
-    let poems = document.getElementsByClassName("poem");
-
-    // Loop through each poem and hide/show based on the search query
-    for (let i = 0; i < poems.length; i++) {
-        let poem = poems[i];
-        let title = poem.getElementsByTagName("a")[0].innerText.toLowerCase();
-        if (title.includes(query)) {
-            poem.style.display = "table-row";
-        } else {
-            poem.style.display = "none";
-        }
-    }
-}
-</script>
 
 {% endblock %}

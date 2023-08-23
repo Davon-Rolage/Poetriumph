@@ -5,7 +5,6 @@ from poetry_translation.config import LANGUAGE_ENGINES, SUPPORTED_LANGUAGES
 
 
 class Poem(models.Model):
-
     class Meta:
         ordering = ('-pk', )
 
@@ -19,4 +18,5 @@ class Poem(models.Model):
     language_engine = models.CharField(choices=LANGUAGE_ENGINES, max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now)
+    is_hidden = models.BooleanField(default=False)
     

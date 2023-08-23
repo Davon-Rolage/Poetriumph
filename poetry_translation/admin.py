@@ -9,7 +9,7 @@ class PoemAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at',)
     
     fieldsets = [
-        (None, {"fields": ["title", "author", "saved_by"]}),
+        (None, {"fields": ["is_hidden", "title", "author", "saved_by"]}),
         ("Text section", {"fields": ["original_text", "translation"]}),
         ("Translation settings", {"fields": ["source_lang", "target_lang", "language_engine"]}),
         ("Date information", {"fields": ["created_at", "updated_at"]}),

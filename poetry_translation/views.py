@@ -1,12 +1,15 @@
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext as _
-from django.views.generic import DetailView, ListView, View
+from django.views.generic import DeleteView, DetailView, ListView, UpdateView, View
 
 from accounts.models import CustomUser
 
 from .config import *
+from .forms import PoemDetailForm, PoemUpdateForm
 from .models import Poem
 from .utils import translate, translate_gpt
 
@@ -21,7 +24,7 @@ class TranslationFormView(View):
             
         context = {
             'source_lang': 'auto',
-            'target_lang': 'english',
+            'target_lang': 'spanish',
             'language_engine': SUPPORTED_LANGUAGES[0],
             'supported_languages': supported_languages,
             'language_engines': LANGUAGE_ENGINES,
@@ -87,7 +90,7 @@ class PoemListView(ListView):
     paginate_by = 100
     
     def get_queryset(self):
-        return self.model.objects.all()
+        return self.model.objects.filter(is_hidden=False)
     
     
 class MyLibraryView(ListView):
@@ -101,6 +104,51 @@ class MyLibraryView(ListView):
 class PoemDetailView(DetailView):
     template_name = 'poetry_translation/poem_detail.html'
     model = Poem
+    form_class = PoemDetailForm
+    
+    def get(self, request, *args, **kwargs):
+        poem = self.model.objects.get(pk=kwargs.get('pk'))
+        form = self.form_class(instance=poem)
+        context = {
+            'poem': poem,
+            'form': form,
+        }
+        return render(request, self.template_name, context)
+
+
+class PoemUpdateView(UpdateView):
+    template_name = 'poetry_translation/poem_update.html'
+    form_class = PoemUpdateForm
+    model = Poem
+    
+    def get(self, request, *args, **kwargs):
+        poem = self.model.objects.get(pk=kwargs.get('pk'))
+        form = self.form_class(instance=poem)
+        context = {
+            'poem': poem,
+            'form': form,
+        }
+        return render(request, self.template_name, context)
+    
+    def form_valid(self, form):
+        if 'edit' in self.request.POST:
+            return HttpResponseRedirect(reverse('poem_update', args=[self.object.pk]))
+        form.save()
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        messages.success(self.request, _('The poem has been successfully updated.'))
+        return reverse('poem_detail', args=[self.object.pk])
+
+
+class PoemDeleteView(SuccessMessageMixin, DeleteView):
+    model = Poem
+    success_url = reverse_lazy('my_library')
+    success_message = _('The poem has been successfully deleted.')
+    
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super().delete(request, *args, **kwargs)
 
 
 class SaveTranslation(DetailView):
@@ -112,12 +160,8 @@ class SaveTranslation(DetailView):
         source_lang = request.POST.get('source_lang')
         target_lang = request.POST.get('target_lang')
         language_engine = request.POST.get('language_engine')
-        title = ' '.join(original_text.split(' ', 5)[:5])
-        if title.strip() == '':
-            title = ' '.join(translation.split(' ', 5)[:5])
 
         poem = Poem.objects.create(
-            title=title,
             original_text=original_text,
             translation=translation,
             source_lang=source_lang,
@@ -125,32 +169,12 @@ class SaveTranslation(DetailView):
             language_engine=language_engine,
             saved_by=request.user.username
         )
-        context = {
-            'poem': poem
-        }
-        return HttpResponseRedirect(reverse('poem_detail', args=[poem.pk]), context)
-
-
-class UpdateTranslation(DetailView):
-    model = Poem
-    
-    def post(self, request, poem_id):
-        Poem.objects.filter(pk=poem_id).update(
-            original_text=request.POST.get('original_text'),
-            translation=request.POST.get('translation_text'),
-            title=request.POST.get('title'),
-            author=request.POST.get('author'),
-            saved_by=request.user.username
-        )
-        return HttpResponseRedirect(reverse('poem_detail', args=(poem_id,)) + '?status_success=true')
-    
-
-class DeleteTranslation(DetailView):
-    model = Poem
-    
-    def post(self, request, poem_id):
-        Poem.objects.filter(pk=poem_id).delete()
-        return HttpResponseRedirect(reverse('my_library'))
+        
+        total_poems = Poem.objects.filter(saved_by=request.user.username).count()
+        if total_poems in (1, 5, 20, 50, 100):
+            messages.warning(request, _('You have earned a badge! Check out your profile!'))
+        
+        return HttpResponseRedirect(reverse('poem_detail', args=[poem.pk]), {'poem': poem})
 
 
 class GetPremiumView(View):
