@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-08-23 17:59+0400\n"
+"POT-Creation-Date: 2023-08-27 21:43+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,6 +43,10 @@ msgstr "Адрес электронной почты содержит недоп
 #: .\accounts\forms.py:109
 msgid "Invalid username or password"
 msgstr "Неправильное имя пользователя или пароль"
+
+#: .\accounts\views.py:70
+msgid "The user has been successfully deleted."
+msgstr "Пользователь был успешно удален."
 
 #: .\poetry_translation\config.py:5
 msgid "Detect language"
@@ -322,7 +326,7 @@ msgid "Welcome"
 msgstr "Добро пожаловать"
 
 #: .\templates\poetry_translation\my_profile.html:40
-#: .\templates\poetry_translation\my_profile.html:70
+#: .\templates\poetry_translation\my_profile.html:73
 msgid "Total number of poems:"
 msgstr "Общее число стихов:"
 
@@ -342,27 +346,35 @@ msgstr "У вас нет премиума."
 msgid "Upgrade to Premium"
 msgstr "Активировать премиум"
 
-#: .\templates\poetry_translation\my_profile.html:73
+#: .\templates\poetry_translation\my_profile.html:61
+msgid "Are you sure you want to delete your account?"
+msgstr "Вы уверены, что хотите удалить свой аккаунт?"
+
+#: .\templates\poetry_translation\my_profile.html:61
+msgid "Delete Account"
+msgstr "Удалить аккаунт"
+
+#: .\templates\poetry_translation\my_profile.html:76
 msgid "You have premium status!"
 msgstr "У вас есть премиум-статус!"
 
-#: .\templates\poetry_translation\my_profile.html:78
+#: .\templates\poetry_translation\my_profile.html:81
 msgid "Save your first poem to the library!"
 msgstr "Сохрани свой первый стих в библиотеку!"
 
-#: .\templates\poetry_translation\my_profile.html:83
+#: .\templates\poetry_translation\my_profile.html:86
 msgid "Have 5 poems saved to your library."
 msgstr "В вашей библиотеке есть не менее 5 стихов."
 
-#: .\templates\poetry_translation\my_profile.html:88
+#: .\templates\poetry_translation\my_profile.html:91
 msgid "Have 20 poems saved to your library."
 msgstr "В вашей библиотеке есть не менее 20 стихов."
 
-#: .\templates\poetry_translation\my_profile.html:93
+#: .\templates\poetry_translation\my_profile.html:96
 msgid "Have 50 poems saved to your library."
 msgstr "В вашей библиотеке есть не менее 50 стихов."
 
-#: .\templates\poetry_translation\my_profile.html:98
+#: .\templates\poetry_translation\my_profile.html:101
 msgid "Have 100 poems saved to your library."
 msgstr "В вашей библиотеке есть не менее 100 стихов."
 
@@ -414,6 +426,10 @@ msgstr "Язык перевода"
 #: .\templates\poetry_translation\poem_update.html:14
 msgid "You are not authorized to edit this poem."
 msgstr "У вас нет полномочий редактировать этот текст."
+
+#: .\templates\poetry_translation\poem_update.html:23
+msgid "Are you sure you want to delete this poem?"
+msgstr "Вы уверены, что хотите удалить этот текст?"
 
 #: .\templates\poetry_translation\poem_update.html:24
 #: .\venv\Lib\site-packages\django\forms\formsets.py:499

@@ -1,14 +1,17 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext as _
-from django.views import View
+from django.views.generic import DeleteView, View
 
 from accounts.models import MyProfile
 from poetry_translation.models import Poem
 
 from .forms import CustomUserCreationForm, CustomUserLoginForm
+from .models import CustomUser
 
 
 class SignUpView(View):
@@ -59,3 +62,14 @@ class MyProfileView(View):
             'total_poems': total_poems,
         }
         return render(request, self.template_name, context=context)
+
+
+class DeleteUserView(SuccessMessageMixin, DeleteView):
+    model = CustomUser
+    success_url = reverse_lazy('translation')    
+    success_message = _('The user has been successfully deleted.')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super().delete(request, *args, **kwargs)
+    

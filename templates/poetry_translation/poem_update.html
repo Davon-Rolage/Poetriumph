@@ -20,7 +20,7 @@
   <div class="row">
     <form id="delete-form" action="{% url 'poem_delete' poem.id %}" method="post" style="margin-top: 10px">
       {% csrf_token %}
-      <button onclick="return confirm('Are you sure you want to delete this poem?')" {% if not user.username == poem.saved_by %}disabled{% endif %}
+      <button onclick="return confirm('{% trans 'Are you sure you want to delete this poem?' %}')" {% if not user.username == poem.saved_by %}disabled{% endif %}
         class="btn btn-outline-danger" style="width: 200px;">{% trans "Delete" %}</button>
     </form>
   </div>
