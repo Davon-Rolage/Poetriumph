@@ -83,23 +83,24 @@
     <div class="row" style="margin-top: 20px">
 
       <!-- Title -->
-      <div class="col-lg-2 col-md-3 col-sm-6">
+      <div class="col">
         <h class="display-6" for="title">{% trans "Title" %}</h>
         {{ form.title|safe }}
       </div>
 
       <!-- Author -->
-      <div class="col-lg-2 col-md-3 col-sm-6">
+      <div class="col">
         <h class="display-6" for="author">{% trans "Author" %}</h>
         {{ form.author|safe }}
       </div>
 
       <!-- Saved By (user) -->
-      <div class="col-lg-2 col-md-3 col-sm-6">
+      <div class="col">
         <h class="display-6" for="saved_by">{% trans "Saved by" %}</h>
         {{ form.saved_by|safe }}
       </div>
 
+      <div class="col"></div>
       <div class="col"></div>
     </div>
 
