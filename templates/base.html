@@ -25,9 +25,10 @@
 
   <style>
     body {
-      background-image: url('{% static "images/background.jpg" %}');
+      background-image: url('{% static "images/background_full+.jpg" %}');
       background-repeat: no-repeat;
-      background-size: cover;
+      background-size: 100%;
+      background-color: #145767;
       opacity: 0.95;
       display: flex;
       flex-direction: column;
@@ -40,7 +41,7 @@
 
     /* country's flag icon settings */
     a>img, .flag_usa {
-      max-width: 20px;
+      max-width: 23px;
       vertical-align: text-bottom;
     }
 
@@ -80,7 +81,7 @@
               class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
               {% if request.LANGUAGE_CODE == 'en' %}
-              <img class="flag_usa" src="{% static 'images/flags/usa.png' %}" alt="flag_usa"> English
+              <img class="flag_usa" src="{% static 'images/flags/usa_uk.png' %}" alt="flag_usa"> English
               {% elif request.LANGUAGE_CODE == 'es' %}
               Español
               {% elif request.LANGUAGE_CODE == 'ru' %}
@@ -91,7 +92,7 @@
             </button>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="/en/{{ request.path|remove_language }}"><img
-                  src="{% static 'images/flags/usa.png' %}" alt="flag_usa"> {% trans "English" %}</a>
+                  src="{% static 'images/flags/usa_uk.png' %}" alt="flag_usa"> {% trans "English" %}</a>
               <a class="dropdown-item" href="/es/{{ request.path|remove_language }}"><img
                   src="{% static 'images/flags/spain.png' %}" alt="flag_spain"> {% trans "Spanish" %}</a>
               <a class="dropdown-item" href="/ru/{{ request.path|remove_language }}"><img
@@ -172,16 +173,12 @@
 
 <!-- Adjust textarea's height based on its content -->
 <script>
-  const textareas = document.querySelectorAll("textarea");
-  textareas.forEach(textarea => {
-    textarea.addEventListener("keyup", () => resize(textarea));
-    document.addEventListener("DOMContentLoaded", () => resize(textarea));
+  $('textarea').each(function () {
+    this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
+  }).on('input', function () {
+    this.style.height = 'auto';
+    this.style.height = (this.scrollHeight) + 5 + 'px';
   });
-
-  function resize(textarea) {
-    textarea.style.height = "auto";
-    textarea.style.height = `${textarea.scrollHeight + 5}px`;
-  }
 </script>
 
 <!-- Activate bootstrap tooltips -->

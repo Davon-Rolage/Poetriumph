@@ -37,12 +37,11 @@ class TranslationFormView(View):
         target_lang = request.POST.get('target_lang')
         original_text = request.POST.get('original_text')
 
+        target_lang = 'english' if target_lang is None else target_lang
+
         if language_engine == 'ChatGpt_Poet':
-            translation = translate_gpt(
-                source_lang,
-                target_lang,
-                original_text
-            )
+            translation = translate_gpt(original_text)
+        
         else:
             translation = translate(
             language_engine,

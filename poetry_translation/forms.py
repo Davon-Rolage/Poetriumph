@@ -195,17 +195,6 @@ class PoemUpdateForm(forms.ModelForm):
         }
     ))
     
-    def clean(self):
-        cleaned_data = super().clean()
-        source_lang = cleaned_data.get('source_lang')
-        target_lang = cleaned_data.get('target_lang')
-        if source_lang == target_lang:
-            self.add_error('source_lang', _('Source and target languages cannot be the same.'))
-            self.fields['source_lang'].widget.attrs.update({'class': 'form-control border-danger placeicon'})
-            self.fields['target_lang'].widget.attrs.update({'class': 'form-control border-danger placeicon'})
-        
-        return cleaned_data
-    
     def save(self):
         poem = super().save(commit=False)
         poem.updated_at = timezone.now()

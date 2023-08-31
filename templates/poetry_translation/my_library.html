@@ -29,7 +29,7 @@
                     <th scope="col">{% trans '#' %}</th>
                     <th scope="col">{% trans 'Title' %}</th>
                     <th scope="col">{% trans 'Author' %}</th>
-                    <th scope="col">{% trans 'Language' %}</th>
+                    <th scope="col">{% trans 'Target Language' %}</th>
                     <th scope="col">{% trans 'Created at' %}</th>
                     <th scope="col">{% trans 'Is hidden' %}</th>
                   </tr>
@@ -40,7 +40,7 @@
                     <th scope="row">{{ forloop.counter }}</th>
                     <td><a href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a></td>
                     <td>{{ poem.author }}</td>
-                    <td>{{ poem.source_lang }}</td>
+                    <td>{{ poem.target_lang|capfirst }}</td>
                     <td>{{ poem.created_at }}</td>
                     <!-- If poem is hidden, display a gray badge -->
                     <td>{% if poem.is_hidden %} <h5 style="margin-bottom: 0;"><span class="badge badge-secondary">{% trans "Hidden" %}</span></h5>{% endif %}</td>

@@ -37,7 +37,7 @@
                     <th scope="row">{{ forloop.counter }}</th>
                     <td class="clickable" onclick="window.location='{% url 'poem_detail' poem.id %}'"><a href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a></td>
                     <td>{{ poem.author }}</td>
-                    <td>{{ poem.target_lang }}</td>
+                    <td>{{ poem.target_lang|capfirst }}</td>
                     <td>{{ poem.saved_by }}</td>
                     <td>{{ poem.created_at }}</td>
                 </tr>

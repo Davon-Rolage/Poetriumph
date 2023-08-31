@@ -20,3 +20,8 @@ class Poem(models.Model):
     updated_at = models.DateTimeField(default=timezone.now)
     is_hidden = models.BooleanField(default=False)
     
+    def __str__(self):
+        if self.title == 'Untitled':
+            return f'{self.pk} - {self.saved_by}'
+        return self.title
+    

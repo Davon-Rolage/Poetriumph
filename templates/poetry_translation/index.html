@@ -36,7 +36,7 @@
                       {% endfor %}
                     </select>
                   
-                    <!-- Language engine dropdown list -->
+                    <!-- Language Engine dropdown list -->
                     <select style="flex: 1;" name="language_engine" class="language_engines form-select" aria-select="Translation Service">
                       {% for engine in language_engines %}
                         <option value="{{ engine.0 }}" {% if engine.0 == language_engine %}selected{% endif %}>{{ engine.1 }}</option>
@@ -53,7 +53,7 @@
           </div>
 
           <div class="col-md-6">
-              <!-- Form to save the poem tot the library -->
+              <!-- Form to save the poem to the library -->
               <form id='save-form' action="{% url 'save_translation' %}" method="post">
                   {% csrf_token %}
           
@@ -106,6 +106,27 @@
       document.body.appendChild(element);
       element.click();
       document.body.removeChild(element);
+    }
+  });
+</script>
+
+<!-- Script for setting English as target lang if language engine is ChatGpt_Poet -->
+<script>
+  const languageEngineDropdown = document.querySelector('select[name="language_engine"]');
+  const targetLanguageDropdown = document.querySelector('select[name="target_lang"]');
+
+  // Check the selected option when the page is loaded
+  if (languageEngineDropdown.value === 'ChatGpt_Poet') {
+    targetLanguageDropdown.value = 'english';
+    targetLanguageDropdown.disabled = true;
+  }
+
+  languageEngineDropdown.addEventListener('change', () => {
+    if (languageEngineDropdown.value === 'ChatGpt_Poet') {
+      targetLanguageDropdown.value = 'english';
+      targetLanguageDropdown.disabled = true;
+    } else {
+      targetLanguageDropdown.disabled = false;
     }
   });
 </script>

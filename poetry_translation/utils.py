@@ -42,13 +42,12 @@ def translate(language_engine, source_lang, target_lang, original_text, proxies)
         return HttpResponse(str(e))
 
 
-def translate_gpt(source_lang, target_lang, original_text):
-    ai_role = AI_ROLE.format(source_lang=source_lang, target_lang=target_lang)
+def translate_gpt(original_text):
     try:
         completion = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=[
-            {'role':'system', 'content':ai_role}, 
+            {'role':'system', 'content':AI_ROLE}, 
             {'role':'user', 'content':original_text},
         ],
     )
