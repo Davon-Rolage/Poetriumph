@@ -16,18 +16,14 @@ from .utils import translate, translate_gpt
 
 class TranslationFormView(View):
     template_name = 'poetry_translation/index.html'
+    language_engine_tooltips = list(LANGUAGE_ENGINE_TOOLTIPS.values())
 
     def get(self, request):
-        supported_languages = SUPPORTED_LANGUAGES
-        if not (request.user.is_authenticated and request.user.is_premium):
-            supported_languages = supported_languages[:4]
-            
         context = {
-            'source_lang': 'auto',
             'target_lang': 'spanish',
-            'language_engine': SUPPORTED_LANGUAGES[0],
-            'supported_languages': supported_languages,
+            'supported_languages': SUPPORTED_LANGUAGES,
             'language_engines': LANGUAGE_ENGINES,
+            'language_engine_tooltips': self.language_engine_tooltips,
         }
         return render(request, self.template_name, context)
 
@@ -37,10 +33,8 @@ class TranslationFormView(View):
         target_lang = request.POST.get('target_lang')
         original_text = request.POST.get('original_text')
 
-        target_lang = 'english' if target_lang is None else target_lang
-
         if language_engine == 'ChatGpt_Poet':
-            translation = translate_gpt(original_text)
+            translation = translate_gpt(original_text, target_lang)
         
         else:
             translation = translate(
@@ -54,10 +48,11 @@ class TranslationFormView(View):
             'original_text': original_text,
             'translation': translation,
             'supported_languages': SUPPORTED_LANGUAGES,
-            'language_engines': LANGUAGE_ENGINES,
             'source_lang': source_lang,
             'target_lang': target_lang,
             'language_engine': language_engine,
+            'language_engines': LANGUAGE_ENGINES,
+            'language_engine_tooltips': self.language_engine_tooltips,
         }
         return render(request, self.template_name, context)
 
@@ -197,6 +192,13 @@ class CancelPremiumView(View):
 
 class NewFeaturesView(View):
     template_name = 'poetry_translation/new_features.html'
+    
+    def get(self, request):
+        return render(request, self.template_name)
+
+
+class TestView(View):
+    template_name = 'poetry_translation/test.html'
     
     def get(self, request):
         return render(request, self.template_name)
