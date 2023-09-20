@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-20 02:07+0400\n"
+"POT-Creation-Date: 2023-09-20 18:56+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,31 +20,65 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: .\accounts\forms.py:52
+#: .\accounts\forms.py:48 .\accounts\forms.py:116
+msgid "You must pass the reCAPTCHA test"
+msgstr "Вы должны пройти капчу"
+
+#: .\accounts\forms.py:60
 msgid "Username cannot contain spaces"
 msgstr "Имя пользователя не может содержать пробелы"
 
-#: .\accounts\forms.py:55
+#: .\accounts\forms.py:63
 msgid "Username contains invalid characters"
 msgstr "Имя пользователя содержит недопустимые символы"
 
-#: .\accounts\forms.py:59
+#: .\accounts\forms.py:67
 msgid "Username is too short"
 msgstr "Имя пользователя слишком короткое"
 
-#: .\accounts\forms.py:63
+#: .\accounts\forms.py:71
 msgid "Username is too long"
 msgstr "Имя пользователя слишком длинное"
 
-#: .\accounts\forms.py:67
+#: .\accounts\forms.py:75
 msgid "Email contains invalid characters"
 msgstr "Адрес электронной почты содержит недопустимые символы"
 
-#: .\accounts\forms.py:109
+#: .\accounts\forms.py:123
 msgid "Invalid username or password"
 msgstr "Неправильное имя пользователя или пароль"
 
-#: .\accounts\views.py:70
+#: .\accounts\views.py:54
+msgid ""
+"Thank you for confirming your email. You can now log in to your account."
+msgstr ""
+"Спасибо за подтверждение вашего адреса электронной почты. Теперь вы "
+"можете войти в свою учетную запись."
+
+#: .\accounts\views.py:57
+msgid "Activation link is invalid!"
+msgstr "Ссылка активации недействительна!"
+
+#: .\accounts\views.py:63
+msgid "Confirm your account on Poetriumph"
+msgstr "Подтвердите свой аккаунт на Poetriumph"
+
+#: .\accounts\views.py:73
+#, python-brace-format
+msgid ""
+"<b>{user}</b>, please check your email <b>{to_email}</b> to activate your "
+"account."
+msgstr ""
+"<b>{user}</b>, проверьте свою почту <b>{to_email}</b> для активации своего "
+"акккаунта."
+
+#: .\accounts\views.py:75
+#, python-brace-format
+msgid "Problem sending email to <b>{to_email}</b>, please try again."
+msgstr "Возникла ошибка при отправке письма на почту <b>{to_email}</b>, "
+"попробуйте снова."
+
+#: .\accounts\views.py:114
 msgid "The user has been successfully deleted."
 msgstr "Пользователь был успешно удален."
 
@@ -52,15 +86,15 @@ msgstr "Пользователь был успешно удален."
 msgid "Detect language"
 msgstr "Определить язык"
 
-#: .\poetry_translation\config.py:6 .\templates\base.html:89
+#: .\poetry_translation\config.py:6 .\templates\base.html:85
 msgid "English"
 msgstr "Английский"
 
-#: .\poetry_translation\config.py:7 .\templates\base.html:90
+#: .\poetry_translation\config.py:7 .\templates\base.html:86
 msgid "Spanish"
 msgstr "Испанский"
 
-#: .\poetry_translation\config.py:8 .\templates\base.html:91
+#: .\poetry_translation\config.py:8 .\templates\base.html:87
 msgid "Russian"
 msgstr "Русский"
 
@@ -141,12 +175,13 @@ msgstr ""
 #: .\poetry_translation\config.py:31
 msgid ""
 "Make a rhyming poem (only English and Spanish) out of your text, preserving "
-"rhythm and rhyming patterns.\nOr make a poem using just a prompt, like `I'm "
-"happy that you're with me`"
+"rhythm and rhyming patterns.\n"
+"Or make a poem using just a prompt, like `I'm happy that you're with me`"
 msgstr ""
-"Составит из текста рифмованное стихотворение (только на английском и испанском языках), сохранив "
-"ритм и рифму.\nИли составит стихотворение, используя только подсказку, например: Я "
-"рад, что ты со мной"
+"Составит из текста рифмованное стихотворение (только на английском и "
+"испанском языках), сохранив ритм и рифму.\n"
+"Или составит стихотворение, используя только подсказку, например: Я рад, что "
+"ты со мной"
 
 #: .\poetry_translation\forms.py:45 .\poetry_translation\forms.py:139
 msgid "Title..."
@@ -168,70 +203,69 @@ msgstr "Исходный текст..."
 msgid "Translation text..."
 msgstr "Текст перевода..."
 
-#: .\poetry_translation\views.py:141
+#: .\poetry_translation\views.py:134
 msgid "The poem has been successfully updated."
 msgstr "Текст был успешно обновлен."
 
-#: .\poetry_translation\views.py:148
+#: .\poetry_translation\views.py:141
 msgid "The poem has been successfully deleted."
 msgstr "Текст был успешно удален."
 
-#: .\poetry_translation\views.py:176
+#: .\poetry_translation\views.py:169
 msgid "You have earned a badge! Check out your profile!"
 msgstr "Вы получили новый значок! Проверьте свой профиль!"
 
-#: .\templates\base.html:98 .\templates\poetry_translation\index.html:8
+#: .\templates\base.html:94 .\templates\poetry_translation\index.html:7
 msgid "Poem Translation"
 msgstr "Перевод стихов"
 
-#: .\templates\base.html:101
-#: .\templates\poetry_translation\poem_library.html:12
+#: .\templates\base.html:97 .\templates\poetry_translation\poem_library.html:12
 msgid "Poem Library"
 msgstr "Библиотека"
 
-#: .\templates\base.html:104 .\templates\poetry_translation\my_library.html:21
+#: .\templates\base.html:100 .\templates\poetry_translation\my_library.html:21
 msgid "My Library"
 msgstr "Моя библиотека"
 
-#: .\templates\base.html:107
+#: .\templates\base.html:103
 msgid "About"
 msgstr "О проекте"
 
-#: .\templates\base.html:110
+#: .\templates\base.html:106
 msgid "Support Us"
 msgstr "Поддержите нас"
 
-#: .\templates\base.html:113 .\templates\poetry_translation\premium.html:12
+#: .\templates\base.html:109 .\templates\poetry_translation\premium.html:12
 msgid "Premium"
 msgstr "Премиум"
 
-#: .\templates\base.html:118
+#: .\templates\base.html:114
 msgid "Hi"
 msgstr "Привет,"
 
-#: .\templates\base.html:121
+#: .\templates\base.html:117
 msgid "My Profile"
 msgstr "Мой профиль"
 
-#: .\templates\base.html:123
+#: .\templates\base.html:119
 msgid "Log out"
 msgstr "Выйти"
 
-#: .\templates\base.html:125
+#: .\templates\base.html:121
 msgid "Admin"
 msgstr "Админ"
 
-#: .\templates\base.html:129 .\templates\registration\login.html:22
-#: .\templates\registration\login.html:71
+#: .\templates\base.html:125 .\templates\registration\login.html:22
+#: .\templates\registration\login.html:69
 msgid "Login"
 msgstr "Вход"
 
-#: .\templates\base.html:131 .\templates\registration\signup.html:15
-#: .\templates\registration\signup.html:64
+#: .\templates\base.html:127 .\templates\registration\signup.html:15
+#: .\templates\registration\signup.html:77
 msgid "Register"
 msgstr "Регистрация"
 
-#: .\templates\base.html:165
+#: .\templates\base.html:161
 msgid "All Rights Reserved"
 msgstr "Все права защищены"
 
@@ -259,32 +293,32 @@ msgstr ""
 msgid "Source code is available on GitHub"
 msgstr "Исходный код доступен на GitHub"
 
-#: .\templates\poetry_translation\index.html:9
+#: .\templates\poetry_translation\index.html:8
 msgid "Insert your poem and choose translation engine."
 msgstr "Вставьте свой стих и выберите сервис перевода."
 
-#: .\templates\poetry_translation\index.html:57
+#: .\templates\poetry_translation\index.html:56
 msgid "Translate"
 msgstr "Перевести"
 
-#: .\templates\poetry_translation\index.html:62
+#: .\templates\poetry_translation\index.html:61
 msgid "Insert your poem..."
 msgstr "Вставьте свой стих..."
 
-#: .\templates\poetry_translation\index.html:77
+#: .\templates\poetry_translation\index.html:76
 msgid "Download"
 msgstr "Скачать"
 
-#: .\templates\poetry_translation\index.html:81
+#: .\templates\poetry_translation\index.html:80
 msgid "Sign in to save to library!"
 msgstr "Авторизуйтесь, чтобы сохранить в библиотеку"
 
-#: .\templates\poetry_translation\index.html:82
-#: .\templates\poetry_translation\index.html:85
+#: .\templates\poetry_translation\index.html:81
+#: .\templates\poetry_translation\index.html:84
 msgid "Save to Library"
 msgstr "Сохранить в библиотеку"
 
-#: .\templates\poetry_translation\index.html:90
+#: .\templates\poetry_translation\index.html:89
 msgid "Your translation will be here..."
 msgstr "Ваш перевод будет здесь..."
 
@@ -522,61 +556,66 @@ msgstr "Если вам нравится то, что мы делаем, под�
 msgid "Download this background image"
 msgstr "Скачать это фоновое изображение"
 
-#: .\templates\registration\login.html:56
-msgid "Remember Me"
-msgstr "Запомнить меня"
+#: .\templates\registration\activate_email.html:3
+msgid "Please click on the link below to activate your Poetriumph account:"
+msgstr "Пожалуйста, нажмите на ссылку ниже, чтобы активировать свою учетную запись Poetriumph:"
 
-#: .\templates\registration\login.html:62
+#: .\templates\registration\login.html:53
 msgid "Forgot Password?"
 msgstr "Забыли пароль?"
 
-#: .\templates\registration\login.html:90
+#: .\templates\registration\login.html:89
 msgid "Don't have an account?"
 msgstr "Нет аккаунта?"
 
-#: .\templates\registration\login.html:90
+#: .\templates\registration\login.html:89
 msgid "Register Now!"
 msgstr "Зарегистрируйся сейчас!"
 
-#: .\templates\registration\signup.html:76
+#: .\templates\registration\signup.html:88
 msgid "Already have an account?"
 msgstr "Уже есть аккаунт?"
 
-#: .\templates\registration\signup.html:76
+#: .\templates\registration\signup.html:88
 msgid "Sign in now!"
 msgstr "Войдите сейчас"
 
-#: .\templates\registration\signup.html:82
+#: .\templates\registration\signup.html:94
 msgid "Registration prerequisites"
 msgstr "Требования к имени пользователя и паролю"
 
-#: .\templates\registration\signup.html:84
+#: .\templates\registration\signup.html:96
 msgid "Only latin letters are allowed."
 msgstr "Разрешены только латинские буквы."
 
-#: .\templates\registration\signup.html:85
+#: .\templates\registration\signup.html:97
 msgid "Username must contain only letters, digits and"
 msgstr "Имя пользователя должно содержать только буквы, цифры и"
 
-#: .\templates\registration\signup.html:86
+#: .\templates\registration\signup.html:98
 msgid "Username must be at least 3 characters and no more than 15."
 msgstr "Имя пользователя должно быть не менее 3 символов и не более 15."
 
-#: .\templates\registration\signup.html:87
+#: .\templates\registration\signup.html:99
 msgid "Your password can't be too similar to your other personal information."
 msgstr "Ваш пароль не должен быть слишком похож на другую личную информацию."
 
-#: .\templates\registration\signup.html:88
+#: .\templates\registration\signup.html:100
 msgid "Your password must contain at least 8 characters."
 msgstr "Ваш пароль должен содержать не менее 8 символов."
 
-#: .\templates\registration\signup.html:89
+#: .\templates\registration\signup.html:101
 msgid "Your password can't be a commonly used password."
 msgstr "Ваш пароль не может быть широко используемым паролем."
 
-#: .\templates\registration\signup.html:90
+#: .\templates\registration\signup.html:102
 msgid "Your password can't be entirely numeric."
 msgstr "Ваш пароль не может быть полностью числовым."
+
+#: .\venv\Lib\site-packages\captcha\fields.py:20
+#: .\venv\Lib\site-packages\captcha\fields.py:21
+msgid "Error verifying reCAPTCHA, please try again."
+msgstr "Ошибка при проверке капчи, пожалуйста повторите ещё раз."
 
 #: .\venv\Lib\site-packages\django\contrib\messages\apps.py:15
 msgid "Messages"
@@ -1826,6 +1865,9 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:248
 msgid "Connect, get help, or contribute"
 msgstr ""
+
+#~ msgid "Remember Me"
+#~ msgstr "Запомнить меня"
 
 #~ msgid "Source and target languages cannot be the same."
 #~ msgstr "Исходный и целевой языки не могут совпадать."

@@ -51,7 +51,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         
-        messages.success(request, _('Thank you for your email confirmation. Now you can login your account.'))
+        messages.success(request, _('Thank you for confirming your email. You can now log in to your account.'))
         return HttpResponseRedirect(reverse('login'))
     else:
         messages.error(request, _('Activation link is invalid!'))
@@ -60,7 +60,7 @@ def activate(request, uidb64, token):
     
 
 def activate_email(request, user, to_email):
-    mail_subject = _('Activate your account')
+    mail_subject = _('Confirm your account on Poetriumph')
     message = render_to_string('registration/activate_email.html', {
         'user': user.username,
         'domain': get_current_site(request).domain,

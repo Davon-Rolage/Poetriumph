@@ -56,6 +56,13 @@
 								</div>
 							</div>
 
+							<!-- CAPTCHA Checkbox -->
+							<div class="form-group row justify-content-center px-3">
+								<div class="col-9 px-0">
+									{{ form.captcha }}
+								</div>
+							</div>
+
 							<!-- Login button -->
 							<div class="form-group row justify-content-center">
 								<div class="col-3 px-3">
@@ -66,6 +73,7 @@
 							<!-- Show errors if any -->
 							{% if form.errors %}
 							<div class="alert alert-danger" role="alert">
+								{{ form.captcha.errors.1 }}
 								{% for error in form.username.errors %}
 									{{ error }}
 								{% endfor %}

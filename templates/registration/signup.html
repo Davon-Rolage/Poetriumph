@@ -58,6 +58,19 @@
                 </div>
               </div>
 
+              <!-- CAPTCHA Checkbox -->
+							<div class="form-group row justify-content-center px-3">
+								<div class="col-9 px-0">
+									{{ form.captcha }}
+								</div>
+							</div>
+              {% if form.captcha.errors %}
+							<div class="alert alert-danger" role="alert">below
+                {{ form.captcha.errors.1 }}
+              </div>
+                {% endif %}
+
+
               <!-- Register button -->
               <div class="form-group row justify-content-center">
                 <div class="col-3 px-3">

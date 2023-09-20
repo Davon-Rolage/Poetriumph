@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'poetry_translation',
     'accounts',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 LOCALE_PATHS = [
     os.path.join(BASE_DIR / 'locale'),
 ]
+
+RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY')
+RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY')
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']

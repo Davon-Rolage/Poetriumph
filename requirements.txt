@@ -9,6 +9,7 @@ charset-normalizer==3.2.0
 colorama==0.4.6
 deep-translator==1.11.4
 Django==4.2.4
+django-recaptcha==3.0.0
 frozenlist==1.4.0
 gunicorn==21.2.0
 idna==3.4
