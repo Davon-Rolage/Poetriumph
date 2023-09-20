@@ -10,6 +10,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_FROM = os.environ.get('EMAIL_FROM')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+PASSWORD_RESET_TIMEOUT = 14400 # 4 hours or 240 minutes
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -24,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'poetry_translation',
     'accounts',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -119,3 +130,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 LOCALE_PATHS = [
     os.path.join(BASE_DIR / 'locale'),
 ]
+
+RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY')
+RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY')
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']

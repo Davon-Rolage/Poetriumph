@@ -58,7 +58,7 @@
     </div>
     <form action="{% url 'cancel_premium' %}" method="post">
         {% csrf_token %}
-        <button style="margin-top: 20px;" class="btn btn-outline-danger" type="submit">
+        <button style="margin-top: 20px;" class="btn btn-outline-danger shadow-none" type="submit">
             {% trans "Cancel Premium Status" %}
         </button>
     </form>

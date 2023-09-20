@@ -40,9 +40,8 @@
     }
 
     /* country's flag icon settings */
-    a>img, .flag_usa {
+    a>img, .flag {
       max-width: 23px;
-      vertical-align: text-bottom;
     }
 
     /* Place 'search' to the left and 'pagination' to the right */
@@ -56,52 +55,41 @@
 </head>
 
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 
   <!-- navigation bar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index: 2;">
     <div class="container-fluid">
-      <div class="navbar-brand"><a href="{% url 'translation' %}"><img src="{% static 'images/logo.png' %}"
-            alt="logo"></a>
-      </div>
+      <div class="navbar-brand"><a href="{% url 'translation' %}"><img src="{% static 'images/logo.png' %}" alt="logo"></a></div>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-
       </button>
+      
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <div class="btn-group" style="margin-left: 10px; margin-right: 10px;">
-
             <!-- Language interface selection -->
-            <button type="button" style="min-width: 105px; max-height: 40px"
-              class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              {% if request.LANGUAGE_CODE == 'en' %}
-              <img class="flag_usa" src="{% static 'images/flags/usa_uk.png' %}" alt="flag_usa"> English
-              {% elif request.LANGUAGE_CODE == 'es' %}
-              Español
-              {% elif request.LANGUAGE_CODE == 'ru' %}
-              Русский
-              <!-- Add new languages here -->
+            <div class="btn-group" style="margin-left: 10px; margin-right: 10px;">
+              <button type="button" style="min-width: 105px; max-height: 40px" class="btn btn-outline-secondary dropdown-toggle shadow-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {% if request.LANGUAGE_CODE == 'en' %}
+                <img class="flag" src="{% static 'images/flags/usa_uk1.png' %}" alt="flag_usa"> English
+                {% elif request.LANGUAGE_CODE == 'es' %}
+                <img class="flag" src="{% static 'images/flags/spain.png' %}" alt="flag_spain"> Español
+                {% elif request.LANGUAGE_CODE == 'ru' %}
+                <img class="flag" src="{% static 'images/flags/russia.png' %}" alt="flag_russia"> Русский
+                <!-- Add new languages here -->
 
-              {% endif %}
-            </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="/en/{{ request.path|remove_language }}"><img
-                  src="{% static 'images/flags/usa_uk.png' %}" alt="flag_usa"> {% trans "English" %}</a>
-              <a class="dropdown-item" href="/es/{{ request.path|remove_language }}"><img
-                  src="{% static 'images/flags/spain.png' %}" alt="flag_spain"> {% trans "Spanish" %}</a>
-              <a class="dropdown-item" href="/ru/{{ request.path|remove_language }}"><img
-                  src="{% static 'images/flags/russia.png' %}" alt="flag_russia"> {% trans "Russian" %}</a>
-              <!-- Add new languages here -->
-              
+                {% endif %}
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="/en/{{ request.path|remove_language }}"><img src="{% static 'images/flags/usa_uk1.png' %}" alt="flag_usa"> {% trans "English" %}</a>
+                <a class="dropdown-item" href="/es/{{ request.path|remove_language }}"><img src="{% static 'images/flags/spain.png' %}" alt="flag_spain"> {% trans "Spanish" %}</a>
+                <a class="dropdown-item" href="/ru/{{ request.path|remove_language }}"><img src="{% static 'images/flags/russia.png' %}" alt="flag_russia"> {% trans "Russian" %}</a>
+                <!-- Add new languages here -->
+                
+              </div>
             </div>
 
-          </div>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'translation' %}">{% trans "Poem Translation" %}</a>
           </li>
@@ -141,22 +129,24 @@
               {% endif %}
           </li>
 
-          <!-- New features, shown only to staff users -->
+          <!-- New Features and Test Area, shown only to staff users -->
           <li {% if not user.is_staff%}hidden{% endif %} style="position: absolute; right: 10px;">
             <div class="new_features">
-              <a class="btn btn-outline-info" href="{% url 'new_features' %}" style="margin-left: 10px">{% trans "New Features" %}</a>
+              <a class="btn btn-outline-info shadow-none" href="{% url 'new_features' %}" style="margin-left: 10px">New Features</a>
+            </div>
+            <div class="test">
+              <a class="btn btn-warning shadow-none" href="{% url 'test' %}" style="margin-left: 10px">Test Area</a>
             </div>
           </li>
+
+        </ul>
       </div>
-      </ul>
-      </ul>
-    </div>
     </div>
   </nav>
 
 <!-- Alerts -->
 {% for message in messages %}
-<div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+<div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
   {{ message|safe }}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -168,7 +158,7 @@
 {% endblock %}
 
 <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
-  <p class="col-md-4 mb-0" style="color: aliceblue;">&copy; 2023 Poetriumph, Newa Fun Solutions. {% trans "All Rights Reserved" %}</p>
+  <p class="col-md-4 mb-0" style="color: aliceblue;">&copy; 2023 Poetriumph, <a href="https://newa.fun" target="_blank" style="text-decoration: none; color: inherit;">Newa Fun</a>. {% trans "All Rights Reserved" %}</p>
 </footer>
 
 <!-- Adjust textarea's height based on its content -->

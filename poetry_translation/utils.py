@@ -14,6 +14,7 @@ from openai.error import *
 
 from .config import AI_ROLE
 
+
 load_dotenv()
 
 openai.api_key = os.environ.get('OPENAI_API_KEY')
@@ -22,7 +23,6 @@ def translate(language_engine, source_lang, target_lang, original_text, proxies)
     lang_engine_map = {
         "GoogleTranslator": GoogleTranslator,
         "ChatGptTranslator": ChatGptTranslator,
-        # "DeeplTranslator": DeeplTranslator,
     }
     language_engine = lang_engine_map[language_engine]
     translator = language_engine(
@@ -42,12 +42,12 @@ def translate(language_engine, source_lang, target_lang, original_text, proxies)
         return HttpResponse(str(e))
 
 
-def translate_gpt(original_text):
+def translate_gpt(original_text, language):
     try:
         completion = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=[
-            {'role':'system', 'content':AI_ROLE}, 
+            {'role':'system', 'content':AI_ROLE.format(language=language)}, 
             {'role':'user', 'content':original_text},
         ],
     )

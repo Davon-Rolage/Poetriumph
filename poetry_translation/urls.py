@@ -17,4 +17,5 @@ urlpatterns = [
     path('get-premium/', GetPremiumView.as_view(), name='get_premium'),
     path('cancel-premium/', CancelPremiumView.as_view(), name='cancel_premium'),
     path('new-features/', NewFeaturesView.as_view(), name='new_features'),
+    path('test/', TestView.as_view(), name='test'),
 ]

@@ -13,7 +13,7 @@
 
     {% if user.is_staff %}
     <br>
-    <a class="btn btn-secondary" href="/admin/poetry_translation/poem/" role="button" style="margin: 10px;">{% trans "Change the list (moderator)" %}</a>
+    <a class="btn btn-secondary shadow-none" href="/admin/poetry_translation/poem/" role="button" style="margin: 10px;">{% trans "Change the list (moderator)" %}</a>
     {% endif %}
     <p>
         {% trans "Total number of Poems:" %} {{ object_list|length }}
