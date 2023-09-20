@@ -42,39 +42,34 @@
 								</div>
 							</div>
 
-							<!-- Remember Me and Forgot Password -->
-							<div class="form-group row justify-content-center px-3">
+							<!-- Forgot Password -->
+							<div hidden class="form-group row justify-content-center px-3">
 								<div class="col-9">
-									<div class="row">
-
-										<!-- Remember Me checkbox -->
-										<div class="col-6 px-0">
-											<div class="custom-control custom-checkbox mb-3">
-												<input name="remember-me" id="customCheck1" type="checkbox"
-													class="custom-control-input checkbox-muted">
-												<label for="customCheck1"
-													class="custom-control-label text-muted">{% trans "Remember Me" %}</label>
-											</div>
-										</div>
-
-										<!-- Forgot Password Link -->
-										<div class="col-6 px-0 text-right">
-											<span><a href="#" class="text-danger"><b>{% trans "Forgot Password?" %}</b></a></span>
-										</div>
+									<!-- Forgot Password Link -->
+									<div class="col-12 px-0 text-right">
+										<span><a href="#" class="text-danger"><b>{% trans "Forgot Password?" %}</b></a></span>
 									</div>
+								</div>
+							</div>
+
+							<!-- CAPTCHA Checkbox -->
+							<div class="form-group row justify-content-center px-3">
+								<div class="col-9 px-0">
+									{{ form.captcha }}
 								</div>
 							</div>
 
 							<!-- Login button -->
 							<div class="form-group row justify-content-center">
 								<div class="col-3 px-3">
-									<input type="submit" value="{% trans 'Login' %}" class="btn btn-block btn-info" style="width: 120px;">
+									<input type="submit" value="{% trans 'Login' %}" class="btn btn-block btn-info shadow-none" style="width: 120px;">
 								</div>
 							</div>
 
 							<!-- Show errors if any -->
 							{% if form.errors %}
 							<div class="alert alert-danger" role="alert">
+								{{ form.captcha.errors.1 }}
 								{% for error in form.username.errors %}
 									{{ error }}
 								{% endfor %}

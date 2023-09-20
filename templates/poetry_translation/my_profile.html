@@ -58,7 +58,7 @@
       <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
         <form action="{% url 'delete_user' user.id %}" method="post">
           {% csrf_token %}
-          <button type="submit" class="btn btn-outline-danger" style="width: 140px; margin-top: 10px" onclick="return confirm('{% trans 'Are you sure you want to delete your account?' %}')">{% trans "Delete Account" %}</button>
+          <button type="submit" class="btn btn-outline-danger shadow-none" style="width: 140px; margin-top: 10px" onclick="return confirm('{% trans 'Are you sure you want to delete your account?' %}')">{% trans "Delete Account" %}</button>
         </form>
       </div>
 

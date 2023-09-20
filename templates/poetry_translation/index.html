@@ -30,20 +30,31 @@
                     </svg>
 
                     <!-- Target Language dropdown list -->
+                    <!-- If user is not premium, only show first 3 languages -->
                     <select style="flex: 1; margin-right: 5px;" name="target_lang" class="form-select" aria-select="Target Language">
                       {% for language in supported_languages|slice:"1:" %}
-                      <option value="{{ language.0 }}" {% if language.0 == target_lang %}selected{% endif %}>{{ language.1 }}</option>
+                        {% if not user.is_premium and forloop.counter <= 3 or user.is_premium %}
+                          <option value="{{ language.0 }}" {% if language.0 == target_lang %}selected{% endif %}>{{ language.1 }}</option>
+                        {% endif %}
                       {% endfor %}
                     </select>
-                  
+                    
                     <!-- Language Engine dropdown list -->
                     <select style="flex: 1;" name="language_engine" class="language_engines form-select" aria-select="Translation Service">
                       {% for engine in language_engines %}
-                        <option value="{{ engine.0 }}" {% if engine.0 == language_engine %}selected{% endif %}>{{ engine.1 }}</option>
+                        <option value="{{ engine.0 }}" 
+                          {% if engine.0 == language_engine %}selected{% endif %} 
+                          data-toggle="tooltip" data-bs-toggle="tooltip" 
+                          {% if forloop.counter == 1 %} title="{{ language_engine_tooltips.0 }}" 
+                          {% elif forloop.counter == 2 %} title="{{ language_engine_tooltips.1 }}" 
+                          {% elif forloop.counter == 3 %} title="{{ language_engine_tooltips.2 }}" 
+                          {% endif %}>{{ engine.1 }}
+                        </option>
                       {% endfor %}
                     </select>
-                  <button type="submit" id="button_translate" class="btn btn-primary" style="margin-left: 10px;">{% trans "Translate" %}</button>
-                  </div>
+                    
+                    <button type="submit" id="button_translate" class="btn btn-primary shadow-none" style="margin-left: 10px;">{% trans "Translate" %}</button>
+                  </div>                  
                   
                   <!-- Original text textarea -->
                   <div class="user_text_section" style="margin-top: 15px;">
@@ -62,15 +73,15 @@
                   <input type="hidden" name="target_lang" value="{{ target_lang }}">
 
                   <!-- A download button -->
-                  <input type="button" onclick="return validateForm()" id="button_download" class="btn btn-outline-primary" value="{% trans 'Download' %}">
+                  <input type="button" onclick="return validateForm()" id="button_download" class="btn btn-outline-primary shadow-none" value="{% trans 'Download' %}">
 
                   <!-- Save to library button -->
                   {% if not user.is_authenticated %}
                   <span class="tt d-inline-block" tabindex="0" data-toggle="tooltip" title="{% trans 'Sign in to save to library!' %}">
-                    <button disabled onclick="return validateForm()" style="pointer-events: none;" id="button_save_translation" type="submit" class="btn btn-success">{% trans "Save to Library" %}</button>
+                    <button disabled onclick="return validateForm()" style="pointer-events: none;" id="button_save_translation" type="submit" class="btn btn-success shadow-none">{% trans "Save to Library" %}</button>
                   </span>
                   {% else %}
-                  <button onclick="return validateForm()" id="button_save_translation" type="submit" class="btn btn-success">{% trans "Save to Library" %}</button>
+                  <button onclick="return validateForm()" id="button_save_translation" type="submit" class="btn btn-success shadow-none">{% trans "Save to Library" %}</button>
                   {% endif %}
 
                   <!-- Translation textarea -->
@@ -96,7 +107,7 @@
 <script>
   document.getElementById('button_download').addEventListener('click', function () {
     let translation = document.querySelector(".translation_text").textContent;
-    let filename = translation.split(' ').slice(0, 5).join(' ');
+    let filename = translation.slice(0, 20);
 
     if (translation) {
       let element = document.createElement('a');
@@ -110,25 +121,36 @@
   });
 </script>
 
-<!-- Script for setting English as target lang if language engine is ChatGpt_Poet -->
+<!-- Script for setting target_lang options to English and Spanish if language engine is set to ChatGpt_Poet -->
 <script>
   const languageEngineDropdown = document.querySelector('select[name="language_engine"]');
   const targetLanguageDropdown = document.querySelector('select[name="target_lang"]');
 
-  // Check the selected option when the page is loaded
-  if (languageEngineDropdown.value === 'ChatGpt_Poet') {
-    targetLanguageDropdown.value = 'english';
-    targetLanguageDropdown.disabled = true;
+  // Store the original options when the page loads
+  const originalOptions = Array.from(targetLanguageDropdown.options);
+    
+  function updateTargetLanguageDropdown() {
+    if (languageEngineDropdown.value === 'ChatGpt_Poet') {
+      const options = targetLanguageDropdown.options;
+      const slicedOptions = Array.from(options).slice(0, 2);
+      targetLanguageDropdown.innerHTML = '';
+      slicedOptions.forEach((option) => {
+        targetLanguageDropdown.appendChild(option);
+      });
+    } else {
+      targetLanguageDropdown.innerHTML = '';
+      originalOptions.forEach((option) => {
+        targetLanguageDropdown.appendChild(option);
+      });
+    }
   }
 
-  languageEngineDropdown.addEventListener('change', () => {
-    if (languageEngineDropdown.value === 'ChatGpt_Poet') {
-      targetLanguageDropdown.value = 'english';
-      targetLanguageDropdown.disabled = true;
-    } else {
-      targetLanguageDropdown.disabled = false;
-    }
-  });
+  // Call the function on page load
+  updateTargetLanguageDropdown();
+
+  // Call the function when languageEngineDropdown changes
+  languageEngineDropdown.addEventListener('change', updateTargetLanguageDropdown);
+
 </script>
   
 {% endblock %}

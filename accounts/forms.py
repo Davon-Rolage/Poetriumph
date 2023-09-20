@@ -8,6 +8,8 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
 from .models import CustomUser
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Checkbox
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -37,9 +39,15 @@ class CustomUserCreationForm(UserCreationForm):
             'placeholder': mark_safe('&#xf084; &nbsp; Confirm password...'),
         }
     ))
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
     
     def clean(self):
         cleaned_data = super().clean()
+        captcha = cleaned_data.get('captcha')
+        if not captcha:
+            self.add_error('captcha', ValidationError(_('You must pass the reCAPTCHA test')))
+            return cleaned_data
+        
         username = cleaned_data.get('username')
         username_allowed_chars = ascii_letters + digits + '@.+-_'
         email = cleaned_data.get('email')
@@ -99,13 +107,19 @@ class CustomUserLoginForm(forms.Form):
             'placeholder': mark_safe('&#xf084; &nbsp; Enter password...'),
         }
     ))
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
     
     def clean(self):
         cleaned_data = super().clean()
+        captcha = cleaned_data.get('captcha')
+        if not captcha:
+            self.add_error('captcha', ValidationError(_('You must pass the reCAPTCHA test')))
+            return cleaned_data
+        
         username = cleaned_data.get('username')
         password = cleaned_data.get('password')
         user = authenticate(username=username, password=password)
-        if user is None:
+        if not user:
             self.add_error('username', ValidationError(_('Invalid username or password')))
         return cleaned_data
   

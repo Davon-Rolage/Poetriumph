@@ -9,6 +9,7 @@ charset-normalizer==3.2.0
 colorama==0.4.6
 deep-translator==1.11.4
 Django==4.2.4
+django-recaptcha==3.0.0
 frozenlist==1.4.0
 gunicorn==21.2.0
 idna==3.4
@@ -18,8 +19,10 @@ packaging==23.1
 psycopg2-binary==2.9.7
 python-dotenv==1.0.0
 requests==2.31.0
+six==1.16.0
 soupsieve==2.4.1
 sqlparse==0.4.4
+sseclient-py==1.8.0
 tqdm==4.65.0
 typing_extensions==4.7.1
 tzdata==2023.3
