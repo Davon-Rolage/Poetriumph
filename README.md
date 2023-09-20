@@ -32,7 +32,7 @@ ___
 1. Add a domain, e.g. `mysite.com` or `127.0.0.1` (localhost).
 1. Accept their Terms of Service and press Submit.
 1. Copy `Site Key` to `RECAPTCHA_PUBLIC_KEY` variable in `.env`
-1. Copy `Secret Key` to `RECAPTCHA_SECRET_KEY` variable in `.env`
+1. Copy `Secret Key` to `RECAPTCHA_PRIVATE_KEY` variable in `.env`
 ___
 15. Create a superuser with `python manage.py createsuperuser`
 1. Make migrations and migrate:
