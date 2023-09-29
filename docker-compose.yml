@@ -2,7 +2,9 @@ version: '3.9'
 
 services:
   postgres:
-    image: davon/postgres
+    build:
+      context: .
+      dockerfile: ./postgres_image/Dockerfile
     container_name: ${PG_CONTAINER_NAME}
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -10,7 +12,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PGDATA: ${PGDATA}
     volumes:
-       - postgres_data:/data/davon-postgres
+       - postgres_data_poetry:/data/davon-postgres
     restart: unless-stopped
 
   web:
@@ -25,6 +27,12 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      EMAIL_FROM: ${EMAIL_FROM}
+      EMAIL_HOST_USER: ${EMAIL_HOST_USER}
+      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD}
+      RECAPTCHA_PUBLIC_KEY: ${RECAPTCHA_PUBLIC_KEY}
+      RECAPTCHA_PRIVATE_KEY: ${RECAPTCHA_PRIVATE_KEY}
+
     volumes:
       - ./templates:/app/templates
       - ./static:/app/static
@@ -34,5 +42,5 @@ services:
       - postgres
 
 volumes:
-    postgres_data:
+    postgres_data_poetry:
       external: true
