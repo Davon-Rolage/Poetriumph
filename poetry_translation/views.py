@@ -19,22 +19,37 @@ class TranslationFormView(View):
     language_engine_tooltips = list(LANGUAGE_ENGINE_TOOLTIPS.values())
 
     def get(self, request):
+        user = request.user
+        if user.is_authenticated and user.is_premium:
+            character_limit = CHARACTER_LIMIT_PREMIUM
+        else:
+            character_limit = CHARACTER_LIMIT
+            
         context = {
             'target_lang': 'spanish',
             'supported_languages': SUPPORTED_LANGUAGES,
             'language_engines': LANGUAGE_ENGINES,
             'language_engine_tooltips': self.language_engine_tooltips,
+            'character_limit': character_limit,
+            'loading_button_text': GUI_MESSAGES['loading_button_text'],
+            'loading_tooltip_text': GUI_MESSAGES['loading_tooltip_text'],
         }
         return render(request, self.template_name, context)
 
     def post(self, request):
+        user = request.user
         language_engine = request.POST.get('language_engine')
         source_lang = request.POST.get('source_lang')
         target_lang = request.POST.get('target_lang')
         original_text = request.POST.get('original_text')
 
+        if user.is_authenticated and user.is_premium:
+            character_limit = CHARACTER_LIMIT_PREMIUM
+        else:
+            character_limit = CHARACTER_LIMIT
+            
         if language_engine == 'ChatGpt_Poet':
-            translation = translate_gpt(original_text, target_lang)
+            translation = translate_gpt(original_text, target_lang, character_limit)
         
         else:
             translation = translate(
@@ -43,7 +58,8 @@ class TranslationFormView(View):
             target_lang,
             original_text,
             proxies=None
-        )            
+        )
+         
         context = {
             'original_text': original_text,
             'translation': translation,
@@ -53,6 +69,9 @@ class TranslationFormView(View):
             'language_engine': language_engine,
             'language_engines': LANGUAGE_ENGINES,
             'language_engine_tooltips': self.language_engine_tooltips,
+            'character_limit': character_limit,
+            'loading_button_text': GUI_MESSAGES['loading_button_text'],
+            'loading_tooltip_text': GUI_MESSAGES['loading_tooltip_text'],
         }
         return render(request, self.template_name, context)
 
@@ -84,7 +103,7 @@ class PoemListView(ListView):
     paginate_by = 100
     
     def get_queryset(self):
-        return self.model.objects.filter(is_hidden=False)
+        return self.model.objects.filter(is_hidden=False).order_by('-updated_at')
     
     
 class MyLibraryView(ListView):
@@ -92,7 +111,7 @@ class MyLibraryView(ListView):
     model = Poem
     
     def get_queryset(self):
-        return self.model.objects.filter(saved_by=self.request.user.username)
+        return self.model.objects.filter(saved_by=self.request.user.username).order_by('-updated_at')
     
 
 class PoemDetailView(DetailView):
@@ -114,6 +133,7 @@ class PoemUpdateView(UpdateView):
     template_name = 'poetry_translation/poem_update.html'
     form_class = PoemUpdateForm
     model = Poem
+    success_message = GUI_MESSAGES['messages']['poem_updated']
     
     def get(self, request, *args, **kwargs):
         poem = self.model.objects.get(pk=kwargs.get('pk'))
@@ -128,21 +148,21 @@ class PoemUpdateView(UpdateView):
         if 'edit' in self.request.POST:
             return HttpResponseRedirect(reverse('poem_update', args=[self.object.pk]))
         form.save()
+        messages.success(self.request, self.success_message)
         return super().form_valid(form)
     
     def get_success_url(self):
-        messages.success(self.request, _('The poem has been successfully updated.'))
         return reverse('poem_detail', args=[self.object.pk])
 
 
 class PoemDeleteView(SuccessMessageMixin, DeleteView):
     model = Poem
     success_url = reverse_lazy('my_library')
-    success_message = _('The poem has been successfully deleted.')
+    success_message = GUI_MESSAGES['messages']['poem_deleted']
     
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form):
         messages.success(self.request, self.success_message)
-        return super().delete(request, *args, **kwargs)
+        return super().form_valid(form)
 
 
 class SaveTranslation(DetailView):
@@ -166,7 +186,7 @@ class SaveTranslation(DetailView):
         
         total_poems = Poem.objects.filter(saved_by=request.user.username).count()
         if total_poems in (1, 5, 20, 50, 100):
-            messages.warning(request, _('You have earned a badge! Check out your profile!'))
+            messages.warning(request, GUI_MESSAGES['messages']['badge_earned'])
         
         return HttpResponseRedirect(reverse('poem_detail', args=[poem.pk]), {'poem': poem})
 

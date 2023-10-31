@@ -18,7 +18,7 @@ class Poem(models.Model):
     language_engine = models.CharField(choices=LANGUAGE_ENGINES, max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(default=timezone.now)
-    is_hidden = models.BooleanField(default=False)
+    is_hidden = models.BooleanField(default=True)
     
     def __str__(self):
         if self.title == 'Untitled':

@@ -4,6 +4,7 @@ from django.utils.translation import gettext as _
 
 from poetry_translation.config import LANGUAGE_ENGINES, SUPPORTED_LANGUAGES
 
+from .config import GUI_MESSAGES
 from .models import Poem
 
 
@@ -11,11 +12,11 @@ class PoemDetailForm(forms.ModelForm):
     class Meta:
         model = Poem
         fields = '__all__'
+        exclude = ['saved_by']
         
     source_lang = forms.ChoiceField(choices=SUPPORTED_LANGUAGES, widget=forms.Select(
         attrs={
             'disabled': True,
-            'style': 'flex: 1; width: 200px;', 
             'class': 'form-select', 
             'aria-select': 'Source Language'
         }
@@ -23,7 +24,6 @@ class PoemDetailForm(forms.ModelForm):
     target_lang = forms.ChoiceField(choices=SUPPORTED_LANGUAGES[1:], widget=forms.Select(
         attrs={
             'disabled': True,
-            'style': 'flex: 1; width: 200px;', 
             'class': 'form-select', 
             'aria-select': 'Target Language'
         }
@@ -31,7 +31,6 @@ class PoemDetailForm(forms.ModelForm):
     language_engine = forms.ChoiceField(choices=LANGUAGE_ENGINES, widget=forms.Select(
         attrs={
             'readonly': True,
-            'style': 'flex: 1; width: 200px;', 
             'class': 'form-select', 
             'aria-select': 'Language Engine'
         }
@@ -42,8 +41,7 @@ class PoemDetailForm(forms.ModelForm):
             'id': 'title',
             'name': 'title',
             'class': 'form-control',
-            'placeholder': _('Title...'),
-            'style': 'width: 300px; padding-left: 15px;',
+            'placeholder': GUI_MESSAGES['forms']['placeholder_title'],
         }
     ))
     author = forms.CharField(max_length=50, widget=forms.TextInput(
@@ -52,19 +50,7 @@ class PoemDetailForm(forms.ModelForm):
             'id': 'author',
             'name': 'author',
             'class': 'form-control',
-            'placeholder': _('Author...'),
-            'style': 'width: 300px; padding-left: 15px;',
-        }
-    ))
-    saved_by = forms.CharField(max_length=50, widget=forms.TextInput(
-        attrs={
-            'default': 'Anonymous',
-            'readonly': True,
-            'id': 'saved_by',
-            'name': 'saved_by',
-            'class': 'form-control',
-            'placeholder': _('Saved by...'),
-            'style': 'width: 300px; padding-left: 15px;',
+            'placeholder': GUI_MESSAGES['forms']['placeholder_author'],
         }
     ))
     is_hidden = forms.BooleanField(required=False, widget=forms.CheckboxInput(
@@ -72,7 +58,6 @@ class PoemDetailForm(forms.ModelForm):
             'disabled': True,
             'id': 'flexSwitchCheckDefault',
             'name': 'is_hidden',
-            'class': 'form-check-input',
         }
     ))
     original_text = forms.CharField(required=True, widget=forms.Textarea(
@@ -80,9 +65,8 @@ class PoemDetailForm(forms.ModelForm):
             'readonly': True,
             'rows': 10,
             'name': 'original_text',
-            'class': 'message_text',
-            'style': 'margin-top: 10px;',
-            'placeholder': _('Original text...'),
+            'class': 'message_text text-to-copy',
+            'placeholder': GUI_MESSAGES['forms']['placeholder_original_text'],
         }
     ))
     translation = forms.CharField(required=True, widget=forms.Textarea(
@@ -90,9 +74,8 @@ class PoemDetailForm(forms.ModelForm):
             'readonly': True,
             'rows': 10,
             'name': 'translation_text',
-            'class': 'message_text',
-            'style': 'margin-top: 10px;',
-            'placeholder': _('Translation text...'),
+            'class': 'message_text text-to-copy',
+            'placeholder': GUI_MESSAGES['forms']['placeholder_translation_text'],
         }
     ))
     updated_at = forms.DateTimeField(required=True, widget=forms.DateTimeInput(
@@ -109,24 +92,22 @@ class PoemUpdateForm(forms.ModelForm):
     class Meta:
         model = Poem
         fields = '__all__'
+        exclude = ['saved_by']
         
     source_lang = forms.ChoiceField(required=False, choices=SUPPORTED_LANGUAGES, widget=forms.Select(
         attrs={
-            'style': 'flex: 1; width: 200px;', 
             'class': 'form-select', 
-            'aria-select': 'Source Language'
+            'aria-select': 'Source Language',
         }
     ))
     target_lang = forms.ChoiceField(choices=SUPPORTED_LANGUAGES[1:], widget=forms.Select(
         attrs={
-            'style': 'flex: 1; width: 200px;', 
             'class': 'form-select', 
             'aria-select': 'Target Language'
         }
     ))
     language_engine = forms.ChoiceField(choices=LANGUAGE_ENGINES, widget=forms.Select(
         attrs={
-            'style': 'flex: 1; width: 200px; padding-left: 12px;', 
             'class': 'form-select', 
             'aria-select': 'Language Engine'
         }
@@ -136,8 +117,7 @@ class PoemUpdateForm(forms.ModelForm):
             'id': 'title',
             'name': 'title',
             'class': 'form-control',
-            'placeholder': _('Title...'),
-            'style': 'width: 300px; padding-left: 15px;',
+            'placeholder': GUI_MESSAGES['forms']['placeholder_title'],
         }
     ))
     author = forms.CharField(required=False, max_length=50, widget=forms.TextInput(
@@ -145,19 +125,7 @@ class PoemUpdateForm(forms.ModelForm):
             'id': 'author',
             'name': 'author',
             'class': 'form-control',
-            'placeholder': _('Author...'),
-            'style': 'width: 300px; padding-left: 15px;',
-        }
-    ))
-    saved_by = forms.CharField(max_length=50, widget=forms.TextInput(
-        attrs={
-            'readonly': True,
-            'default': 'Anonymous',
-            'id': 'saved_by',
-            'name': 'saved_by',
-            'class': 'form-control',
-            'placeholder': _('Saved by...'),
-            'style': 'width: 300px; padding-left: 15px;',
+            'placeholder': GUI_MESSAGES['forms']['placeholder_author'],
         }
     ))
     is_hidden = forms.BooleanField(required=False, widget=forms.CheckboxInput(
@@ -171,18 +139,16 @@ class PoemUpdateForm(forms.ModelForm):
         attrs={
             'rows': 10,
             'name': 'original_text',
-            'class': 'message_text',
-            'style': 'margin-top: 10px;',
-            'placeholder': _('Original text...'),
+            'class': 'message_text text-to-copy',
+            'placeholder': GUI_MESSAGES['forms']['placeholder_original_text'],
         }
     ))
     translation = forms.CharField(widget=forms.Textarea(
         attrs={
             'rows': 10,
             'name': 'translation',
-            'class': 'message_text',
-            'style': 'margin-top: 10px;',
-            'placeholder': _('Translation text...'),
+            'class': 'message_text text-to-copy',
+            'placeholder': GUI_MESSAGES['forms']['placeholder_translation_text'],
         }
     ))
     updated_at = forms.DateTimeField(widget=forms.DateTimeInput(
@@ -191,9 +157,16 @@ class PoemUpdateForm(forms.ModelForm):
             'id': 'updated_at',
             'name': 'updated_at',
             'class': 'form-control',
-            'style': 'max-width: 170px;',
         }
     ))
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        title = cleaned_data.get('title')
+        if not title:
+            self.fields['title'].widget.attrs.update({'class': 'form-control border-danger'})
+
+        return cleaned_data
     
     def save(self):
         poem = super().save(commit=False)

@@ -3,12 +3,12 @@
 
 {% block content %}
 {% if not user.is_authenticated %}
-<div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
+<div class="container-fluid" style="padding: 40px; padding-top: 20px;">
     <h class="display-6">{% trans "Premium is only available for registered users." %} <a href="{% url 'login' %}">{% trans "Sign in" %}</a> {% trans "and try again." %}</h>
 </div>
 {% else %}
 {% if not user.is_premium %}
-<div class="container-fluid" style="background-color: aliceblue; padding: 40px;">
+<div class="container-fluid" style="padding: 40px;">
     <h1 style="color: #50586C;">{% trans "Premium" %}</h1>
     <p style="color: #50586C;">
         {% trans "What you get with premium:" %}
@@ -49,7 +49,7 @@
 </script>
 
 {% else %}
-<div class="container-fluid" style="background-color: aliceblue; padding: 40px;">
+<div class="container-fluid" style="padding: 40px;">
     <h1 style="color: #50586C;">Never give up, premium user {{ user.username }}!</h1>
     <div class="thank_you_premium" style="font-size: 32px;">
         <p>

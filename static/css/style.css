@@ -1,16 +1,17 @@
+.container-fluid {
+  background-color: aliceblue;
+  padding: 0 20px 20px 20px;
+}
+
 .message_text {
     width: 100%;
-    float: left;
     font-size: 18px;
     color: #666666;
     background-color: white;
-    padding-right: 20px;
-    padding-left: 15px;
-    padding-top: 10px;
+    padding: 10px 30px 10px 15px;
     border: 1px solid silver;
     border-radius: 5px;
     line-height: 1.3;
-    min-height: 2;
 }
 
 .message_text:focus {
@@ -18,11 +19,13 @@
 }
 
 .navbar {
-    opacity: 0.95;
+    background-color: aliceblue;
+    opacity: 0.8;
 }
 
 .navbar-brand img {
     max-width: 150px;
+    margin-left: 10px;
 }
 
 .nav-item>a {
@@ -206,12 +209,12 @@
 }
 
 .alert-success {
-  font-size: 26px;
-  top: 60px;
   position: fixed;
   align-self: center;
+  font-size: 26px;
+  top: 60px;
   z-index: 1000;
-  animation: fadeOutSuccess 7s forwards;
+  animation: fadeOutSuccess 5s forwards;
   box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
@@ -231,3 +234,35 @@
 .tooltip {
   pointer-events: none;
 }
+
+.copy-to-clipboard {
+  cursor: pointer;
+  color: aliceblue;
+  font-size: 12px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #333;
+  position: absolute;
+  top: 5px;
+  right: 16px;
+}
+
+.copy-to-clipboard:hover {
+  background-color: #4d4d4d;
+}
+
+.copyable-textbox {
+  position: relative !important;
+}
+
+.save-check {
+  color: #45d35d;
+  display: none;
+  margin-left: 2px;
+}
+
+.clickable-td {
+  cursor: pointer;
+}
+

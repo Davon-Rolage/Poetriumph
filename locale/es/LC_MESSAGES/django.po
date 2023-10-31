@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-20 18:56+0400\n"
+"POT-Creation-Date: 2023-10-31 23:53+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,160 +18,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: .\accounts\forms.py:48 .\accounts\forms.py:116
-msgid "You must pass the reCAPTCHA test"
-msgstr "Debe pasar la prueba reCAPTCHA"
-
-#: .\accounts\forms.py:60
-msgid "Username cannot contain spaces"
-msgstr "El nombre de usuario no puede contener espacios"
-
-#: .\accounts\forms.py:63
-msgid "Username contains invalid characters"
-msgstr "El nombre de usuario contiene caracteres inválidos"
-
-#: .\accounts\forms.py:67
-msgid "Username is too short"
-msgstr "El nombre de usuario es demasiado corto"
-
-#: .\accounts\forms.py:71
-msgid "Username is too long"
-msgstr "El nombre de usuario es demasiado largo"
-
-#: .\accounts\forms.py:75
-msgid "Email contains invalid characters"
-msgstr "El correo electrónico contiene carácteres inválidos"
-
-#: .\accounts\forms.py:123
-msgid "Invalid username or password"
-msgstr "Nombre de usuario o contraseña inválidos"
-
-#: .\accounts\views.py:54
-msgid ""
-"Thank you for confirming your email. You can now log in to your account."
-msgstr ""
-"Gracias por confirmar su correo electrónico. Ahora puede iniciar sesión "
-"en su cuenta."
-
-#: .\accounts\views.py:57
-msgid "Activation link is invalid!"
-msgstr "El enlace de activación no es válido!"
-
-#: .\accounts\views.py:63
-msgid "Confirm your account on Poetriumph"
-msgstr "Confirma su cuenta en Poetriumph"
-
-#: .\accounts\views.py:73
-#, python-brace-format
-msgid ""
-"<b>{user}</b>, please check your email <b>{to_email}</b> to activate your "
-"account."
-msgstr ""
-"<b>{user}</b>, revise su correo electrónico <b>{to_email}</b> para activar su "
-"cuenta."
-
-#: .\accounts\views.py:75
-#, python-brace-format
-msgid "Problem sending email to <b>{to_email}</b>, please try again."
-msgstr "Problema al enviar el correo electrónico a <b>{to_email}</b>, "
-"inténtelo de nuevo."
-
-#: .\accounts\views.py:114
-msgid "The user has been successfully deleted."
-msgstr "El usuario ha sido eliminado exitosamente."
-
-#: .\poetry_translation\config.py:5
-msgid "Detect language"
-msgstr "Detectar idioma"
-
-#: .\poetry_translation\config.py:6 .\templates\base.html:85
-msgid "English"
-msgstr "Inglés"
-
-#: .\poetry_translation\config.py:7 .\templates\base.html:86
-msgid "Spanish"
-msgstr "Español"
-
-#: .\poetry_translation\config.py:8 .\templates\base.html:87
-msgid "Russian"
-msgstr "Ruso"
-
-#: .\poetry_translation\config.py:9
-msgid "Hindi"
-msgstr "Hindi"
-
 #: .\poetry_translation\config.py:10
-msgid "Italian"
-msgstr "Italiano"
-
-#: .\poetry_translation\config.py:11
-msgid "Portuguese"
-msgstr "Portugués"
-
-#: .\poetry_translation\config.py:12
-msgid "French"
-msgstr "Francés"
-
-#: .\poetry_translation\config.py:13
-msgid "German"
-msgstr "Alemán"
-
-#: .\poetry_translation\config.py:14
-msgid "Ukrainian"
-msgstr "Ucranio"
-
-#: .\poetry_translation\config.py:15
-msgid "Arabic"
-msgstr "Árabe"
-
-#: .\poetry_translation\config.py:16
-msgid "Japanese"
-msgstr "Japonés"
-
-#: .\poetry_translation\config.py:17
-msgid "Korean"
-msgstr "Coreano"
-
-#: .\poetry_translation\config.py:18
-msgid "Chinese Simplified"
-msgstr "Chino simpl."
-
-#: .\poetry_translation\config.py:19
-msgid "Chinese Traditional"
-msgstr "Chino trad."
-
-#: .\poetry_translation\config.py:20
-msgid "Turkish"
-msgstr "Turco"
-
-#: .\poetry_translation\config.py:21
-msgid "Indonesian"
-msgstr "Indonesio"
-
-#: .\poetry_translation\config.py:24
 msgid "Google Translator"
 msgstr "Traductor de Google"
 
-#: .\poetry_translation\config.py:25
+#: .\poetry_translation\config.py:11
 msgid "ChatGPT Translator"
 msgstr "Traductor de ChatGPT"
 
-#: .\poetry_translation\config.py:26
+#: .\poetry_translation\config.py:12
 msgid "ChatGPT Poet"
 msgstr "Poeta de ChatGPT"
 
-#: .\poetry_translation\config.py:29
+#: .\poetry_translation\config.py:15
 msgid "Literal translation with Google Translator"
 msgstr "Traducción literal con Traductor de Google"
 
-#: .\poetry_translation\config.py:30
+#: .\poetry_translation\config.py:16
 msgid ""
 "Take the context into account and use the power of AI to translate your text"
 msgstr ""
 "Tiene en cuenta el contexto y utiliza el poder de la IA para traducir su "
 "texto"
 
-#: .\poetry_translation\config.py:31
+#: .\poetry_translation\config.py:17
 msgid ""
 "Make a rhyming poem (only English and Spanish) out of your text, preserving "
 "rhythm and rhyming patterns.\n"
@@ -182,89 +52,246 @@ msgstr ""
 "O haga un poema usando solo una sugerencia, como Estoy feliz de que estés "
 "conmigo"
 
-#: .\poetry_translation\forms.py:45 .\poetry_translation\forms.py:139
+#: .\poetry_translation\config.py:21
+msgid "Detect language"
+msgstr "Detectar idioma"
+
+#: .\poetry_translation\config.py:22 .\templates\base.html:81
+msgid "English"
+msgstr "Inglés"
+
+#: .\poetry_translation\config.py:23 .\templates\base.html:82
+msgid "Spanish"
+msgstr "Español"
+
+#: .\poetry_translation\config.py:24 .\templates\base.html:83
+msgid "Russian"
+msgstr "Ruso"
+
+#: .\poetry_translation\config.py:25
+msgid "Hindi"
+msgstr "Hindi"
+
+#: .\poetry_translation\config.py:26
+msgid "Italian"
+msgstr "Italiano"
+
+#: .\poetry_translation\config.py:27
+msgid "Portuguese"
+msgstr "Portugués"
+
+#: .\poetry_translation\config.py:28
+msgid "French"
+msgstr "Francés"
+
+#: .\poetry_translation\config.py:29
+msgid "German"
+msgstr "Alemán"
+
+#: .\poetry_translation\config.py:30
+msgid "Ukrainian"
+msgstr "Ucranio"
+
+#: .\poetry_translation\config.py:31
+msgid "Arabic"
+msgstr "Árabe"
+
+#: .\poetry_translation\config.py:32
+msgid "Japanese"
+msgstr "Japonés"
+
+#: .\poetry_translation\config.py:33
+msgid "Korean"
+msgstr "Coreano"
+
+#: .\poetry_translation\config.py:34
+msgid "Chinese Simplified"
+msgstr "Chino simpl."
+
+#: .\poetry_translation\config.py:35
+msgid "Chinese Traditional"
+msgstr "Chino trad."
+
+#: .\poetry_translation\config.py:36
+msgid "Turkish"
+msgstr "Turco"
+
+#: .\poetry_translation\config.py:37
+msgid "Indonesian"
+msgstr "Indonesio"
+
+#: .\poetry_translation\config.py:42
 msgid "Title..."
 msgstr "Título..."
 
-#: .\poetry_translation\forms.py:55 .\poetry_translation\forms.py:148
+#: .\poetry_translation\config.py:43
 msgid "Author..."
 msgstr "Autor..."
 
-#: .\poetry_translation\forms.py:66 .\poetry_translation\forms.py:159
-msgid "Saved by..."
-msgstr "Guardado por"
-
-#: .\poetry_translation\forms.py:85 .\poetry_translation\forms.py:176
-msgid "Original text..."
+#: .\poetry_translation\config.py:44
+#, fuzzy
+#| msgid "Original text..."
+msgid "Original Text..."
 msgstr "Texto original..."
 
-#: .\poetry_translation\forms.py:95 .\poetry_translation\forms.py:185
+#: .\poetry_translation\config.py:45
 msgid "Translation text..."
 msgstr "Traducción..."
 
-#: .\poetry_translation\views.py:134
-msgid "The poem has been successfully updated."
+#: .\poetry_translation\config.py:47
+msgid "You must pass the reCAPTCHA test"
+msgstr "Debe pasar la prueba reCAPTCHA"
+
+#: .\poetry_translation\config.py:48
+msgid "Username cannot contain spaces"
+msgstr "El nombre de usuario no puede contener espacios"
+
+#: .\poetry_translation\config.py:49
+msgid "Username contains invalid characters"
+msgstr "El nombre de usuario contiene caracteres inválidos"
+
+#: .\poetry_translation\config.py:50
+msgid "Username is too short"
+msgstr "El nombre de usuario es demasiado corto"
+
+#: .\poetry_translation\config.py:51
+msgid "Username is too long"
+msgstr "El nombre de usuario es demasiado largo"
+
+#: .\poetry_translation\config.py:52
+msgid "Email contains invalid characters"
+msgstr "El correo electrónico contiene carácteres inválidos"
+
+#: .\poetry_translation\config.py:53
+#, fuzzy
+#| msgid "Username is too short"
+msgid "Password is too short"
+msgstr "El nombre de usuario es demasiado corto"
+
+#: .\poetry_translation\config.py:54
+msgid "Passwords do not match"
+msgstr ""
+
+#: .\poetry_translation\config.py:55
+msgid "Invalid username or password"
+msgstr "Nombre de usuario o contraseña inválidos"
+
+#: .\poetry_translation\config.py:58
+#, fuzzy
+#| msgid "The poem has been successfully updated."
+msgid "The poem has been successfully updated"
 msgstr "El poema ha sido actualizado exitosamente."
 
-#: .\poetry_translation\views.py:141
-msgid "The poem has been successfully deleted."
+#: .\poetry_translation\config.py:59
+#, fuzzy
+#| msgid "The poem has been successfully deleted."
+msgid "The poem has been successfully deleted"
 msgstr "El poema ha sido eliminado exitosamente."
 
-#: .\poetry_translation\views.py:169
+#: .\poetry_translation\config.py:60
 msgid "You have earned a badge! Check out your profile!"
 msgstr "¡Ha ganado una insignia! ¡Eche un vistazo a su perfil!"
 
-#: .\templates\base.html:94 .\templates\poetry_translation\index.html:7
+#: .\poetry_translation\config.py:61
+#, fuzzy
+#| msgid "The user has been successfully deleted."
+msgid "The user has been successfully deleted"
+msgstr "El usuario ha sido eliminado exitosamente."
+
+#: .\poetry_translation\config.py:62
+msgid "Confirm your account on Poetriumph"
+msgstr "Confirma su cuenta en Poetriumph"
+
+#: .\poetry_translation\config.py:63
+#, python-brace-format
+msgid ""
+"<b>{user}</b>, please check your email <b>{to_email}</b> to activate your "
+"account."
+msgstr ""
+"<b>{user}</b>, revise su correo electrónico <b>{to_email}</b> para activar "
+"su cuenta."
+
+#: .\poetry_translation\config.py:64
+msgid ""
+"Thank you for confirming your email. You can now log in to your account."
+msgstr ""
+"Gracias por confirmar su correo electrónico. Ahora puede iniciar sesión en "
+"su cuenta."
+
+#: .\poetry_translation\config.py:67
+#, python-brace-format
+msgid "Problem sending email to <b>{to_email}</b>, please try again."
+msgstr ""
+"Problema al enviar el correo electrónico a <b>{to_email}</b>, inténtelo de "
+"nuevo."
+
+#: .\poetry_translation\config.py:68
+#, fuzzy
+#| msgid "Activation link is invalid!"
+msgid "Activation link is invalid! Please try again."
+msgstr "El enlace de activación no es válido!"
+
+#: .\poetry_translation\config.py:70
+#, fuzzy
+#| msgid "Translation"
+msgid "Translating"
+msgstr "Traducción"
+
+#: .\poetry_translation\config.py:71
+msgid "ChatGPT response may take up to 2 minutes"
+msgstr ""
+
+#: .\templates\base.html:91 .\templates\poetry_translation\index.html:16
 msgid "Poem Translation"
 msgstr "Traduccíon de poemas"
 
-#: .\templates\base.html:97 .\templates\poetry_translation\poem_library.html:12
+#: .\templates\base.html:94 .\templates\poetry_translation\poem_library.html:7
 msgid "Poem Library"
 msgstr "Biblioteca de poemas"
 
-#: .\templates\base.html:100 .\templates\poetry_translation\my_library.html:21
+#: .\templates\base.html:97 .\templates\poetry_translation\my_library.html:13
 msgid "My Library"
 msgstr "Mi biblioteca"
 
-#: .\templates\base.html:103
+#: .\templates\base.html:100
 msgid "About"
 msgstr "Acerca del proyecto"
 
-#: .\templates\base.html:106
+#: .\templates\base.html:103
 msgid "Support Us"
 msgstr "Apóyenos"
 
-#: .\templates\base.html:109 .\templates\poetry_translation\premium.html:12
+#: .\templates\base.html:106 .\templates\poetry_translation\premium.html:12
 msgid "Premium"
 msgstr "Premium"
 
-#: .\templates\base.html:114
+#: .\templates\base.html:111
 msgid "Hi"
 msgstr "Hola"
 
-#: .\templates\base.html:117
+#: .\templates\base.html:114
 msgid "My Profile"
 msgstr "Mi perfil"
 
-#: .\templates\base.html:119
+#: .\templates\base.html:116
 msgid "Log out"
 msgstr "Cerrar sesión"
 
-#: .\templates\base.html:121
+#: .\templates\base.html:118
 msgid "Admin"
 msgstr "Admin"
 
-#: .\templates\base.html:125 .\templates\registration\login.html:22
-#: .\templates\registration\login.html:69
+#: .\templates\base.html:122 .\templates\registration\login.html:13
+#: .\templates\registration\login.html:82
 msgid "Login"
 msgstr "Iniciar sesión"
 
-#: .\templates\base.html:127 .\templates\registration\signup.html:15
-#: .\templates\registration\signup.html:77
+#: .\templates\base.html:124 .\templates\registration\signup.html:13
+#: .\templates\registration\signup.html:107
 msgid "Register"
 msgstr "Registrarse"
 
-#: .\templates\base.html:161
+#: .\templates\base.html:155
 msgid "All Rights Reserved"
 msgstr "Todos los derechos reservados"
 
@@ -292,82 +319,83 @@ msgstr ""
 msgid "Source code is available on GitHub"
 msgstr "El código fuente está disponible en GitHub"
 
-#: .\templates\poetry_translation\index.html:8
+#: .\templates\poetry_translation\index.html:17
 msgid "Insert your poem and choose translation engine."
 msgstr "Inserte su poema y eliga servicio de traducción."
 
-#: .\templates\poetry_translation\index.html:56
+#: .\templates\poetry_translation\index.html:88
 msgid "Translate"
 msgstr "Traducir"
 
-#: .\templates\poetry_translation\index.html:61
+#: .\templates\poetry_translation\index.html:99
 msgid "Insert your poem..."
 msgstr "Inserte su poema..."
 
-#: .\templates\poetry_translation\index.html:76
+#: .\templates\poetry_translation\index.html:127
 msgid "Download"
 msgstr "Descargar"
 
-#: .\templates\poetry_translation\index.html:80
+#: .\templates\poetry_translation\index.html:135
 msgid "Sign in to save to library!"
 msgstr "¡Inicie sesión para guardar en la biblioteca!"
 
-#: .\templates\poetry_translation\index.html:81
-#: .\templates\poetry_translation\index.html:84
+#: .\templates\poetry_translation\index.html:136
+#: .\templates\poetry_translation\index.html:139
 msgid "Save to Library"
 msgstr "Guardar en la biblioteca"
 
-#: .\templates\poetry_translation\index.html:89
+#: .\templates\poetry_translation\index.html:149
 msgid "Your translation will be here..."
 msgstr "Su traducción estará aquí..."
 
-#: .\templates\poetry_translation\my_library.html:16
+#: .\templates\poetry_translation\my_library.html:8
 msgid "To see your library, you need to"
 msgstr "Para ver su biblioteca, necesita"
 
-#: .\templates\poetry_translation\my_library.html:16
+#: .\templates\poetry_translation\my_library.html:8
 msgid "sign in"
 msgstr "iniciar sesión"
 
-#: .\templates\poetry_translation\my_library.html:22
-#: .\templates\poetry_translation\poem_library.html:19
+#: .\templates\poetry_translation\my_library.html:14
+#: .\templates\poetry_translation\poem_library.html:14
 msgid "Total number of Poems:"
 msgstr "Número total de poemas:"
 
-#: .\templates\poetry_translation\my_library.html:29
-#: .\templates\poetry_translation\poem_library.html:26
+#: .\templates\poetry_translation\my_library.html:21
+#: .\templates\poetry_translation\poem_library.html:21
 msgid "#"
 msgstr "#"
 
-#: .\templates\poetry_translation\my_library.html:30
-#: .\templates\poetry_translation\poem_detail.html:61
-#: .\templates\poetry_translation\poem_library.html:27
-#: .\templates\poetry_translation\poem_update.html:87
+#: .\templates\poetry_translation\my_library.html:22
+#: .\templates\poetry_translation\poem_detail.html:64
+#: .\templates\poetry_translation\poem_library.html:22
+#: .\templates\poetry_translation\poem_update.html:82
 msgid "Title"
 msgstr "Título"
 
-#: .\templates\poetry_translation\my_library.html:31
-#: .\templates\poetry_translation\poem_detail.html:67
-#: .\templates\poetry_translation\poem_library.html:28
-#: .\templates\poetry_translation\poem_update.html:93
+#: .\templates\poetry_translation\my_library.html:23
+#: .\templates\poetry_translation\poem_detail.html:74
+#: .\templates\poetry_translation\poem_library.html:23
+#: .\templates\poetry_translation\poem_update.html:100
 msgid "Author"
 msgstr "Autor"
 
-#: .\templates\poetry_translation\my_library.html:32
-#: .\templates\poetry_translation\poem_library.html:29
+#: .\templates\poetry_translation\my_library.html:24
+#: .\templates\poetry_translation\poem_library.html:24
 msgid "Target Language"
 msgstr "Lengua meta"
 
-#: .\templates\poetry_translation\my_library.html:33
-#: .\templates\poetry_translation\poem_library.html:31
-msgid "Created at"
-msgstr "Creado en"
+#: .\templates\poetry_translation\my_library.html:25
+#: .\templates\poetry_translation\poem_library.html:26
+#: .\templates\poetry_translation\poem_update.html:39
+msgid "Updated at"
+msgstr "Actualizado en"
 
-#: .\templates\poetry_translation\my_library.html:34
+#: .\templates\poetry_translation\my_library.html:26
 msgid "Is hidden"
 msgstr "Oculto"
 
-#: .\templates\poetry_translation\my_library.html:46
+#: .\templates\poetry_translation\my_library.html:38
 msgid "Hidden"
 msgstr "Oculto"
 
@@ -436,57 +464,53 @@ msgstr "Características por añadir"
 msgid "This poem is hidden by its author."
 msgstr "Este poema está oculto por su autor."
 
-#: .\templates\poetry_translation\poem_detail.html:25
+#: .\templates\poetry_translation\poem_detail.html:26
 msgid "Translation Service"
 msgstr "Servicio de traducción"
 
-#: .\templates\poetry_translation\poem_detail.html:48
+#: .\templates\poetry_translation\poem_detail.html:52
 msgid "Change Poem"
 msgstr "Cambiar poema"
 
-#: .\templates\poetry_translation\poem_detail.html:73
-#: .\templates\poetry_translation\poem_library.html:30
-#: .\templates\poetry_translation\poem_update.html:99
+#: .\templates\poetry_translation\poem_detail.html:84
+#: .\templates\poetry_translation\poem_library.html:25
+#: .\templates\poetry_translation\poem_update.html:110
 msgid "Saved by"
 msgstr "Guardado por"
 
-#: .\templates\poetry_translation\poem_detail.html:82
-#: .\templates\poetry_translation\poem_update.html:51
+#: .\templates\poetry_translation\poem_detail.html:96
+#: .\templates\poetry_translation\poem_update.html:57
 msgid "Hide from Poem Library"
 msgstr "Ocultar de la biblioteca de poemas"
 
-#: .\templates\poetry_translation\poem_detail.html:95
-#: .\templates\poetry_translation\poem_update.html:112
+#: .\templates\poetry_translation\poem_detail.html:107
+#: .\templates\poetry_translation\poem_update.html:121
 msgid "Original Text"
 msgstr "Texto original"
 
-#: .\templates\poetry_translation\poem_detail.html:103
-#: .\templates\poetry_translation\poem_update.html:120
+#: .\templates\poetry_translation\poem_detail.html:127
+#: .\templates\poetry_translation\poem_update.html:136
 msgid "Translation"
 msgstr "Traducción"
 
-#: .\templates\poetry_translation\poem_library.html:16
+#: .\templates\poetry_translation\poem_library.html:11
 msgid "Change the list (moderator)"
 msgstr "Cambiar la lista (moderador)"
 
-#: .\templates\poetry_translation\poem_update.html:14
+#: .\templates\poetry_translation\poem_update.html:8
 msgid "You are not authorized to edit this poem."
 msgstr "No está autorizado(a) para editar este poema."
 
-#: .\templates\poetry_translation\poem_update.html:23
+#: .\templates\poetry_translation\poem_update.html:19
 msgid "Are you sure you want to delete this poem?"
 msgstr "¿Está seguro de que desea eliminar este poema?"
 
-#: .\templates\poetry_translation\poem_update.html:24
+#: .\templates\poetry_translation\poem_update.html:19
 #: .\venv\Lib\site-packages\django\forms\formsets.py:499
 msgid "Delete"
 msgstr "Borrar"
 
-#: .\templates\poetry_translation\poem_update.html:35
-msgid "Updated at"
-msgstr "Actualizado en"
-
-#: .\templates\poetry_translation\poem_update.html:70
+#: .\templates\poetry_translation\poem_update.html:26
 msgid "Save Changes"
 msgstr "Guardar cambios"
 
@@ -557,59 +581,80 @@ msgstr "Descargar esta imagen de fondo"
 
 #: .\templates\registration\activate_email.html:3
 msgid "Please click on the link below to activate your Poetriumph account:"
-msgstr "Por favor, haga clic en el enlace de abajo para activar su cuenta Poetriumph:"
+msgstr ""
+"Por favor, haga clic en el enlace de abajo para activar su cuenta Poetriumph:"
 
-#: .\templates\registration\login.html:53
+#: .\templates\registration\login.html:27
+#: .\templates\registration\signup.html:25
+msgid "Username"
+msgstr ""
+
+#: .\templates\registration\login.html:44
+#: .\templates\registration\signup.html:60
+#, fuzzy
+#| msgid "Forgot Password?"
+msgid "Password"
+msgstr "¿Olvidó su contraseña?"
+
+#: .\templates\registration\login.html:60
 msgid "Forgot Password?"
 msgstr "¿Olvidó su contraseña?"
 
-#: .\templates\registration\login.html:89
+#: .\templates\registration\login.html:100
 msgid "Don't have an account?"
 msgstr "¿No tiene una cuenta?"
 
-#: .\templates\registration\login.html:89
+#: .\templates\registration\login.html:100
 msgid "Register Now!"
 msgstr "Regístrese ahora"
 
-#: .\templates\registration\signup.html:88
+#: .\templates\registration\signup.html:42
+msgid "Email"
+msgstr ""
+
+#: .\templates\registration\signup.html:78
+msgid "Repeat password"
+msgstr ""
+
+#: .\templates\registration\signup.html:116
 msgid "Already have an account?"
 msgstr "¿Ya tiene una cuenta?"
 
-#: .\templates\registration\signup.html:88
+#: .\templates\registration\signup.html:116
 msgid "Sign in now!"
 msgstr "¡Inicie sesión ahora!"
 
-#: .\templates\registration\signup.html:94
+#: .\templates\registration\signup.html:121
 msgid "Registration prerequisites"
 msgstr "Requisitos de registro"
 
-#: .\templates\registration\signup.html:96
+#: .\templates\registration\signup.html:123
 msgid "Only latin letters are allowed."
 msgstr "Solo se permiten letras latinas."
 
-#: .\templates\registration\signup.html:97
+#: .\templates\registration\signup.html:124
 msgid "Username must contain only letters, digits and"
 msgstr "El nombre de usuario debe contener solo letras, dígotos y"
 
-#: .\templates\registration\signup.html:98
+#: .\templates\registration\signup.html:125
 msgid "Username must be at least 3 characters and no more than 15."
 msgstr "El nombre de usuario debe tener al menos 3 carácteres y no más de 15."
 
-#: .\templates\registration\signup.html:99
+#: .\templates\registration\signup.html:126
 msgid "Your password can't be too similar to your other personal information."
 msgstr ""
 "Su contraseña no puede ser demasiado similar a otra información personal "
 "suya."
 
-#: .\templates\registration\signup.html:100
+#: .\templates\registration\signup.html:127
 msgid "Your password must contain at least 8 characters."
 msgstr "Su contraseña debe tener al menos 8 carácteres."
 
-#: .\templates\registration\signup.html:101
+#: .\templates\registration\signup.html:128
 msgid "Your password can't be a commonly used password."
 msgstr "Su contraseña no puede ser una contraseña comúnmente utilizada."
 
-#: .\templates\registration\signup.html:102
+#: .\templates\registration\signup.html:129
 msgid "Your password can't be entirely numeric."
 msgstr "Su contraseña no puede ser completamente numérica."
 
@@ -1836,6 +1881,12 @@ msgstr ""
 #: .\venv\Lib\site-packages\django\views\templates\default_urlconf.html:248
 msgid "Connect, get help, or contribute"
 msgstr ""
+
+#~ msgid "Saved by..."
+#~ msgstr "Guardado por"
+
+#~ msgid "Created at"
+#~ msgstr "Creado en"
 
 #~ msgid "Remember Me"
 #~ msgstr "Recuérdame"
