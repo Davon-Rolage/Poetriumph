@@ -3,16 +3,23 @@
 
 {% block content %}
 
-<div class="container-fluid" style="padding: 40px; padding-top: 20px;">
+<div class="container-fluid px-4 py-2">
     <h class="display-6">{% trans "Poem Library" %}</h>
 
     {% if user.is_staff %}
-    <br>
-    <a class="btn btn-secondary shadow-none" href="/admin/poetry_translation/poem/" role="button" style="margin: 10px;">{% trans "Change the list (moderator)" %}</a>
+    <div class="row">
+        <div class="col-auto">
+            <a class="btn btn-secondary shadow-none" href="/admin/poetry_translation/poem/" role="button">{% trans "Change the list (moderator)" %}</a>
+        </div>
+    </div>
     {% endif %}
-    <p>
-        {% trans "Total number of Poems:" %} {{ object_list|length }}
-    </p>
+    <div class="row">
+        <div class="col-auto">
+            <span class="badge rounded-pill bg-primary my-2 p-2">
+                {% trans "Total number of Poems:" %} {{ object_list|length }}
+            </span>
+        </div>
+    </div>
     
     <div class="poems_list">
         <table class="table table-hover" id="poems-table">

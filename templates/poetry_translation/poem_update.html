@@ -4,7 +4,7 @@
 {% block content %}
 
 {% if not user.username == poem.saved_by %}
-<div class="container-fluid" style="margin: 0 auto;">
+<div class="container-fluid text-center">
   <h class="display-6">{% trans 'You are not authorized to edit this poem.' %}</h>
 </div>
 {% else %}
@@ -16,7 +16,7 @@
     <div class="col-auto py-1">
       <form id="delete-form" action="{% url 'poem_delete' poem.id %}" method="post">
         {% csrf_token %}
-        <button onclick="return confirm('{% trans 'Are you sure you want to delete this poem?' %}')" class="btn btn-outline-danger shadow-none">{% trans "Delete" %}</button>
+        <button onclick="return confirm('{{ confirm_poem_delete }}')" class="btn btn-outline-danger shadow-none">{% trans "Delete" %}</button>
       </form>
     </div>
 
@@ -52,7 +52,7 @@
       </div>
 
       <!-- Is hidden from library -->
-      <div class="col-auto py-1 form-check form-switch">
+      <div class="col-auto my-1 mx-3 form-check form-switch">
         {{ form.is_hidden }}
         <label class="form-check-label" for="flexSwitchCheckDefault">{% trans "Hide from Poem Library" %}</label>
       </div>
@@ -119,7 +119,6 @@
       <!-- Original text -->
       <div class="col-sm-12 col-md-6">
         <div class="row"><h1>{% trans "Original Text" %}</h1></div>
-        <div class="row">
           <div class="copyable-textbox">
             {{ form.original_text|safe }}
             
@@ -127,14 +126,12 @@
             <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
               <i id="check-icon" class="fa-solid fa-check save-check"></i>
             </i>
-          </div>
         </div>
       </div>
 
       <!-- Translation text -->
       <div class="col-sm-12 col-md-6">
         <div class="row"><h1>{% trans "Translation" %}</h1></div>
-        <div class="row">
           <div class="copyable-textbox">
             {{ form.translation|safe }}
 
@@ -144,7 +141,6 @@
             </i>
           </div>          
 
-        </div>
       </div>
       
     </div>

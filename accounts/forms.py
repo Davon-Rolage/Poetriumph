@@ -16,27 +16,27 @@ from .models import CustomUser
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ('username', 'email')
+        fields = '__all__'
         
-    username = forms.CharField(required=True, max_length=15, widget=forms.TextInput(
+    username = forms.CharField(max_length=15, widget=forms.TextInput(
         attrs={
-            'class': 'form-control',
+            'class': 'form-control shadow-none',
             'id': 'floatingInputGroupUsername',
             }))
-    email = forms.EmailField(required=True, widget=forms.EmailInput(
+    email = forms.EmailField(widget=forms.EmailInput(
         attrs={
-            'class': 'form-control',
+            'class': 'form-control shadow-none',
             'id': 'floatingInputGroupEmail',
         }
     ))
-    password1 = forms.CharField(required=True, widget=forms.PasswordInput(
+    password1 = forms.CharField(widget=forms.PasswordInput(
         attrs={
-            'class': 'form-control',
+            'class': 'form-control shadow-none',
             'id': 'floatingInputGroupPassword1',
             }))
-    password2 = forms.CharField(required=True, widget=forms.PasswordInput(
+    password2 = forms.CharField(widget=forms.PasswordInput(
         attrs={
-            'class': 'form-control',
+            'class': 'form-control shadow-none',
             'id': 'floatingInputGroupPassword2',
         }
     ))
@@ -59,30 +59,26 @@ class CustomUserCreationForm(UserCreationForm):
         if username and not all(char in username_allowed_chars for char in username):
             if username and ' ' in username:
                 self.add_error('username', ValidationError(GUI_MESSAGES['forms']['error_username_contains_spaces']))
-                self.fields['username'].widget.attrs.update({'class': 'form-control border-danger placeicon'})
+                self.fields['username'].widget.attrs.update({'class': 'form-control border-danger'})
             else:
                 self.add_error('username', ValidationError(GUI_MESSAGES['forms']['error_username_contains_invalid_chars']))
-                self.fields['username'].widget.attrs.update({'class': 'form-control border-danger placeicon'})
+                self.fields['username'].widget.attrs.update({'class': 'form-control border-danger'})
             
         if username and len(username) < 3:
             self.add_error('username', ValidationError(GUI_MESSAGES['forms']['error_username_too_short']))
-            self.fields['username'].widget.attrs.update({'class': 'form-control border-danger placeicon'})
+            self.fields['username'].widget.attrs.update({'class': 'form-control border-danger'})
             
         if username and len(username) > 15:
             self.add_error('username', ValidationError(GUI_MESSAGES['forms']['error_username_too_long']))
-            self.fields['username'].widget.attrs.update({'class': 'form-control border-danger placeicon'})
-        
-        if email and '@' not in email:
-            self.add_error('email', ValidationError(GUI_MESSAGES['forms']['error_invalid_email']))
-            self.fields['email'].widget.attrs.update({'class': 'form-control border-danger placeicon'})
+            self.fields['username'].widget.attrs.update({'class': 'form-control border-danger'})
             
         if password1 and len(password1) < 8:
             self.add_error('password1', ValidationError(GUI_MESSAGES['forms']['error_password_too_short']))
-            self.fields['password1'].widget.attrs.update({'class': 'form-control border-danger placeicon'})
+            self.fields['password1'].widget.attrs.update({'class': 'form-control border-danger'})
             
         if password1 and password1 != password2:
             self.add_error('password2', ValidationError(GUI_MESSAGES['forms']['error_passwords_do_not_match']))
-            self.fields['password2'].widget.attrs.update({'class': 'form-control border-danger placeicon'})
+            self.fields['password2'].widget.attrs.update({'class': 'form-control border-danger'})
         
         return cleaned_data
 
@@ -100,13 +96,13 @@ class CustomUserLoginForm(forms.Form):
         
     username = forms.CharField(required=True, max_length=15, widget=forms.TextInput(
         attrs={
-            'class': 'form-control',
+            'class': 'form-control shadow-none',
             'id': 'floatingInputGroupUsername',
         }
     ))
     password = forms.CharField(required=True, widget=forms.PasswordInput(
         attrs={
-            'class': 'form-control',
+            'class': 'form-control shadow-none',
             'id': 'floatingInputGroupPassword',
         }
     ))

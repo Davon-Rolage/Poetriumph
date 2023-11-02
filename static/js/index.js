@@ -27,19 +27,19 @@ $("#original").on('input', function() {
 });
 
 const loadingButtonText = $("#loading_button_text").text();
-const loading_tooltip = new bootstrap.Tooltip($("#button_translate"), {
-    title: $("#loading_tooltip_text").text(),
+const loadingTooltip = new bootstrap.Tooltip($("#button_translate"), {
+    title: $("#tt-loading-text").text(),
     placement: "top",
     trigger: "manual"
 })
 
 function showLoadingTooltip() {
     setTimeout(function() {
-        loading_tooltip.show();
+        loadingTooltip.show();
     }, 5000);
     
     setTimeout(function() {
-        loading_tooltip.hide();
+        loadingTooltip.hide();
     }, 12000);
 }
 
@@ -52,7 +52,7 @@ $("#form-translate").on("submit", function (event) {
     } else {
         $("#button_translate").prop("disabled", true);
         $("#button_translate_text").text(loadingButtonText);
-        $("#spinner").show();
+        $("#spinner").css("display", "inline-block");
         event.target.submit();
         showLoadingTooltip();
     }});

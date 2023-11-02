@@ -61,7 +61,7 @@ GUI_MESSAGES = {
         'user_deleted': _('The user has been successfully deleted'),
         'email_subject': _('Confirm your account on Poetriumph'),
         'email_sent': _('<b>{user}</b>, please check your email <b>{to_email}</b> to activate your account.'),
-        'activation_successful': _('Thank you for confirming your email. You can now log in to your account.')
+        'activation_successful': _('Thank you for confirming your email. You can now log in to your account.'),
     },
     'error_messages': {
         'email_sent': _('Problem sending email to <b>{to_email}</b>, please try again.'),
@@ -69,4 +69,6 @@ GUI_MESSAGES = {
     },
     'loading_button_text': _('Translating'),
     'loading_tooltip_text': _('ChatGPT response may take up to 2 minutes'), 
+    'confirm_poem_delete': _('Are you sure you want to delete this poem?'),
+    'confirm_account_delete': _('Are you sure you want to delete your account?'),
 }

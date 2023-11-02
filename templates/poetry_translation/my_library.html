@@ -3,13 +3,7 @@
 
 {% block content %}
 
-{% if not user.is_authenticated %}
-<div class="container-fluid" style="padding: 40px; padding-top: 20px;">
-    <h class="display-6">{% trans 'To see your library, you need to' %} <a href="{% url "login" %}">{% trans 'sign in' %}</a>.</h>
-</div>
-{% else %}
-
-<div class="container-fluid" style="padding: 40px; padding-top: 20px;">
+<div class="container-fluid px-4 py-3">
     <h class="display-6">{% trans "My Library" %}</h>
     <p>{% trans "Total number of Poems:" %} {{ object_list|length }}</p>
 
@@ -35,7 +29,7 @@
                     <td>{{ poem.target_lang|capfirst }}</td>
                     <td>{{ poem.updated_at }}</td>
                     <!-- If poem is hidden, display a gray badge -->
-                    <td>{% if poem.is_hidden %} <h4 style="margin-bottom: 0;"><span class="badge bg-secondary">{% trans "Hidden" %}</span></h4>{% endif %}</td>
+                    <td>{% if poem.is_hidden %} <h4><span class="badge bg-secondary">{% trans "Hidden" %}</span></h4>{% endif %}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -43,5 +37,4 @@
     </div>
 </div>
 
-{% endif %}
 {% endblock %}

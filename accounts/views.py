@@ -1,12 +1,14 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext as _
@@ -37,6 +39,15 @@ class SignUpView(View):
             return HttpResponseRedirect(reverse('translation'))
      
         return render(request, self.template_name, {'form': form})
+    
+
+def check_username_exists(request):
+    if request.method == 'GET':
+        username = request.GET.get('username')
+        if CustomUser.objects.filter(username=username).exists():
+            return HttpResponse('true')
+        else:
+            return HttpResponse('false')
     
     
 def activate(request, uidb64, token):
@@ -100,11 +111,16 @@ class MyProfileView(View):
     template_name = 'poetry_translation/my_profile.html'
     model = MyProfile
     
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
     def get(self, request):
         total_poems = Poem.objects.filter(saved_by=request.user).count()
         context = {
             'model': self.model,
             'total_poems': total_poems,
+            'confirm_account_delete': GUI_MESSAGES['confirm_account_delete'],
         }
         return render(request, self.template_name, context=context)
 

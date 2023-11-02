@@ -9,7 +9,7 @@
 			<div class="container bg-white">
 
 				<!-- Login title -->
-				<div class="row pt-3 text-center">
+				<div class="row pt-2 text-center">
 					<h1><strong>{% trans "Login" %}</strong></h1>
 				</div>
 
@@ -26,10 +26,6 @@
 										{{ form.username }}
 										<label for="floatingInputGroupUsername">{% trans "Username" %}</label>
 									</div>
-					
-									{% for error in form.username.errors %}
-									<p class="text-danger">{{ error }}</p>
-									{% endfor %}
 								</div>
 							</div>
 						</div>
@@ -42,12 +38,7 @@
 									<div class="form-floating">
 										{{ form.password }}
 										<label for="floatingInputGroupPassword">{% trans "Password" %}</label>
-									</div>
-					
-									{% for error in form.password.errors %}
-									<p class="text-danger">{{ error }}</p>
-									{% endfor %}
-					
+									</div>					
 								</div>
 							</div>
 						</div>
@@ -68,24 +59,19 @@
 							  <div class="form-group">
 								{{ form.captcha }}
 							  </div>
-							  {% if form.captcha.errors %}
-								<div class="alert alert-danger" role="alert">below
-								  {{ form.captcha.errors.1 }}
-								</div>
-							  {% endif %}
 							</div>
 						</div>
 
 						<!-- Login button -->
 						<div class="row justify-content-center text-center">
 							<div class="col-6">
-								<input type="submit" value="{% trans 'Login' %}" class="btn btn-primary shadow-none" style="width: fit-content;">
+								<input type="submit" value="{% trans 'Login' %}" class="btn btn-primary shadow-none">
 							</div>
 						</div>
 
 						<!-- Show errors if any -->
 						{% if form.errors %}
-						<div class="alert alert-danger" role="alert">
+						<div class="alert alert-danger text-center my-2" role="alert">
 							{{ form.captcha.errors.1 }}
 							{% for error in form.username.errors %}
 								{{ error }}
@@ -96,7 +82,7 @@
 					</form>
 
 				<!-- Register Now -->
-				<div class="row my-2 justify-content-center text-center" style="padding: 10px;">
+				<div class="row py-3 justify-content-center text-center">
 					<h5>{% trans "Don't have an account?" %} <span><a href="{% url 'signup' %}" class="text-danger">{% trans "Register Now!" %}</a></span></h5>
 				</div>
 			</div>

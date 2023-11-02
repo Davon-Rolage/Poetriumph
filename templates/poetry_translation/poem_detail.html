@@ -10,11 +10,11 @@
 </style>
 
 {% if poem.is_hidden and not user.username == poem.saved_by %}
-<div class="container-fluid" style="text-align: center; padding-bottom: 10px; padding-left: 30px;">
-  <h class="display-6">{% trans 'This poem is hidden by its author.' %}</h>
+<div class="container-fluid text-center">
+  <h class="display-6">{% trans 'This poem is hidden by its author' %}</h>
 </div>
 {% else %}
-<div class="container-fluid" style="padding-bottom: 10px; padding-left: 30px;">
+<div class="container-fluid px-4">
   <form action="{% url 'poem_update' poem.id %}" method="post">
     {% csrf_token %}
 
@@ -22,9 +22,8 @@
     <input type="text" hidden value="1" name="edit">
 
     <!-- Language engine -->
-    <div class="row">
-      <h class="display-6">{% trans "Translation Service" %} - <span style="font-weight: bold">{{ poem.language_engine }}</span></h>
-    </div>
+    <div class="row my-3"><h class="display-6">{% trans "Translation Service" %} - <span class="fw-bold">{{ poem.language_engine }}</span></h></div>
+
     <div class="row" hidden>{{ form.language_engine }}</div>
 
     <div class="row justify-content-start align-items-center">

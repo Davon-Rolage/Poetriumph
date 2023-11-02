@@ -1,8 +1,11 @@
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
 from django.views.generic import DeleteView, DetailView, ListView, UpdateView, View
 
@@ -110,6 +113,10 @@ class MyLibraryView(ListView):
     template_name = 'poetry_translation/my_library.html'
     model = Poem
     
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
     def get_queryset(self):
         return self.model.objects.filter(saved_by=self.request.user.username).order_by('-updated_at')
     
@@ -120,7 +127,7 @@ class PoemDetailView(DetailView):
     form_class = PoemDetailForm
     
     def get(self, request, *args, **kwargs):
-        poem = self.model.objects.get(pk=kwargs.get('pk'))
+        poem = get_object_or_404(self.model, pk=kwargs.get('pk'))
         form = self.form_class(instance=poem)
         context = {
             'poem': poem,
@@ -135,12 +142,17 @@ class PoemUpdateView(UpdateView):
     model = Poem
     success_message = GUI_MESSAGES['messages']['poem_updated']
     
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
     def get(self, request, *args, **kwargs):
-        poem = self.model.objects.get(pk=kwargs.get('pk'))
+        poem = get_object_or_404(self.model, pk=kwargs.get('pk'))
         form = self.form_class(instance=poem)
         context = {
             'poem': poem,
             'form': form,
+            'confirm_poem_delete': GUI_MESSAGES['confirm_poem_delete'],
         }
         return render(request, self.template_name, context)
     
@@ -168,7 +180,12 @@ class PoemDeleteView(SuccessMessageMixin, DeleteView):
 class SaveTranslation(DetailView):
     model = Poem
 
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
     def post(self, request):
+        user = request.user
         original_text = request.POST.get('original_text')
         translation = request.POST.get('translation')
         source_lang = request.POST.get('source_lang')
@@ -184,7 +201,7 @@ class SaveTranslation(DetailView):
             saved_by=request.user.username
         )
         
-        total_poems = Poem.objects.filter(saved_by=request.user.username).count()
+        total_poems = Poem.objects.filter(saved_by=user.username).count()
         if total_poems in (1, 5, 20, 50, 100):
             messages.warning(request, GUI_MESSAGES['messages']['badge_earned'])
         
@@ -212,6 +229,10 @@ class CancelPremiumView(View):
 
 class NewFeaturesView(View):
     template_name = 'poetry_translation/new_features.html'
+
+    @method_decorator(staff_member_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
     
     def get(self, request):
         return render(request, self.template_name)
@@ -219,6 +240,10 @@ class NewFeaturesView(View):
 
 class TestView(View):
     template_name = 'poetry_translation/test.html'
+    
+    @method_decorator(staff_member_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
     
     def get(self, request):
         return render(request, self.template_name)

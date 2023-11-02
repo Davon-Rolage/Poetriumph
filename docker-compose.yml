@@ -4,7 +4,7 @@ services:
   postgres:
     build:
       context: .
-      dockerfile: ./postgres_image/Dockerfile
+      dockerfile: ./docker/postgres_image/Dockerfile
     container_name: ${PG_CONTAINER_NAME}
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
@@ -14,32 +14,57 @@ services:
     volumes:
        - postgres_data_poetry:/data/davon-postgres
     restart: unless-stopped
+    networks:
+          - network
+    ports:
+      - "5432:5432"
 
   web:
     image: davon/poetriumph
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ./docker/Dockerfile
     container_name: ${POETRIUMPH_CONTAINER_NAME}
     environment:
+      DEBUG: ${DEBUG}
       SECRET_KEY: ${SECRET_KEY}
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PG_CONTAINER_NAME: ${PG_CONTAINER_NAME}
       EMAIL_FROM: ${EMAIL_FROM}
       EMAIL_HOST_USER: ${EMAIL_HOST_USER}
       EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD}
       RECAPTCHA_PUBLIC_KEY: ${RECAPTCHA_PUBLIC_KEY}
       RECAPTCHA_PRIVATE_KEY: ${RECAPTCHA_PRIVATE_KEY}
+      CELERY_BROKER_URL: ${CELERY_BROKER_URL}
+      CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND}
 
     volumes:
       - ./templates:/app/templates
       - ./static:/app/static
+
     ports:
       - "8008:8000"
+
     depends_on:
       - postgres
+      - redis
+
+    networks:
+          - network
+
+  redis:
+      image: redis:7-alpine
+      container_name: ${REDIS_CONTAINER_NAME}
+      networks:
+          - network
+
+networks:
+  network:
+    driver: bridge
+
 
 volumes:
     postgres_data_poetry:

@@ -30,31 +30,15 @@
       flex-direction: column;
       min-height: 100vh;
     }
-
-    footer {
-      margin-top: auto;
-    }
-
-    /* country's flag icon settings */
-    a>img, .flag {
-      max-width: 23px;
-    }
-
-    /* Place 'search' to the left and 'pagination' to the right */
-    .dataTables_wrapper .dataTables_filter {
-      float: left;
-    }
-    .dataTables_wrapper .dataTables_length {
-      float: right;
-    }
   </style>
+  
 </head>
 
 <body>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js" integrity="sha512-X/YkDZyjTf4wyc2Vy16YGCPHwAY8rZJY+POgokZjQB2mhIRFJCckEGc6YyX9eNsPfn0PzThEuNs+uaomE5CO6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
 
   <!-- navigation bar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index: 2;">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="navbar-brand"><a href="{% url 'translation' %}"><img src="{% static 'images/logo.png' %}" alt="logo"></a></div>
       
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,11 +46,11 @@
       </button>
       
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav">
             <!-- Language interface selection -->
-            <div class="dropdown text-center">
-              <div class="btn-group" style="margin-left: 10px; margin-right: 10px;">
-                <button type="button" style="min-width: 105px; max-height: 40px" class="btn btn-outline-secondary dropdown-toggle shadow-none" data-bs-toggle="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown mx-auto">
+              <div class="btn-group">
+                <button type="button" id="btn-language-dropdown" class="btn btn-outline-secondary dropdown-toggle shadow-none" data-bs-toggle="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   {% if request.LANGUAGE_CODE == 'en' %}
                   <img class="flag" src="{% static 'images/flags/usa_uk1.png' %}" alt="flag_usa"> English
                   {% elif request.LANGUAGE_CODE == 'es' %}
@@ -102,23 +86,24 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'support_us' %}">{% trans "Support Us" %}</a>
           </li>
-          <li class="nav-item" style="margin: 0 auto;">
+          <li class="nav-item mx-auto">
             <a class="button_premium" href="{% url 'premium' %}">{% trans "Premium" %}</a>
           </li>
           <li>
             <div class="user_authentication text-center">
               {% if user.is_authenticated %}
-              {% trans "Hi" %} {% if user.is_premium %}<img style="max-width: 16px" src="{% static 'images/badges/badge_premium.png' %}" alt="premium_badge">{% endif %}
+              {% trans "Hi" %} {% if user.is_premium %}<img id="premium-badge-icon" src="{% static 'images/badges/badge_premium.png' %}" alt="premium_badge">{% endif %}
               {{ user.username }}!
               <br>
               <a href="{% url 'my_profile' %}">{% trans "My Profile" %}</a>
               ·
               <a href="{% url 'logout' %}">{% trans "Log out" %}</a>
+              
               {% if user.is_staff %}
-              <a href="/admin/" style="text-decoration: none;">&#9881;{% trans "Admin" %}</a>
+              <a href="/admin/" class="text-decoration-none">&#9881;{% trans "Admin" %}</a>
               {% endif %}
               {% else %}
-              <div class="login_register" style="margin-top: 8px;">
+              <div class="login_register my-2">
                 <a href="{% url 'login' %}">{% trans "Login" %}</a>
                 ·
                 <a href="{% url 'signup' %}">{% trans "Register" %}</a>
@@ -126,36 +111,34 @@
               {% endif %}
           </li>
 
+          {% if user.is_staff %}
           <!-- New Features and Test Area, shown only to staff users -->
-          <li {% if not user.is_staff%}hidden{% endif %} style="position: absolute; right: 10px;">
-            <div class="new_features">
-              <a class="btn btn-outline-info shadow-none" href="{% url 'new_features' %}" style="margin-left: 10px">New Features</a>
-            </div>
-            <div class="test">
-              <a class="btn btn-warning shadow-none" href="{% url 'test' %}" style="margin-left: 10px">Test Area</a>
-            </div>
-          </li>
+          <div class="staff_area">  
+            <div class="new_features_area"><a class="btn btn-outline-info shadow-none" href="{% url 'new_features' %}">New Features</a></div>
+            <div class="test_area"><a class="btn btn-warning shadow-none" href="{% url 'test' %}">Test Area</a></div>
+          </div>
+          {% endif %}
 
         </ul>
       </div>
   </nav>
 
-<!-- Alerts -->
 {% for message in messages %}
+<!-- Alerts -->
 <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
   {{ message|safe }}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endfor %}
 
+<script src="{% static 'js/base.js' %}"></script>
+
 {% block content %}
 {% endblock %}
 
-<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
-  <p class="col-md-4 mb-0" style="color: aliceblue; margin-left: 10px;">&copy; 2023 Poetriumph, <a href="https://newa.fun" target="_blank" style="text-decoration: none; color: inherit;">Newa Fun</a>. {% trans "All Rights Reserved" %}</p>
+<footer class="mx-3 py-3 border-top">
+  <p>&copy; 2023 Poetriumph, <a href="https://newa.fun" target="_blank">Newa Fun</a>. {% trans "All Rights Reserved" %}</p>
 </footer>
-
-<script src="{% static 'js/base.js' %}"></script>
 
 </body>
 </html>

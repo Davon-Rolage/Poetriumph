@@ -60,7 +60,7 @@ class PoemDetailForm(forms.ModelForm):
             'name': 'is_hidden',
         }
     ))
-    original_text = forms.CharField(required=True, widget=forms.Textarea(
+    original_text = forms.CharField(widget=forms.Textarea(
         attrs={
             'readonly': True,
             'rows': 10,
@@ -69,7 +69,7 @@ class PoemDetailForm(forms.ModelForm):
             'placeholder': GUI_MESSAGES['forms']['placeholder_original_text'],
         }
     ))
-    translation = forms.CharField(required=True, widget=forms.Textarea(
+    translation = forms.CharField(widget=forms.Textarea(
         attrs={
             'readonly': True,
             'rows': 10,
@@ -78,7 +78,7 @@ class PoemDetailForm(forms.ModelForm):
             'placeholder': GUI_MESSAGES['forms']['placeholder_translation_text'],
         }
     ))
-    updated_at = forms.DateTimeField(required=True, widget=forms.DateTimeInput(
+    updated_at = forms.DateTimeField(widget=forms.DateTimeInput(
         attrs={
             'readonly': True,
             'id': 'updated_at',

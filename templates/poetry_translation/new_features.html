@@ -2,9 +2,9 @@
 {% load i18n %}
 
 {% block content %}
-<div class="container-fluid" style="padding: 30px; padding-top: 20px;">
+<div class="container-fluid container-new-features px-4 py-3">
     <h class="display-6">{% trans "Features to be added" %}</h>
-    <ol style="margin-top: 10px">
+    <ol class="my-3">
         
         <li>
             Add a 'Send feedback' button (maybe use <a href="https://github.com/ludrao/django-tellme" target="_blank">django-tellme</a>)
@@ -23,10 +23,6 @@
         </li>
 
         <li>
-            celery
-        </li>
-
-        <li>
             web sockets (server sends information to client)
         </li>
 
@@ -35,14 +31,18 @@
         </li>
 
         <li>
-
+            update i18n files
         </li>
 
         <li>
-            
+            add more language engines in utils.py
         </li>
 
+        <li>
+            add sparkling colorful text to "premium.html" to the words "premium user"
+        </li>
         
+
     </ol>
 </div>
 {% endblock %}

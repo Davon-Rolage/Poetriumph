@@ -4,160 +4,148 @@
 
 {% block content %}
 
-<style>
-  .character_counter {
-    position: absolute;
-    bottom: 10px;
-    right: 20px;
-  }
-</style>
+<div class="container-fluid container-index text-center">
+  <h1>{% trans "Poem Translation" %}</h1>
+  <p>{% trans "Insert your poem and choose translation engine." %}</p>
 
-<div class="container-fluid" style="background: linear-gradient(to bottom, rgba(240, 248, 255, 0.8), aliceblue);">
-  <h1 style="text-align: center;">{% trans "Poem Translation" %}</h1>
-  <p style="font-size: 24px; padding-left: 40px;">{% trans "Insert your poem and choose translation engine." %}</p>
+  <div class="row">
+      <div class="col-sm-12 col-md-6">
 
-  <div class="contact_section2">
-      <div class="row">
-          <div class="col-sm-12 col-md-6">
+          <!-- Form to translate the poem -->
+          <form id='form-translate' method="post">
+              {% csrf_token %}
 
-              <!-- Form to translate the poem -->
-              <form id='form-translate' action="" method="post">
-                  {% csrf_token %}
+              <div class="row gy-5">
+                <div class="container-translation-settings">
+                  
+                  <!-- Source Language dropdown list -->
+                  <div class="col-sm-auto col-md-3">
+                    <div class="p-1">
+                      <select name="source_lang" class="form-select" aria-select="Source Language">
+                        {% for language in supported_languages %}
+                          <option value="{{ language.0 }}" {% if language.0 == source_lang %}selected{% endif %}>{{ language.1 }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                  </div>
 
-                  <div class="row gy-5">
-                    <div class="translation-settings-container">
-                      
-                      <!-- Source Language dropdown list -->
-                      <div class="col-sm-auto col-md-3">
-                        <div class="p-1">
-                          <select name="source_lang" class="form-select" aria-select="Source Language">
-                            {% for language in supported_languages %}
-                              <option value="{{ language.0 }}" {% if language.0 == source_lang %}selected{% endif %}>{{ language.1 }}</option>
-                            {% endfor %}
-                          </select>
-                        </div>
-                      </div>
-
-                      <!-- Simple right arrow -> -->
-                      <div class="col-sm-auto">
-                        <div class="p-1">
-                          <i class="fa-solid fa-arrow-right fa-beat fa-xl"></i>
-                        </div>
-                      </div>
-                      
-                      <!-- Target Language dropdown list -->
-                      <!-- If user is not premium, only show first 3 languages -->
-                      <div class="col-sm-auto col-md-3">
-                        <div class="p-1">
-                          <select name="target_lang" class="form-select" aria-select="Target Language">
-                            {% for language in supported_languages|slice:"1:" %}
-                              {% if not user.is_premium and forloop.counter <= 3 or user.is_premium %}
-                                <option value="{{ language.0 }}" {% if language.0 == target_lang %}selected{% endif %}>{{ language.1 }}</option>
-                              {% endif %}
-                            {% endfor %}
-                          </select>
-                        </div>
-                      </div>
-                      
-                      <!-- Language Engine dropdown list -->
-                      <div class="col-sm-auto col-md-3">
-                        <div class="p-1">
-                          <select name="language_engine" class="language_engines form-select" aria-select="Translation Service">
-                            {% for engine in language_engines %}
-                              <option value="{{ engine.0 }}" 
-                                {% if engine.0 == language_engine %}selected{% endif %} 
-                                data-toggle="tooltip" data-bs-toggle="tooltip" 
-                                {% if forloop.counter == 1 %} title="{{ language_engine_tooltips.0 }}" 
-                                {% elif forloop.counter == 2 %} title="{{ language_engine_tooltips.1 }}" 
-                                {% elif forloop.counter == 3 %} title="{{ language_engine_tooltips.2 }}" 
-                                {% endif %}>{{ engine.1 }}
-                              </option>
-                            {% endfor %}
-                          </select>
-                        </div>
-                      </div>
-                      
-                      <!-- Translate button -->
-                      <div class="col-sm-auto col-md-2 text-end">
-                        <div class="p-1">
-                          <span hidden id="loading_button_text">{{ loading_button_text }}</span>
-                          <span hidden id="loading_tooltip_text">{{ loading_tooltip_text }}</span>
-
-                          <button type="submit" id="button_translate" class="btn btn-primary shadow-none" data-bs-toggle="tooltip" data-bs-placement="top">
-                            <span style="display: none;" id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            <span id="button_translate_text">{% trans "Translate" %}</span>
-                          </button>
-                        </div>
-                      </div>
-                      
+                  <!-- Simple right arrow -> -->
+                  <div class="col-sm-auto">
+                    <div class="p-1">
+                      <i class="fa-solid fa-arrow-right fa-beat fa-xl"></i>
                     </div>
                   </div>
                   
-                  <!-- Original text textarea -->
-                  <div class="row">
-                    <div class="user_text_section copyable-textbox">
-                        <textarea required class="message_text text-to-copy" placeholder='{% trans "Insert your poem..." %}' rows="10" id="original" name="original_text">{{ original_text }}</textarea>
-                        <!-- Copy to clipboard icon -->
-                        <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
-                          <i id="check-icon" class="fa-solid fa-check save-check"></i>
-                        </i>
-
-                        <div id="character_counter" class="character_counter">
-                          <span id="character_count"></span> / <span id="character_limit">{{ character_limit }}</span>
-                        </div>
-                        
+                  <!-- Target Language dropdown list -->
+                  <!-- If user is not premium, only show first 3 languages -->
+                  <div class="col-sm-auto col-md-3">
+                    <div class="p-1">
+                      <select name="target_lang" class="form-select" aria-select="Target Language">
+                        {% for language in supported_languages|slice:"1:" %}
+                          {% if not user.is_premium and forloop.counter <= 3 or user.is_premium %}
+                            <option value="{{ language.0 }}" {% if language.0 == target_lang %}selected{% endif %}>{{ language.1 }}</option>
+                          {% endif %}
+                        {% endfor %}
+                      </select>
                     </div>
-                  </div>                    
-                </form>
-          </div>
-
-          <div class="col-sm-12 col-md-6">
-              <!-- Form to save the poem to the library -->
-              <form id='save-form' action="{% url 'save_translation' %}" method="post">
-                  {% csrf_token %}
-          
-                  <input type="hidden" name="language_engine" value="{{ language_engine }}">
-                  <input type="hidden" name="source_lang" value="{{ source_lang }}">
-                  <input type="hidden" name="target_lang" value="{{ target_lang }}">
-
-                  <div class="row gy-5 justify-content-start">
-                    <!-- A download button -->
-                    <div class="col-auto">
-                      <div class="py-1">
-                        <input type="button" id="button_download" class="btn btn-outline-primary shadow-none" value="{% trans 'Download' %}">
-                      </div>
-                    </div>
-
-                    <!-- Save to library button -->
-                    <div class="col-auto">
-                      <div class="py-1">
-                        {% if not user.is_authenticated %}
-                        <span class="tt d-inline-block" tabindex="0" data-toggle="tooltip" title="{% trans 'Sign in to save to library!' %}">
-                          <button disabled style="pointer-events: none;" id="button_save_translation" type="submit" class="btn btn-success shadow-none">{% trans "Save to Library" %}</button>
-                        </span>
-                        {% else %}
-                        <button id="button_save_translation" type="submit" class="btn btn-success shadow-none">{% trans "Save to Library" %}</button>
-                        {% endif %}
-                      </div>
-                    </div>
-
                   </div>
-
-                  <!-- Translation textarea -->
-                  <div class="row">
-                    <div class="user_text_section copyable-textbox">
-                        <textarea id="translation-text" readonly required class="message_text translation_text text-to-copy" placeholder="{% trans 'Your translation will be here...' %}" rows="10" name="translation">{{ translation|safe }}</textarea>
-                        <!-- Copy to clipboard icon -->
-                        <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
-                          <i id="check-icon" class="fa-solid fa-check save-check"></i>
-                        </i>
+                  
+                  <!-- Language Engine dropdown list -->
+                  <div class="col-sm-auto col-md-3">
+                    <div class="p-1">
+                      <select name="language_engine" class="form-select" aria-select="Translation Service">
+                        {% for engine in language_engines %}
+                          <option value="{{ engine.0 }}" 
+                            {% if engine.0 == language_engine %}selected{% endif %} 
+                            data-toggle="tooltip" data-bs-toggle="tooltip" 
+                            {% if forloop.counter == 1 %} title="{{ language_engine_tooltips.0 }}" 
+                            {% elif forloop.counter == 2 %} title="{{ language_engine_tooltips.1 }}" 
+                            {% elif forloop.counter == 3 %} title="{{ language_engine_tooltips.2 }}" 
+                            {% endif %}>{{ engine.1 }}
+                          </option>
+                        {% endfor %}
+                      </select>
                     </div>
-                    <input type="hidden" name="original_text" value="{{ original_text }}">
                   </div>
-              </form>
-          </div>
+                  
+                  <!-- Translate button -->
+                  <div class="col-sm-auto col-md-2 ms-auto text-end">
+                    <div class="py-1">
+                      <span hidden id="loading_button_text">{{ loading_button_text }}</span>
+                      <span hidden id="tt-loading-text">{{ loading_tooltip_text }}</span>
+
+                      <button type="submit" id="button_translate" class="btn btn-primary shadow-none" data-bs-toggle="tooltip" data-bs-placement="top">
+                        <span id="spinner" class="spinner-border spinner-border-sm display-none" role="status" aria-hidden="true"></span>
+                        <span id="button_translate_text">{% trans "Translate" %}</span>
+                      </button>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+              
+              <!-- Original text textarea -->
+              <div class="user_text_section copyable-textbox">
+                  <textarea required class="message_text text-to-copy" placeholder='{% trans "Insert your poem..." %}' rows="10" id="original" name="original_text">{{ original_text }}</textarea>
+                  <!-- Copy to clipboard icon -->
+                  <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
+                    <i id="check-icon" class="fa-solid fa-check save-check"></i>
+                  </i>
+
+                  <div id="character_counter" class="character_counter">
+                    <span id="character_count"></span> / <span id="character_limit">{{ character_limit }}</span>
+                  </div>
+              </div>
+
+          </form>
+      </div>
+
+      <div class="col-sm-12 col-md-6">
+          <!-- Form to save the poem to the library -->
+          <form id='save-form' action="{% url 'save_translation' %}" method="post">
+              {% csrf_token %}
+      
+              <input type="hidden" name="language_engine" value="{{ language_engine }}">
+              <input type="hidden" name="source_lang" value="{{ source_lang }}">
+              <input type="hidden" name="target_lang" value="{{ target_lang }}">
+
+              <div class="row gy-5 justify-content-start">
+                <!-- A download button -->
+                <div class="col-auto">
+                  <div class="py-1">
+                    <input type="button" id="button_download" class="btn btn-outline-primary shadow-none" value="{% trans 'Download' %}">
+                  </div>
+                </div>
+
+                <!-- Save to library button -->
+                <div class="col-auto">
+                  <div class="py-1">
+                    {% if not user.is_authenticated %}
+                    <span id="tt-save-to-library" class="tt d-inline-block" tabindex="0" data-toggle="tooltip" title="{% trans 'Sign in to save to library!' %}">
+                      <button disabled type="submit" class="btn btn-success shadow-none pe-none">{% trans "Save to Library" %}</button>
+                    </span>
+                    {% else %}
+                    <button type="submit" class="btn btn-success shadow-none">{% trans "Save to Library" %}</button>
+                    {% endif %}
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Translation textarea -->
+                <div class="user_text_section copyable-textbox">
+                    <textarea id="translation-text" readonly required class="message_text translation_text text-to-copy" placeholder="{% trans 'Your translation will be here...' %}" rows="10" name="translation">{{ translation|safe }}</textarea>
+                    <!-- Copy to clipboard icon -->
+                    <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
+                      <i id="check-icon" class="fa-solid fa-check save-check"></i>
+                    </i>
+                </div>
+                <input type="hidden" name="original_text" value="{{ original_text }}">
+              
+          </form>
       </div>
   </div>
+
 </div>
 
 <script src="{% static 'js/index.js' %}"></script>
