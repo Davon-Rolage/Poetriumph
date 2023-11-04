@@ -69,7 +69,7 @@ class TranslationFormView(View):
         context = {
             'original_text': original_text,
             'translation': translation,
-            'supported_languages': SUPPORTED_LANGUAGES,
+            'source_languages': SUPPORTED_LANGUAGES,
             'target_languages': target_languages,
             'source_lang': source_lang,
             'target_lang': target_lang,
