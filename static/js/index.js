@@ -1,11 +1,32 @@
 const characterLimit = $("#character_limit").text();
+const buttonTranslate = $("#btn-translate");
+const languageEngineDropdown = $("#language-engine-dropdown");
+const targetLanguageDropdown = $('select[name="target_lang"]');
+const languageOptions = targetLanguageDropdown.find('option').map(function() {return $(this).text();}).get();
+const loadingButtonText = $("#loading_button_text").text();
+const tooltipLoadingGPT = new bootstrap.Tooltip($("#btn-translate"), {
+    title: $("#tt-loading-text-chatgpt").text(),
+    placement: "top",
+    trigger: "manual"
+});
+
+$(document).ready(function() {
+    // Update character counter on page load
+    $("#character_count").text($("#original").val().length);
+    
+    // Update the target language dropdown when the language engine dropdown changes
+    languageEngineDropdown.change(updateTargetLanguageDropdown);
+    updateTargetLanguageDropdown();
+
+    // Activate "Sign in to save to library" tooltip
+    activateTooltipSaveToLibrary();
+})
 
 // Update character counter in the lower right corner of the textbox
 function updateCounter(textbox) {
     const characterCount = textbox.val().length;
     $("#character_count").text(characterCount);
 
-    const buttonTranslate = $("#button_translate");
     
     if (characterCount > characterLimit) {
         $("#character_counter").css("color", "red");
@@ -21,44 +42,35 @@ function updateCounter(textbox) {
     }
 }
 
-// Update character counter when user types
-$("#original").on('input', function() {
-    updateCounter($("#original"));
-});
-
-const loadingButtonText = $("#loading_button_text").text();
-const loadingTooltip = new bootstrap.Tooltip($("#button_translate"), {
-    title: $("#tt-loading-text").text(),
-    placement: "top",
-    trigger: "manual"
-})
-
-function showLoadingTooltip() {
+function activateTooltipLoadingGPT() {
     setTimeout(function() {
-        loadingTooltip.show();
+        tooltipLoadingGPT.show();
     }, 5000);
     
     setTimeout(function() {
-        loadingTooltip.hide();
+        tooltipLoadingGPT.hide();
     }, 12000);
 }
 
 // Start loading spinner and show loading tooltip when translate button is clicked
-$("#form-translate").on("submit", function (event) {
+$("#form-translate").submit(function (event) {
     event.preventDefault();
     const withinLimit = updateCounter($("#original"));
     if (!withinLimit) {
         return
     } else {
-        $("#button_translate").prop("disabled", true);
-        $("#button_translate_text").text(loadingButtonText);
+        buttonTranslate.prop("disabled", true);
+        $("#button-translate-text").text(loadingButtonText);
         $("#spinner").css("display", "inline-block");
         event.target.submit();
-        showLoadingTooltip();
-    }});
+        if (languageEngineDropdown.val().includes('ChatGpt')) {
+            activateTooltipLoadingGPT();
+        }
+    }
+});
 
 // Download button
-$("#button_download").click(function () {
+$("#button-download").click(function () {
     const translation = $("#translation-text").val();
     if (!translation.trim()) {
         return false;
@@ -84,34 +96,22 @@ $("#save-form").submit(function(e) {
     }
 });
 
-// // Set target_lang options to English and Spanish if language engine is ChatGpt_Poet
-const languageEngineDropdown = document.querySelector('select[name="language_engine"]');
-const targetLanguageDropdown = document.querySelector('select[name="target_lang"]');
-
-// Store the original options when the page loads
-const originalOptions = Array.from(targetLanguageDropdown.options);
+// Update character counter when user types
+$("#original").on('input', function() {
+    updateCounter($("#original"));
+});
 
 function updateTargetLanguageDropdown() {
-    if (languageEngineDropdown.value === 'ChatGpt_Poet') {
-        const options = targetLanguageDropdown.options;
-        const slicedOptions = Array.from(options).slice(0, 2);
-        targetLanguageDropdown.innerHTML = '';
-        slicedOptions.forEach((option) => {
-        targetLanguageDropdown.appendChild(option);
-        });
-    } else {
-        targetLanguageDropdown.innerHTML = '';
-        originalOptions.forEach((option) => {
-        targetLanguageDropdown.appendChild(option);
-        });
+    targetLanguageDropdown.empty();
+    const gptPoetLanguages = languageOptions.slice(0, 2);
+    const options = languageEngineDropdown.val() === 'ChatGpt_Poet' ? gptPoetLanguages : languageOptions;
+    options.forEach((language) => {
+        targetLanguageDropdown.append(`<option value="${language}">${language}</option>`);
+    });
+};
+
+function activateTooltipSaveToLibrary() {
+    if (!$("#btn-save-to-library").prop("disabled")) {
+        $("#tt-save-to-library").parent().html($("#tt-save-to-library").html());
     }
-}
-// Call the function on page load
-updateTargetLanguageDropdown();
-
-// Call the function when languageEngineDropdown changes
-languageEngineDropdown.addEventListener('change', updateTargetLanguageDropdown);
-
-$(document).ready(function() {
-    $("#character_count").text($("#original").val().length);
-})
+};

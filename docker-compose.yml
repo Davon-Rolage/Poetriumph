@@ -38,8 +38,6 @@ services:
       EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD}
       RECAPTCHA_PUBLIC_KEY: ${RECAPTCHA_PUBLIC_KEY}
       RECAPTCHA_PRIVATE_KEY: ${RECAPTCHA_PRIVATE_KEY}
-      CELERY_BROKER_URL: ${CELERY_BROKER_URL}
-      CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND}
 
     volumes:
       - ./templates:/app/templates
@@ -55,16 +53,10 @@ services:
     networks:
           - network
 
-  redis:
-      image: redis:7-alpine
-      container_name: ${REDIS_CONTAINER_NAME}
-      networks:
-          - network
 
 networks:
   network:
     driver: bridge
-
 
 volumes:
     postgres_data_poetry:

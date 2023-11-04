@@ -65,7 +65,7 @@ class PoemDetailForm(forms.ModelForm):
             'readonly': True,
             'rows': 10,
             'name': 'original_text',
-            'class': 'message_text text-to-copy',
+            'class': 'poem-textarea text-to-copy',
             'placeholder': GUI_MESSAGES['forms']['placeholder_original_text'],
         }
     ))
@@ -74,7 +74,7 @@ class PoemDetailForm(forms.ModelForm):
             'readonly': True,
             'rows': 10,
             'name': 'translation_text',
-            'class': 'message_text text-to-copy',
+            'class': 'poem-textarea text-to-copy',
             'placeholder': GUI_MESSAGES['forms']['placeholder_translation_text'],
         }
     ))
@@ -139,7 +139,7 @@ class PoemUpdateForm(forms.ModelForm):
         attrs={
             'rows': 10,
             'name': 'original_text',
-            'class': 'message_text text-to-copy',
+            'class': 'poem-textarea text-to-copy',
             'placeholder': GUI_MESSAGES['forms']['placeholder_original_text'],
         }
     ))
@@ -147,7 +147,7 @@ class PoemUpdateForm(forms.ModelForm):
         attrs={
             'rows': 10,
             'name': 'translation',
-            'class': 'message_text text-to-copy',
+            'class': 'poem-textarea text-to-copy',
             'placeholder': GUI_MESSAGES['forms']['placeholder_translation_text'],
         }
     ))

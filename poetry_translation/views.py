@@ -19,23 +19,24 @@ from .utils import translate, translate_gpt
 
 class TranslationFormView(View):
     template_name = 'poetry_translation/index.html'
-    language_engine_tooltips = list(LANGUAGE_ENGINE_TOOLTIPS.values())
 
     def get(self, request):
         user = request.user
         if user.is_authenticated and user.is_premium:
             character_limit = CHARACTER_LIMIT_PREMIUM
+            target_languages = SUPPORTED_LANGUAGES[1:]
         else:
             character_limit = CHARACTER_LIMIT
+            target_languages = SUPPORTED_LANGUAGES[1:4]
             
         context = {
             'target_lang': 'spanish',
-            'supported_languages': SUPPORTED_LANGUAGES,
+            'source_languages': SUPPORTED_LANGUAGES,
+            'target_languages': target_languages,
             'language_engines': LANGUAGE_ENGINES,
-            'language_engine_tooltips': self.language_engine_tooltips,
+            'tooltips': GUI_MESSAGES['tooltips'],
             'character_limit': character_limit,
             'loading_button_text': GUI_MESSAGES['loading_button_text'],
-            'loading_tooltip_text': GUI_MESSAGES['loading_tooltip_text'],
         }
         return render(request, self.template_name, context)
 
@@ -43,13 +44,15 @@ class TranslationFormView(View):
         user = request.user
         language_engine = request.POST.get('language_engine')
         source_lang = request.POST.get('source_lang')
-        target_lang = request.POST.get('target_lang')
+        target_lang = request.POST.get('target_lang').lower()
         original_text = request.POST.get('original_text')
 
         if user.is_authenticated and user.is_premium:
             character_limit = CHARACTER_LIMIT_PREMIUM
+            target_languages = SUPPORTED_LANGUAGES[1:]
         else:
             character_limit = CHARACTER_LIMIT
+            target_languages = SUPPORTED_LANGUAGES[1:4]
             
         if language_engine == 'ChatGpt_Poet':
             translation = translate_gpt(original_text, target_lang, character_limit)
@@ -62,19 +65,19 @@ class TranslationFormView(View):
             original_text,
             proxies=None
         )
-         
+            
         context = {
             'original_text': original_text,
             'translation': translation,
             'supported_languages': SUPPORTED_LANGUAGES,
+            'target_languages': target_languages,
             'source_lang': source_lang,
             'target_lang': target_lang,
             'language_engine': language_engine,
             'language_engines': LANGUAGE_ENGINES,
-            'language_engine_tooltips': self.language_engine_tooltips,
+            'tooltips': GUI_MESSAGES['tooltips'],
             'character_limit': character_limit,
             'loading_button_text': GUI_MESSAGES['loading_button_text'],
-            'loading_tooltip_text': GUI_MESSAGES['loading_tooltip_text'],
         }
         return render(request, self.template_name, context)
 
@@ -247,3 +250,4 @@ class TestView(View):
     
     def get(self, request):
         return render(request, self.template_name)
+    

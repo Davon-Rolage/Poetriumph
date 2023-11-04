@@ -12,6 +12,7 @@ from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext as _
+from django.views.decorators.cache import cache_page
 from django.views.generic import DeleteView, View
 
 from accounts.models import MyProfile
@@ -25,6 +26,10 @@ from .tokens import account_activation_token
 
 class SignUpView(View):
     template_name = 'registration/signup.html'
+    
+    @method_decorator(cache_page(60 * 60 * 24))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
     
     def get(self, request):
         form = CustomUserCreationForm()
@@ -89,6 +94,10 @@ def activate_email(request, user, to_email):
 
 class LoginView(View):
     template_name = 'registration/login.html'
+    
+    @method_decorator(cache_page(60 * 60 * 24))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
     
     def get(self, request):
         form = CustomUserLoginForm()

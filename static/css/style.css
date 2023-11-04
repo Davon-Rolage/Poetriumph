@@ -41,7 +41,7 @@
   height: 500px;
 }
 
-.message_text {
+.poem-textarea {
     width: 100%;
     font-size: 18px;
     color: #666666;
@@ -52,7 +52,7 @@
     line-height: 1.3;
 }
 
-.message_text:focus {
+.poem-textarea:focus {
     outline-width: 0;
 }
 

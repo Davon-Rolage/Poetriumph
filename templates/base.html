@@ -92,16 +92,17 @@
           <li>
             <div class="user_authentication text-center">
               {% if user.is_authenticated %}
-              {% trans "Hi" %} {% if user.is_premium %}<img id="premium-badge-icon" src="{% static 'images/badges/badge_premium.png' %}" alt="premium_badge">{% endif %}
-              {{ user.username }}!
-              <br>
-              <a href="{% url 'my_profile' %}">{% trans "My Profile" %}</a>
-              ·
-              <a href="{% url 'logout' %}">{% trans "Log out" %}</a>
+                {% trans "Hi" %} {% if user.is_premium %}<img id="premium-badge-icon" src="{% static 'images/badges/badge_premium.png' %}" alt="premium_badge">{% endif %}
+                {{ user.username }}!
+                <br>
+                <a href="{% url 'my_profile' %}">{% trans "My Profile" %}</a>
+                ·
+                <a href="{% url 'logout' %}">{% trans "Log out" %}</a>
               
-              {% if user.is_staff %}
-              <a href="/admin/" class="text-decoration-none">&#9881;{% trans "Admin" %}</a>
-              {% endif %}
+                {% if user.is_staff %}
+                  <a href="/admin/" class="text-decoration-none">&#9881;{% trans "Admin" %}</a>
+                {% endif %}
+
               {% else %}
               <div class="login_register my-2">
                 <a href="{% url 'login' %}">{% trans "Login" %}</a>

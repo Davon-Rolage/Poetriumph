@@ -11,11 +11,6 @@ LANGUAGE_ENGINES = (
     ('ChatGptTranslator', _('ChatGPT Translator')),
     ('ChatGpt_Poet', _('ChatGPT Poet')),
 )
-LANGUAGE_ENGINE_TOOLTIPS = {
-    'GoogleTranslator': _("Literal translation with Google Translator"),
-    'ChatGptTranslator': _("Take the context into account and use the power of AI to translate your text"),
-    'ChatGpt_Poet': _("Make a rhyming poem (only English and Spanish) out of your text, preserving rhythm and rhyming patterns.\nOr make a poem using just a prompt, like `I'm happy that you're with me`"),
-}
 
 SUPPORTED_LANGUAGES = (
     ('auto', _('Detect language')),
@@ -38,6 +33,13 @@ SUPPORTED_LANGUAGES = (
 )
 
 GUI_MESSAGES = {
+    'tooltips': {
+        'save_to_library': _('Sign in to save to library!'),
+        'loading_text_chatgpt': _('ChatGPT response may take up to 2 minutes'), 
+        'engine_google_translator': _("Literal translation with Google Translator"),
+        'engine_chatgpt_translator': _("Take the context into account and use the power of AI to translate your text"),
+        'engine_chatgpt_poet': _("Make a rhyming poem (only English and Spanish) out of your text, preserving rhythm and rhyming patterns.\nOr make a poem using just a prompt, like `I'm happy that you're with me`"),
+    },
     'forms': {
         'placeholder_title': _('Title...'),
         'placeholder_author': _('Author...'),
@@ -68,7 +70,6 @@ GUI_MESSAGES = {
         'activation_failed': _('Activation link is invalid! Please try again.'),
     },
     'loading_button_text': _('Translating'),
-    'loading_tooltip_text': _('ChatGPT response may take up to 2 minutes'), 
     'confirm_poem_delete': _('Are you sure you want to delete this poem?'),
     'confirm_account_delete': _('Are you sure you want to delete your account?'),
 }
