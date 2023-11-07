@@ -10,7 +10,7 @@
 
 				<!-- Login title -->
 				<div class="row pt-2 text-center">
-					<h1><strong>{% trans "Login" %}</strong></h1>
+					<h1><strong>{{ gui_messages.login_title }}</strong></h1>
 				</div>
 
 					<!-- Login Form -->
@@ -24,7 +24,7 @@
 									<span class="input-group-text"><i class="fa-solid fa-user"></i></span>
 									<div class="form-floating">
 										{{ form.username }}
-										<label for="floatingInputGroupUsername">{% trans "Username" %}</label>
+										<label for="floatingInputGroupUsername">{{ gui_messages.username }}</label>
 									</div>
 								</div>
 							</div>
@@ -37,7 +37,7 @@
 									<span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
 									<div class="form-floating">
 										{{ form.password }}
-										<label for="floatingInputGroupPassword">{% trans "Password" %}</label>
+										<label for="floatingInputGroupPassword">{{ gui_messages.password }}</label>
 									</div>					
 								</div>
 							</div>
@@ -48,7 +48,7 @@
 							<div class="col-9">
 								<!-- Forgot Password Link -->
 								<div class="col-12 px-0 text-right">
-									<span><a href="#" class="text-danger"><b>{% trans "Forgot Password?" %}</b></a></span>
+									<span><a href="#" class="text-danger"><b>{{ gui_messages.forgot_password }}</b></a></span>
 								</div>
 							</div>
 						</div>
@@ -65,7 +65,7 @@
 						<!-- Login button -->
 						<div class="row justify-content-center text-center">
 							<div class="col-6">
-								<input type="submit" value="{% trans 'Login' %}" class="btn btn-primary shadow-none">
+								<input type="submit" value="{{ gui_messages.login_button }}" class="btn btn-primary shadow-none">
 							</div>
 						</div>
 
@@ -83,7 +83,7 @@
 
 				<!-- Register Now -->
 				<div class="row py-3 justify-content-center text-center">
-					<h5>{% trans "Don't have an account?" %} <span><a href="{% url 'signup' %}" class="text-danger">{% trans "Register Now!" %}</a></span></h5>
+					<h5>{{ gui_messages.do_not_have_account }} <span><a href="{% url 'signup' %}" class="text-danger">{{ gui_messages.register_now }}</a></span></h5>
 				</div>
 			</div>
 		</div>

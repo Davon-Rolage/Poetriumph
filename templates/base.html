@@ -22,13 +22,11 @@
   <style>
     body {
       background-image: url('{% static "images/background_full+.jpg" %}');
+      background-attachment: fixed;
       background-repeat: no-repeat;
-      background-size: 100%;
+      background-size: cover;
       background-color: #145767;
       opacity: 0.95;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
     }
   </style>
   
@@ -39,107 +37,110 @@
 
   <!-- navigation bar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="navbar-brand"><a href="{% url 'translation' %}"><img src="{% static 'images/logo.png' %}" alt="logo"></a></div>
+
+    <!-- Poetriumph logo -->
+    <div class="navbar-brand mx-3"><a href="{% url 'translation' %}"><img src="{% static 'images/logo.png' %}" alt="logo"></a></div>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
       
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav">
-            <!-- Language interface selection -->
-            <div class="dropdown mx-auto">
-              <div class="btn-group">
-                <button type="button" id="btn-language-dropdown" class="btn btn-outline-secondary dropdown-toggle shadow-none" data-bs-toggle="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {% if request.LANGUAGE_CODE == 'en' %}
-                  <img class="flag" src="{% static 'images/flags/usa_uk1.png' %}" alt="flag_usa"> English
-                  {% elif request.LANGUAGE_CODE == 'es' %}
-                  <img class="flag" src="{% static 'images/flags/spain.png' %}" alt="flag_spain"> Español
-                  {% elif request.LANGUAGE_CODE == 'ru' %}
-                  <img class="flag" src="{% static 'images/flags/russia.png' %}" alt="flag_russia"> Русский
-                  <!-- Add new languages here -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav align-items-center">
+          <!-- Language interface selection -->
+          <div class="dropdown mx-auto">
+            <button type="button" id="btn-language-dropdown" class="btn btn-outline-secondary dropdown-toggle shadow-none" data-bs-toggle="dropdown" aria-expanded="true">
+              {% if request.LANGUAGE_CODE == 'en' %}
+              <img class="image-flag me-1" src="{% static 'images/flags/usa_uk.png' %}" alt="flag_usa">English
+              {% elif request.LANGUAGE_CODE == 'es' %}
+              <img class="image-flag me-1" src="{% static 'images/flags/spain.png' %}" alt="flag_spain">Español
+              {% elif request.LANGUAGE_CODE == 'ru' %}
+              <img class="image-flag me-1" src="{% static 'images/flags/russia.png' %}" alt="flag_russia">Русский
+              <!-- Add new languages here -->
 
-                  {% endif %}
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="/en/{{ request.path|remove_language }}"><img src="{% static 'images/flags/usa_uk1.png' %}" alt="flag_usa"> {% trans "English" %}</a>
-                  <a class="dropdown-item" href="/es/{{ request.path|remove_language }}"><img src="{% static 'images/flags/spain.png' %}" alt="flag_spain"> {% trans "Spanish" %}</a>
-                  <a class="dropdown-item" href="/ru/{{ request.path|remove_language }}"><img src="{% static 'images/flags/russia.png' %}" alt="flag_russia"> {% trans "Russian" %}</a>
-                  <!-- Add new languages here -->
-                  
-                </div>
-              </div>
-            </div>
-
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'translation' %}">{% trans "Poem Translation" %}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'poem_library' %}">{% trans "Poem Library" %}</a>
-          </li>
-          <li class="nav-item" {% if not user.is_authenticated %}hidden{% endif %}>
-            <a class="nav-link" href="{% url 'my_library' %}">{% trans "My Library" %}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'about' %}">{% trans "About" %}</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'support_us' %}">{% trans "Support Us" %}</a>
-          </li>
-          <li class="nav-item mx-auto">
-            <a class="button_premium" href="{% url 'premium' %}">{% trans "Premium" %}</a>
-          </li>
-          <li>
-            <div class="user_authentication text-center">
-              {% if user.is_authenticated %}
-                {% trans "Hi" %} {% if user.is_premium %}<img id="premium-badge-icon" src="{% static 'images/badges/badge_premium.png' %}" alt="premium_badge">{% endif %}
-                {{ user.username }}!
-                <br>
-                <a href="{% url 'my_profile' %}">{% trans "My Profile" %}</a>
-                ·
-                <a href="{% url 'logout' %}">{% trans "Log out" %}</a>
-              
-                {% if user.is_staff %}
-                  <a href="/admin/" class="text-decoration-none">&#9881;{% trans "Admin" %}</a>
-                {% endif %}
-
-              {% else %}
-              <div class="login_register my-2">
-                <a href="{% url 'login' %}">{% trans "Login" %}</a>
-                ·
-                <a href="{% url 'signup' %}">{% trans "Register" %}</a>
-              </div>
               {% endif %}
-          </li>
-
-          {% if user.is_staff %}
-          <!-- New Features and Test Area, shown only to staff users -->
-          <div class="staff_area">  
-            <div class="new_features_area"><a class="btn btn-outline-info shadow-none" href="{% url 'new_features' %}">New Features</a></div>
-            <div class="test_area"><a class="btn btn-warning shadow-none" href="{% url 'test' %}">Test Area</a></div>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="btn-language-dropdown">
+              <a class="dropdown-item" href="/en/{{ request.path|remove_language }}"><img class="image-flag me-1" src="{% static 'images/flags/usa_uk.png' %}" alt="flag_usa">English</a>
+              <a class="dropdown-item" href="/es/{{ request.path|remove_language }}"><img class="image-flag me-1" src="{% static 'images/flags/spain.png' %}" alt="flag_spain">Español</a>
+              <a class="dropdown-item" href="/ru/{{ request.path|remove_language }}"><img class="image-flag me-1" src="{% static 'images/flags/russia.png' %}" alt="flag_russia">Русский</a>
+              <!-- Add new languages here -->
+              
+            </ul>
           </div>
-          {% endif %}
 
-        </ul>
-      </div>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'translation' %}">{{ gui_messages.poem_translation }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'poem_library' %}">{{ gui_messages.poem_library }}</a>
+        </li>
+        <li class="nav-item" {% if not user.is_authenticated %}hidden{% endif %}>
+          <a class="nav-link" href="{% url 'my_library' %}">{{ gui_messages.my_library }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}">{{ gui_messages.about }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'support_us' %}">{{ gui_messages.support_us }}</a>
+        </li>
+        <li class="nav-item mx-3">
+          <a class="button_premium" href="{% url 'premium' %}">{{ gui_messages.premium }}</a>
+        </li>
+        <li>
+          <div class="user_authentication text-center">
+            {% if user.is_authenticated %}
+            <span class="row my-1 justify-content-center">
+
+              {{ gui_messages.greetings }} {% if user.is_premium %}<img id="premium-badge-icon" src="{% static 'images/badges/badge_premium.png' %}" alt="premium_badge">{% endif %}
+              {{ user.username }}!
+            </span>
+              
+              <a href="{% url 'my_profile' %}">{{ gui_messages.my_profile }}</a>
+              ·
+              <a href="{% url 'logout' %}">{{ gui_messages.logout }}</a>
+            
+              {% if user.is_staff %}
+                <a href="/admin/" class="text-decoration-none">&#9881;{{ gui_messages.admin_panel }}</a>
+              {% endif %}
+
+            {% else %}
+            <div class="login_register my-2">
+              <a href="{% url 'login' %}">{{ gui_messages.login }}</a>
+              ·
+              <a href="{% url 'signup' %}">{{ gui_messages.register }}</a>
+            </div>
+            {% endif %}
+        </li>
+
+        {% if user.is_staff %}
+        <!-- New Features and Test Area, shown only to staff users -->
+        <div class="staff_area">  
+          <div class="new_features_area"><a class="btn btn-outline-info shadow-none" href="{% url 'new_features' %}">New Features</a></div>
+          <div class="test_area"><a class="btn btn-warning shadow-none" href="{% url 'test' %}">Test Area</a></div>
+        </div>
+        {% endif %}
+
+      </ul>
+    </div>
   </nav>
 
-{% for message in messages %}
-<!-- Alerts -->
-<div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
-  {{ message|safe }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-{% endfor %}
+  {% for message in messages %}
+  <!-- Alerts -->
+  <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+    {{ message|safe }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
 
-<script src="{% static 'js/base.js' %}"></script>
+  <script src="{% static 'js/base.js' %}"></script>
 
-{% block content %}
-{% endblock %}
+  {% block content %}
+  {% endblock %}
 
-<footer class="mx-3 py-3 border-top">
-  <p>&copy; 2023 Poetriumph, <a href="https://newa.fun" target="_blank">Newa Fun</a>. {% trans "All Rights Reserved" %}</p>
-</footer>
+  <footer class="ps-3 pt-3 ms-3">
+    <p>&copy; 2023 Poetriumph, <a href="https://newa.fun" target="_blank">Newa Fun</a>. {{ gui_messages.copyright }}</p>
+  </footer>
 
 </body>
 </html>

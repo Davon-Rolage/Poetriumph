@@ -1,16 +1,11 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, get_user_model, login
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import EmailMessage
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.utils.encoding import force_bytes, force_str
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext as _
 from django.views.decorators.cache import cache_page
 from django.views.generic import DeleteView, View
@@ -21,75 +16,38 @@ from poetry_translation.models import Poem
 
 from .forms import CustomUserCreationForm, CustomUserLoginForm
 from .models import CustomUser
-from .tokens import account_activation_token
+from .utils import *
 
 
 class SignUpView(View):
     template_name = 'registration/signup.html'
-    
+    form_class = CustomUserCreationForm
+
     @method_decorator(cache_page(60 * 60 * 24))
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
-    
+        
     def get(self, request):
-        form = CustomUserCreationForm()
-        return render(request, self.template_name, {'form': form})
+        form = self.form_class()
+        context = {
+            'gui_messages': GUI_MESSAGES['base'] | GUI_MESSAGES['accounts'],
+            'form': form
+        }
+        return render(request, self.template_name, context)
     
     def post(self, request):
-        form = CustomUserCreationForm(request.POST)
+        form = self.form_class(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.save()
             activate_email(request, user, form.cleaned_data.get('email'))
             return HttpResponseRedirect(reverse('translation'))
-     
-        return render(request, self.template_name, {'form': form})
-    
 
-def check_username_exists(request):
-    if request.method == 'GET':
-        username = request.GET.get('username')
-        if CustomUser.objects.filter(username=username).exists():
-            return HttpResponse('true')
-        else:
-            return HttpResponse('false')
-    
-    
-def activate(request, uidb64, token):
-    User = get_user_model()
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except:
-        user = None
-    
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        
-        messages.success(request, GUI_MESSAGES['messages']['activation_successful'])
-        return HttpResponseRedirect(reverse('login'))
-    else:
-        messages.error(request, GUI_MESSAGES['error_messages']['activation_failed'])
-    
-    return HttpResponseRedirect(reverse('translation'))
-    
-
-def activate_email(request, user, to_email):
-    mail_subject = GUI_MESSAGES['messages']['email_subject']
-    message = render_to_string('registration/activate_email.html', {
-        'user': user.username,
-        'domain': get_current_site(request).domain,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': account_activation_token.make_token(user),
-        'protocol': 'https' if request.is_secure() else 'http'
-    })
-    email = EmailMessage(mail_subject, message, to=[to_email])
-    if email.send():
-        success_message = GUI_MESSAGES['messages']['email_sent'].format(user=user, to_email=to_email)
-        messages.success(request, success_message)
-    else:
-        messages.error(request, GUI_MESSAGES['error_messages']['email_sent'].format(to_email=to_email))
+        context = {
+            'gui_messages': GUI_MESSAGES['base'] | GUI_MESSAGES['accounts'],
+            'form': form
+        }
+        return render(request, self.template_name, context)
 
 
 class LoginView(View):
@@ -101,7 +59,11 @@ class LoginView(View):
     
     def get(self, request):
         form = CustomUserLoginForm()
-        return render(request, self.template_name, {'form': form})
+        context = {
+            'gui_messages': GUI_MESSAGES['base'] | GUI_MESSAGES['accounts'],
+            'form': form
+        }
+        return render(request, self.template_name, context)
     
     def post(self, request):
         form = CustomUserLoginForm(request.POST)
@@ -113,7 +75,11 @@ class LoginView(View):
                 login(request, user)
                 return HttpResponseRedirect(reverse('translation'))
             
-        return render(request, self.template_name, {'form': form})
+        context = {
+            'gui_messages': GUI_MESSAGES['base'] | GUI_MESSAGES['accounts'],
+            'form': form
+        }
+        return render(request, self.template_name, context)
 
 
 class MyProfileView(View):
@@ -126,10 +92,12 @@ class MyProfileView(View):
     
     def get(self, request):
         total_poems = Poem.objects.filter(saved_by=request.user).count()
+        
         context = {
-            'model': self.model,
             'total_poems': total_poems,
-            'confirm_account_delete': GUI_MESSAGES['confirm_account_delete'],
+            'gui_messages': GUI_MESSAGES['base']
+                          | GUI_MESSAGES['my_profile']
+                          | { 'total_poems': GUI_MESSAGES['total_poems'] },
         }
         return render(request, self.template_name, context=context)
 

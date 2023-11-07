@@ -3,17 +3,14 @@
 {% load i18n %}
 
 {% block content %}
-<div class="container-fluid container-about-us p-4">
-    <h class="display-6">{% trans "About Poetriumph" %}</h>
-    <p>
-        {% blocktranslate %}
-            Poetriumph is a project that allows users to translate poetry from one language to another. 
-            It is designed to provide a user-friendly platform for enhancing translation skills and exploring poetry from different cultures.
-        {% endblocktranslate %}
-    </p>
-    <p>
-        {% trans "Source code is available on GitHub" %} 
-        <a href="https://github.com/Davon-Rolage/poetriumph" target="_blank"><img class="img-github mx-2" src="{% static 'images/logo_github.png' %}">Davon-Rolage</a>
-    </p>
+<div class="container-wrapper">
+    <div class="container-fluid container-about-us p-4">
+        <h class="display-6">{{ gui_messages.about_poetriumph }}</h>
+        <p>{{ gui_messages.about_poetriumph_text }}</p>
+        <p>
+            {{ gui_messages.source_code }}
+            <a href="https://github.com/Davon-Rolage/poetriumph" target="_blank"><img class="image-github mx-2" src="{% static 'images/logo_github.png' %}">Davon-Rolage</a>
+        </p>
+    </div>
 </div>
 {% endblock %}

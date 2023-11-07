@@ -10,10 +10,12 @@ $(document).ready(function () {
 });
 
 // Adjust textarea's height based on its content
-function adjustTextareaHeight(textarea) {
-    let rowsNum = textarea.value.split("\n").length;
+function adjustTextareaHeight(textbox) {
+    let rowsNum = textbox.value.split("\n").length;
     if (rowsNum > 10) {
-        $(textarea).attr("rows", $(textarea).val().split("\n").length);
+        $(textbox).attr("rows", $(textbox).val().split("\n").length);
+    } else {
+        $(textbox).attr("rows", 10);
     }
 }
 
@@ -47,6 +49,7 @@ function activateCopyToClipboard() {
         $(this).click(function() {
             const textToCopy = $(this).siblings(".text-to-copy").val();
             navigator.clipboard.writeText(textToCopy);
+            
             let checkIcon = $(this).children("#check-icon");
             checkIcon.css("display", "inline");
             setTimeout(function() {

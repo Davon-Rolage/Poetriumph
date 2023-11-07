@@ -3,39 +3,41 @@
 {% load i18n %}
 
 {% block content %}
-<div class="mx-3 my-2">
-  <h1>{% trans "Support us" %}</h1>
-  <div class="rows">
+<div class="container-wrapper">
+  <div class="mx-3 mt-2">
+    <h1 class="header-support-us">{{ gui_messages.support_us_title }}</h1>
+    <div class="rows">
 
-    <!-- Boosty logo -->
-    <div class="row">
-      <a href="https://boosty.to/davon.rolage/donate">
-        <img class="img-support-us" src="{% static 'images/logo_boosty.svg' %}">
-      </a>
-    </div>
-    
-    <!-- Boosty QR code -->
-    <div class="row">
-      <img class="img-support-us" src="{% static 'images/qr_boosty.png' %}">
-    </div>
-    
-    <!-- Buymeacoffee QR code -->
-    <div class="row my-2">
-      <img class="img-support-us" src="{% static 'images/qr_buy_coffee.png' %}">
-    </div>
+      <!-- Boosty logo -->
+      <div class="row-3">
+        <a href="https://boosty.to/davon.rolage/donate">
+          <img class="img-support-us" src="{% static 'images/logo_boosty.svg' %}">
+        </a>
+      </div>
+      
+      <!-- Boosty QR code -->
+      <div class="row-3">
+        <img class="img-support-us" src="{% static 'images/qr_boosty.png' %}">
+      </div>
+      
+      <!-- Buymeacoffee QR code -->
+      <div class="row-3 my-2">
+        <img class="img-support-us" src="{% static 'images/qr_buy_coffee.png' %}">
+      </div>
 
-    <!-- Buymeacoffee logo -->
-    <div class="row">
-      <a href="https://www.buymeacoffee.com/davon.rolage" target="_blank"><img
-          id="logo-buy-me-a-coffee" src="{% static 'images/logo_coffee.png' %}" alt="Buy Me A Coffee">
-      </a>
-    </div>
+      <!-- Buymeacoffee logo -->
+      <div class="row-3">
+        <a href="https://www.buymeacoffee.com/davon.rolage" target="_blank"><img
+            id="logo-buy-me-a-coffee" src="{% static 'images/logo_coffee.png' %}" alt="Buy Me A Coffee">
+        </a>
+      </div>
 
-    <!-- Download background image -->
-    <div class="row my-3">
-      <a href="{% static 'images/background_16x9.jpg' %}" class="img-download" download>{% trans "Download this background image" %}</a>
-    </div>
+      <!-- Download background image -->
+      <div class="row-3 mt-3">
+        <a href="{% static 'images/background_16x9.jpg' %}" class="img-download" download>{{ gui_messages.download_bg_image }}</a>
+      </div>
 
+    </div>
   </div>
 </div>
 {% endblock %}

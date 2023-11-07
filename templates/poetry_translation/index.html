@@ -4,75 +4,63 @@
 
 {% block content %}
 
+<div class="container-wrapper">
 <div class="container-fluid container-index text-center">
-  <h1>{% trans "Poem Translation" %}</h1>
-  <p>{% trans "Insert your poem and choose translation engine." %}</p>
+  <h1>{{ gui_messages.index_title }}</h1>
+  <p>{{ gui_messages.index_description }}</p>
 
-  <div class="row">
+  <form id='save-form' action="{% url 'save_translation' %}" method="post">
+    {% csrf_token %}
+    <div class="row">
+
+      <!-- Left side -->
       <div class="col-sm-12 col-md-6">
-
-          <!-- Form to translate the poem -->
-          <form id='form-translate' method="post">
-              {% csrf_token %}
 
               <div class="row gy-5">
                 <div class="container-translation-settings">
                   
                   <!-- Source Language dropdown list -->
                   <div class="col-sm-auto col-md-3">
-                    <div class="p-1">
-                      <select name="source_lang" class="form-select" aria-select="Source Language">
-                        {% for language in source_languages %}
-                          <option value="{{ language.0 }}" {% if language.0 == source_lang %}selected{% endif %}>{{ language.1 }}</option>
-                        {% endfor %}
-                      </select>
+                    <div class="py-1">
+                      {{ form.source_lang }}
                     </div>
                   </div>
 
                   <!-- Simple right arrow -> -->
                   <div class="col-sm-auto">
-                    <div class="p-1">
+                    <div class="py-1 px-2">
                       <i class="fa-solid fa-arrow-right fa-beat fa-xl"></i>
                     </div>
                   </div>
                   
                   <!-- Target Language dropdown list -->
                   <div class="col-sm-auto col-md-3">
-                    <div class="p-1">
-                      <select name="target_lang" class="form-select" aria-select="Target Language">
-                        {% for language in target_languages %}
-                          {% if not user.is_premium and forloop.counter <= 3 or user.is_premium %}
-                            <option value="{{ language.0 }}" {% if language.0 == target_lang %}selected{% endif %}>{{ language.1 }}</option>
-                          {% endif %}
-                        {% endfor %}
-                      </select>
+                    <div class="py-1 pe-1">
+                      {{ form.target_lang }}
                     </div>
                   </div>
                   
                   <!-- Language Engine dropdown list -->
-                  <div class="col-sm-auto col-md-3">
-                    <div class="p-1">
-                      <select id="language-engine-dropdown" name="language_engine" class="form-select" aria-select="Translation Service">
-                        {% for engine in language_engines %}
-                          <option class="language-engine-option" id="language_engine_{{ engine.0 }}"
-                            value="{{ engine.0 }}" 
-                            {% if engine.0 == language_engine %}selected{% endif %}>
-                            {{ engine.1 }}
-                          </option>
-                        {% endfor %}
-                      </select>
+                  <div class="col-sm-auto col-md-3 language-engine">
+                    <div class="py-1 pe-1">
+                      <span id="tt-google-translator" title="{{ tooltips.google_translator }}" class="tt display-none" data-bs-toggle="tooltip" data-bs-placement="top"></span>
+                      <span id="tt-chatgpt-translator" title="{{ tooltips.chatgpt_translator }}" class="tt display-none" data-bs-toggle="tooltip" data-bs-placement="top"></span>
+                      <span id="tt-chatgpt-poet" title="{{ tooltips.chatgpt_poet }}" class="tt display-none" data-bs-toggle="tooltip" data-bs-placement="top"></span>
+
+                      {{ form.language_engine }}
                     </div>
                   </div>
                   
                   <!-- Translate button -->
                   <div class="col-sm-auto col-md-2 ms-auto text-end">
                     <div class="py-1">
-                      <span hidden id="loading_button_text">{{ loading_button_text }}</span>
+                      <span hidden id="url-get-translation">{% url 'get_translation' %}</span>
+                      <span hidden id="loading_button_text">{{ gui_messages.button_loading_text }}</span>
                       <span hidden id="tt-loading-text-chatgpt">{{ tooltips.loading_text_chatgpt }}</span>
 
-                      <button type="submit" id="btn-translate" class="btn btn-primary shadow-none">
+                      <button type="button" id="btn-translate" class="btn btn-primary shadow-none">
                         <span id="spinner" class="spinner-border spinner-border-sm display-none" role="status" aria-hidden="true"></span>
-                        <span id="button-translate-text">{% trans "Translate" %}</span>
+                        <span id="button-translate-text">{{ gui_messages.button_translate_text }}</span>
                       </button>
                     </div>
                   </div>
@@ -81,8 +69,9 @@
               </div>
               
               <!-- Original text textarea -->
-              <div class="user_text_section copyable-textbox">
-                  <textarea required class="poem-textarea text-to-copy" placeholder='{% trans "Insert your poem..." %}' rows="10" id="original" name="original_text">{{ original_text }}</textarea>
+              <div class="copyable-textbox">
+                  {{ form.original_text }}
+
                   <!-- Copy to clipboard icon -->
                   <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
                     <i id="check-icon" class="fa-solid fa-check save-check"></i>
@@ -92,89 +81,45 @@
                     <span id="character_count"></span> / <span id="character_limit">{{ character_limit }}</span>
                   </div>
               </div>
-
-          </form>
       </div>
 
+      <!-- Right side -->
       <div class="col-sm-12 col-md-6">
-          <!-- Form to save the poem to the library -->
-          <form id='save-form' action="{% url 'save_translation' %}" method="post">
-              {% csrf_token %}
-      
-              <input type="hidden" name="language_engine" value="{{ language_engine }}">
-              <input type="hidden" name="source_lang" value="{{ source_lang }}">
-              <input type="hidden" name="target_lang" value="{{ target_lang }}">
+        <div class="row gy-5 justify-content-start">
+          <!-- A download button -->
+          <div class="col-auto">
+            <div class="py-1">
+              <input type="button" id="btn-download" class="btn btn-outline-primary shadow-none" value="{{ gui_messages.button_download_text }}">
+            </div>
+          </div>
 
-              <div class="row gy-5 justify-content-start">
-                <!-- A download button -->
-                <div class="col-auto">
-                  <div class="py-1">
-                    <input type="button" id="button-download" class="btn btn-outline-primary shadow-none" value="{% trans 'Download' %}">
-                  </div>
-                </div>
+          <!-- Save to library button -->
+          <div class="col-auto">
+            <div class="py-1">
+              <span id="tt-save-to-library" tabindex="0" title="{{ tooltips.save_to_library }}" class="tt" data-bs-toggle="tooltip" trigger="hover">
+                <button id="btn-save-to-library" type="submit" class="btn btn-success shadow-none" {% if not user.is_authenticated %}disabled{% endif %}>{{ gui_messages.button_save_to_library }}</button>
+              </span>
+            </div>
+          </div>
 
-                <!-- Save to library button -->
-                <div class="col-auto">
-                  <div class="py-1">
-                    <span id="tt-save-to-library" tabindex="0" title="{{ tooltips.save_to_library }}" class="tt" data-bs-toggle="tooltip" trigger="hover">
-                      <button id="btn-save-to-library" type="submit" class="btn btn-success shadow-none" {% if not user.is_authenticated %}disabled{% endif %}>{% trans "Save to Library" %}</button>
-                    </span>
-                  </div>
-                </div>
+        </div>
 
-              </div>
-
-              <!-- Translation textarea -->
-                <div class="user_text_section copyable-textbox">
-                    <textarea id="translation-text" readonly required class="poem-textarea translation_text text-to-copy" placeholder="{% trans 'Your translation will be here...' %}" rows="10" name="translation">{{ translation|safe }}</textarea>
-                    <!-- Copy to clipboard icon -->
-                    <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
-                      <i id="check-icon" class="fa-solid fa-check save-check"></i>
-                    </i>
-                </div>
-                <input type="hidden" name="original_text" value="{{ original_text }}">
-              
-          </form>
+        <!-- Translation textarea -->
+        <div class="copyable-textbox">
+            {{ form.translation }}
+            
+            <!-- Copy to clipboard icon -->
+            <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
+              <i id="check-icon" class="fa-solid fa-check save-check"></i>
+            </i>
+        </div>
       </div>
-  </div>
+    </div>
+  </form>
 
+</div>
 </div>
 
 <script src="{% static 'js/index.js' %}"></script>
 
-<script>
-  // main.js
-function checkTaskStatus(taskId) {
-  $.ajax({
-    url: '/check-task-status/',
-    method: 'GET',
-    data: { 'task_id': taskId },
-    success: function(response) {
-      if (response.status == 'SUCCESS') {
-        $('#result').text(response.result);
-      } else if (response.status == 'PENDING') {
-        setTimeout(function() {
-          checkTaskStatus(taskId);
-        }, 1000);
-      } else {
-        $('#result').text('Task failed');
-      }
-    }
-  });
-}
-
-$(document).ready(function() {
-  $('#trigger-task').click(function() {
-    $.ajax({
-      url: '/trigger-task/',
-      method: 'GET',
-      success: function(response) {
-        checkTaskStatus(response.task_id);
-      }
-    });
-  });
-});
-
-</script>
-  
 {% endblock %}

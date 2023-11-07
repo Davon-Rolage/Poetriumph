@@ -5,7 +5,7 @@
 
 {% if not user.username == poem.saved_by %}
 <div class="container-fluid text-center">
-  <h class="display-6">{% trans 'You are not authorized to edit this poem.' %}</h>
+  <h class="display-6">{{ gui_messages.not_allowed }}</h>
 </div>
 {% else %}
 <div class="container-fluid">
@@ -16,14 +16,14 @@
     <div class="col-auto py-1">
       <form id="delete-form" action="{% url 'poem_delete' poem.id %}" method="post">
         {% csrf_token %}
-        <button onclick="return confirm('{{ confirm_poem_delete }}')" class="btn btn-outline-danger shadow-none">{% trans "Delete" %}</button>
+        <button onclick="return confirm('{{ gui_messages.confirm_poem_delete }}')" class="btn btn-outline-danger shadow-none">{{ gui_messages.button_delete_poem }}</button>
       </form>
     </div>
 
     <!-- Save button -->
     <div class="col-auto py-1">
       <button onclick="$('#form-update').submit()" class="btn btn-success shadow-none" type="submit">
-        {% trans "Save Changes" %}
+        {{ gui_messages.button_save_changes }}
       </button>
     </div>
 
@@ -36,7 +36,7 @@
     <div class="row gy-1">
       <div class="input-group">
         <div class="col-auto py-1 input-group-prepend">
-          <span class="input-group-text" id="inputGroup-sizing-default">{% trans "Updated at" %}</span>
+          <span class="input-group-text" id="inputGroup-sizing-default">{{ gui_messages.poem_updated_at }}</span>
         </div>
         <div class="col-auto py-1">
           {{ form.updated_at }}
@@ -54,7 +54,7 @@
       <!-- Is hidden from library -->
       <div class="col-auto my-1 mx-3 form-check form-switch">
         {{ form.is_hidden }}
-        <label class="form-check-label" for="flexSwitchCheckDefault">{% trans "Hide from Poem Library" %}</label>
+        <label class="form-check-label" for="flexSwitchCheckDefault">{{ gui_messages.checkbox_hide_from_library }}</label>
       </div>
 
     </div>
@@ -77,39 +77,37 @@
     </div>
     
     <!-- Title -->
-    <div class="row gy-5 justify-content-start align-items-center">
-      <div class="col-auto py-1">
-        <h3 for="title">{% trans "Title" %}</h3>
+    <div class="row my-2 justify-content-start align-items-center">
+      <div class="col-sm-12 col-md-2">
+        <h3 for="title">{{ gui_messages.poem_title }}</h3>
       </div>
-      <div class="col-auto py-1">
+      <div class="col-sm-12 col-md-4">
         {{ form.title|safe }}
+        {% if form.title.errors %}
+          {% for error in form.title.errors %}
+          <span class="text-danger">{{ error }}</span>
+          {% endfor %}
+        {% endif %}
       </div>
-      {% if form.title.errors %}
-      <div class="col-auto py-1">
-        {% for error in form.title.errors %}
-        <span class="text-danger">{{ error }}</span>
-        {% endfor %}
-      </div>
-      {% endif %}
-      
+        
     </div>
 
     <!-- Author -->
-    <div class="row gy-5 justify-content-start">
-      <div class="col-auto py-1">
-        <h3 for="author">{% trans "Author" %}</h3>
+    <div class="row justify-content-start">
+      <div class="col-sm-12 col-md-2">
+        <h3 for="author">{{ gui_messages.poem_author }}</h3>
       </div>
-      <div class="col-auto py-1">
+      <div class="col-sm-12 col-md-4">
         {{ form.author|safe }}
       </div>
     </div>
 
     <!-- Saved By (user) -->
-    <div class="row gy-5 justify-content-start">
-      <div class="col-auto py-1">
-        <h3 for="saved_by">{% trans "Saved by" %}</h3>
+    <div class="row justify-content-start">
+      <div class="col-auto">
+        <h3>{{ gui_messages.poem_saved_by }}</h3>
       </div>
-      <div class="col-auto py-1">
+      <div class="col">
         <h3>{{ user.username }}</h3>
       </div>
     </div>
@@ -118,7 +116,7 @@
 
       <!-- Original text -->
       <div class="col-sm-12 col-md-6">
-        <div class="row"><h1>{% trans "Original Text" %}</h1></div>
+        <div class="row"><h1>{{ gui_messages.original_text }}</h1></div>
           <div class="copyable-textbox">
             {{ form.original_text|safe }}
             
@@ -131,7 +129,7 @@
 
       <!-- Translation text -->
       <div class="col-sm-12 col-md-6">
-        <div class="row"><h1>{% trans "Translation" %}</h1></div>
+        <div class="row"><h1>{{ gui_messages.translation_text }}</h1></div>
           <div class="copyable-textbox">
             {{ form.translation|safe }}
 
@@ -147,5 +145,6 @@
 
   </form>
 </div>
+
 {% endif %}
 {% endblock %}
