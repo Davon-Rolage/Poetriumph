@@ -4,8 +4,8 @@ from poetry_translation.models import Poem
 
 
 class PoemAdmin(admin.ModelAdmin):
-    list_display = ['title', 'author', 'saved_by', 'updated_at', 'source_lang', 'target_lang']
-    list_filter = ['created_at', 'source_lang', 'target_lang', 'saved_by']
+    list_display = ['title', 'author', 'saved_by', 'updated_at', 'source_lang', 'target_lang', 'is_hidden']
+    list_filter = ['is_hidden', 'created_at', 'source_lang', 'target_lang', 'saved_by']
     readonly_fields = ('created_at',)
     
     fieldsets = [

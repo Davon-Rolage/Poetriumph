@@ -2,7 +2,7 @@
 FROM python:3.10-slim
 # Identify the maintainer of an image
 LABEL maintainer="davon.rolage@gmail.com"
-LABEL description="Django image for newA.fun"
+LABEL description="Django image for poetry.newa.fun"
 LABEL version="1.0"
 
 EXPOSE 8000

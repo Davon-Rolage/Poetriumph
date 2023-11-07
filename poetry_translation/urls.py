@@ -4,12 +4,13 @@ from .views import *
 
 
 urlpatterns = [
-    path('', TranslationFormView.as_view(), name='translation'),
+    path('', IndexView.as_view(), name='translation'),
     path('about/', AboutView.as_view(), name='about'),
     path('support-us/', SupportUsView.as_view(), name='support_us'),
     path('premium/', PremiumView.as_view(), name='premium'),
+    path('poem-translate/', GetTranslation.as_view(), name='get_translation'),
     path('poem-save/', SaveTranslation.as_view(), name='save_translation'),
-    path('poems/', PoemListView.as_view(), name='poem_library'),
+    path('poems/', PoemLibraryListView.as_view(), name='poem_library'),
     path('poems/<int:pk>/', PoemDetailView.as_view(), name='poem_detail'),
     path('poems/<int:pk>/update/', PoemUpdateView.as_view(), name='poem_update'),
     path('poems/<int:pk>/update/poem-delete', PoemDeleteView.as_view(), name='poem_delete'),

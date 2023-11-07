@@ -3,34 +3,20 @@
 
 {% block content %}
 
-<style>
-  .row {
-    margin-top: 5px;
-  }
-</style>
-
 {% if poem.is_hidden and not user.username == poem.saved_by %}
 <div class="container-fluid text-center">
-  <h class="display-6">{% trans 'This poem is hidden by its author' %}</h>
+  <h class="display-6">{{ gui_messages.poem_hidden }}</h>
 </div>
 {% else %}
-<div class="container-fluid px-4">
-  <form action="{% url 'poem_update' poem.id %}" method="post">
-    {% csrf_token %}
-
-    <!-- Hidden input for redirecting to poem_update -->
-    <input type="text" hidden value="1" name="edit">
+<div class="container-fluid px-4 py-2">
 
     <!-- Language engine -->
-    <div class="row my-3"><h class="display-6">{% trans "Translation Service" %} - <span class="fw-bold">{{ poem.language_engine }}</span></h></div>
+    <div class="row mb-3"><h class="display-6">{{ gui_messages.language_engine }} - <span class="fw-bold">{{ poem.language_engine }}</span></h></div>
 
-    <div class="row" hidden>{{ form.language_engine }}</div>
-
-    <div class="row justify-content-start align-items-center">
+    <div class="row my-0 justify-content-start align-items-center">
     
       <!-- Source language -->
       <div class="col-auto">
-        <input hidden type="text" value="{{ form.source_lang.value }}" name="source_lang">
         {{ form.source_lang }}
       </div>
     
@@ -40,39 +26,35 @@
       </div>
       
       <!-- Target language -->
-      <div class="col-auto">
-        <input hidden type="text" value="{{ form.target_lang.value }}" name="target_lang">
+      <div class="col-auto py-2">
         {{ form.target_lang }}
       </div>
     
       <!-- If user is poem's author, show the Change button -->
       {% if user.username == poem.saved_by %}
       <div class="col-sm-auto">
-        <button class="btn btn-primary shadow-none" type="submit">{% trans "Change Poem" %}</button>
+        <a class="btn btn-primary shadow-none" href="{% url 'poem_update' poem.id %}" role="button">{{ gui_messages.button_change_poem }}</a>
       </div>
       {% endif %}
     
     </div>
 
-    <!-- Updated at (hidden) -->
-    <div class="col" hidden>{{ form.updated_at }}</div>
-
     <!-- Title -->
-    <div class="row justify-content-start">
-      <div class="col-auto">
-        <h3 for="title">{% trans "Title" %}</h3>
+    <div class="row my-2 justify-content-start">
+      <div class="col-sm-12 col-md-2">
+        <h3 for="title">{{ gui_messages.poem_title }}</h3>
       </div>
-      <div class="col-5">
+      <div class="col-sm-12 col-md-4">
         {{ form.title|safe }}
       </div>
     </div>
 
     <!-- Author -->
-    <div class="row justify-content-start">
-      <div class="col-auto">
-        <h3 for="author">{% trans "Author" %}</h3>
+    <div class="row my-2 justify-content-start">
+      <div class="col-sm-12 col-md-2">
+        <h3 for="author">{{ gui_messages.poem_author }}</h3>
       </div>
-      <div class="col-5">
+      <div class="col-sm-12 col-md-4">
         {{ form.author|safe }}
       </div>
     </div>
@@ -80,21 +62,21 @@
     <!-- Saved By (user) -->
     <div class="row justify-content-start">
       <div class="col-auto">
-        <h3 for="saved_by">{% trans "Saved by" %}</h3>
+        <h3>{{ gui_messages.poem_saved_by }}</h3>
       </div>
-      <div class="col-auto">
+      <div class="col">
         <h3>{{ poem.saved_by }}</h3>
       </div>
     </div>
 
       <!-- Is hidden from library -->
-      <div class="row justify-content-start">
-        <div class="col">
-          {{ form.is_hidden|safe }}
-          <input hidden type="text" value="{{ form.is_hidden.value }}" name="is_hidden">
-          <label class="form-check-label" for="flexSwitchCheckDefault">{% trans "Hide from Poem Library" %}</label>
+      {% if poem.is_hidden %}
+        <div class="row my-2 justify-content-start">
+          <div class="col">
+            <h4 class="my-0"><span class="badge bg-secondary">{{ gui_messages.poem_hidden_badge }}</span></h4>
+          </div>
         </div>
-      </div>
+      {% endif %}
       
 
     <div class="row">
@@ -103,30 +85,29 @@
       <div class="col-sm-12 col-md-6">
         <div class="row">
           <h1>
-            {% trans "Original Text" %}
+            {{ gui_messages.original_text }}
           </h1>
         </div>
-        <div class="row">
-          <div class="copyable-textbox">
-            {{ form.original_text|safe }}
 
-            <!-- Copy to clipboard icon -->
-            <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
-              <i id="check-icon" class="fa-solid fa-check save-check"></i>
-            </i>
-          </div>
+        <div class="copyable-textbox">
+          {{ form.original_text|safe }}
+
+          <!-- Copy to clipboard icon -->
+          <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
+            <i id="check-icon" class="fa-solid fa-check save-check"></i>
+          </i>
         </div>
-
+          
       </div>
 
       <!-- Translation text -->
       <div class="col-sm-12 col-md-6">
         <div class="row">
-        <h1>
-          {% trans "Translation" %}
-        </h1>
-      </div>
-      <div class="row">
+          <h1>
+            {{ gui_messages.translation_text }}
+          </h1>
+        </div>
+        
         <div class="copyable-textbox">
           {{ form.translation|safe }}
 
@@ -135,11 +116,11 @@
             <i id="check-icon" class="fa-solid fa-check save-check"></i>
           </i>
         </div>
-      </div>
+
       </div>
       
+      
     </div>
-  </form>
 </div>
 {% endif %}
 {% endblock %}

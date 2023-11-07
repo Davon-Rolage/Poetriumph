@@ -2,6 +2,7 @@ version: '3.9'
 
 services:
   postgres:
+    image: poetriumph/postgres
     build:
       context: .
       dockerfile: ./docker/postgres_image/Dockerfile
@@ -20,11 +21,11 @@ services:
       - "5432:5432"
 
   web:
-    image: davon/poetriumph
+    image: newa/poetriumph
     build:
       context: .
       dockerfile: ./docker/Dockerfile
-    container_name: ${POETRIUMPH_CONTAINER_NAME}
+    container_name: ${WEB_CONTAINER_NAME}
     environment:
       DEBUG: ${DEBUG}
       SECRET_KEY: ${SECRET_KEY}
@@ -33,11 +34,14 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PG_CONTAINER_NAME: ${PG_CONTAINER_NAME}
+      WEB_CONTAINER_NAME: ${WEB_CONTAINER_NAME}
       EMAIL_FROM: ${EMAIL_FROM}
       EMAIL_HOST_USER: ${EMAIL_HOST_USER}
       EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD}
       RECAPTCHA_PUBLIC_KEY: ${RECAPTCHA_PUBLIC_KEY}
       RECAPTCHA_PRIVATE_KEY: ${RECAPTCHA_PRIVATE_KEY}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
+      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
 
     volumes:
       - ./templates:/app/templates

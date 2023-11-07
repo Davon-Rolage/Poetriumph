@@ -1,10 +1,14 @@
 .container-fluid {
   background-color: aliceblue;
-  padding: 0 20px 20px 20px;
+}
+
+.container-wrapper {
+  min-height: 81vh;
 }
 
 .container-index {
   background: linear-gradient(to bottom, rgba(240, 248, 255, 0.8), aliceblue);
+
 }
 .container-index p {
   font-size: 24px;
@@ -13,6 +17,10 @@
 .container-about-us {
   font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-size: 30px;
+}
+
+.container-profile {
+  max-width: 700px;
 }
 
 .container-premium-get {
@@ -61,8 +69,7 @@
 }
 
 .navbar-brand img {
-    max-width: 150px;
-    margin-left: 10px;
+  max-width: 150px;
 }
 
 .nav-item>a {
@@ -78,6 +85,7 @@
     /* background-image: linear-gradient(to right, #f46b45 0%, #eea849 51%, #f46b45 100%); */
     background-image: linear-gradient(to right, #0072ff 0%, #00c6ff 51%, #0072ff 100%);
     padding: 0 45px;
+    margin: 0 auto;
     text-align: center;
     text-transform: uppercase;
     transition: 0.5s;
@@ -88,8 +96,6 @@
     align-items: center;
     height: 40px;
     width: 168px;
-    margin-left: 20px;
-    margin-right: 20px;
 }
 
 .button_premium:hover {
@@ -185,12 +191,12 @@
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
-  font-size: 26px;
-  top: 60px;
+  font-size: 20px;
+  top: 10vh;
   position: fixed;
   align-self: center;
   z-index: 1000;
-  animation: fadeOutError 6s forwards;
+  animation: fadeOutError 3s forwards;
   box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
@@ -236,11 +242,11 @@
 .alert-success {
   position: fixed;
   align-self: center;
-  font-size: 26px;
-  top: 60px;
+  font-size: 22px;
+  top: 70px;
   z-index: 1000;
-  animation: fadeOutSuccess 5s forwards;
-  box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.5);
+  animation: fadeOutSuccess 4s forwards;
+  box-shadow: 3px 2px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
 @keyframes fadeOutSuccess {
@@ -261,16 +267,16 @@
 }
 
 .copy-to-clipboard {
-  cursor: pointer;
-  color: aliceblue;
-  font-size: 12px;
-  text-align: center;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: #333;
   position: absolute;
   top: 5px;
   right: 5px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #333;
+  color: aliceblue;
+  font-size: 12px;
+  text-align: center;
 }
 
 .copy-to-clipboard:hover {
@@ -287,8 +293,9 @@
   margin-left: 2px;
 }
 
-.clickable-td {
-  cursor: pointer;
+.linker {
+  display: block;
+  text-decoration: none;
 }
 
 .character_counter {
@@ -298,19 +305,30 @@
 }
 
 footer {
-  margin-top: auto;
-}
-footer p {
+  position: relative;
+  bottom: 0;
+  width: 95vw;
   color: aliceblue;
+  border-top-style: solid;
+  border-top-color: aliceblue;
+  border-top-width: 1px;
 }
+
 footer a {
   text-decoration: none;
   color: inherit;
 }
+footer a:hover {
+  text-decoration: underline;
+  color: inherit;
+}
 
-/* country's flag icon settings */
-a>img, .flag {
+.image-flag {
   max-width: 23px;
+}
+
+.image-github {
+  max-width: 45px;
 }
 
 /* Place 'search' to the left and 'pagination' to the right */
@@ -354,8 +372,12 @@ a>img, .flag {
   max-width: 162px;
 }
 
+.header-support-us {
+  text-shadow: 3px 2px 6px #cfcea8;
+}
+
 #logo-buy-me-a-coffee {
-  min-width: 200px;
+  width: 200px;
 }
 
 .img-github {
@@ -364,5 +386,4 @@ a>img, .flag {
 
 .poem_count_badge {
   max-height: 120px;
-  padding: 0 30px;
 }
