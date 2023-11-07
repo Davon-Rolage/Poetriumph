@@ -1,93 +1,93 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends "base.html" %}
 {% load i18n %}
 
 {% block content %}
 
-<style>
-	body {
-		opacity: 1;
-	}
-</style>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
 <div class="container-fluid">
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-12 col-md-9 col-lg-7 col-xl-6">
-				<div class="container bg-white rounded mt-2 mb-2 px-0" style="border-radius: 10px !important;">
+	<div class="row justify-content-center">
+		<div class="col-12 col-md-9 col-lg-7 col-xl-6">
+			<div class="container bg-white">
 
-					<!-- Login title -->
-					<div class="pt-3" style="text-align: center;">
-						<h1><strong>{% trans "Login" %}</strong></h1>
-					</div>
+				<!-- Login title -->
+				<div class="row pt-2 text-center">
+					<h1><strong>{% trans "Login" %}</strong></h1>
+				</div>
 
-					<div class="pt-3 pb-3">
+					<!-- Login Form -->
+					<form method="post">
+						{% csrf_token %}
 
-						<!-- Login Form -->
-						<form method="post">
-							{% csrf_token %}
-
-							<!-- Username input -->
-							<div class="form-group row justify-content-center px-3">
-								<div class="col-9 px-0">
-									{{ form.username }}
-								</div>
-							</div>
-
-							<!-- Password input -->
-							<div class="form-group row justify-content-center px-3">
-								<div class="col-9 px-0">
-									{{ form.password }}
-								</div>
-							</div>
-
-							<!-- Forgot Password -->
-							<div hidden class="form-group row justify-content-center px-3">
-								<div class="col-9">
-									<!-- Forgot Password Link -->
-									<div class="col-12 px-0 text-right">
-										<span><a href="#" class="text-danger"><b>{% trans "Forgot Password?" %}</b></a></span>
+						<!-- Username input -->
+						<div class="row my-2 justify-content-center">
+							<div class="col-10 col-md-6">
+								<div class="input-group">
+									<span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+									<div class="form-floating">
+										{{ form.username }}
+										<label for="floatingInputGroupUsername">{% trans "Username" %}</label>
 									</div>
 								</div>
 							</div>
-
-							<!-- CAPTCHA Checkbox -->
-							<div class="form-group row justify-content-center px-3">
-								<div class="col-9 px-0">
-									{{ form.captcha }}
-								</div>
-							</div>
-
-							<!-- Login button -->
-							<div class="form-group row justify-content-center">
-								<div class="col-3 px-3">
-									<input type="submit" value="{% trans 'Login' %}" class="btn btn-block btn-info shadow-none" style="width: 120px;">
-								</div>
-							</div>
-
-							<!-- Show errors if any -->
-							{% if form.errors %}
-							<div class="alert alert-danger" role="alert">
-								{{ form.captcha.errors.1 }}
-								{% for error in form.username.errors %}
-									{{ error }}
-								{% endfor %}
-							</div>
-							{% endif %}
-							
-						</form>
-					</div>
-
-					<!-- Register Now -->
-					<div class="pt-2">
-						<div class="row justify-content-center" style="padding: 10px; text-align: center;">
-							<h5>{% trans "Don't have an account?" %} <span><a href="{% url 'signup' %}" class="text-danger">{% trans "Register Now!" %}</a></span></h5>
 						</div>
-					</div>
+
+						<!-- Password Input -->
+						<div class="row my-2 justify-content-center">
+							<div class="col-10 col-md-6">
+								<div class="input-group">
+									<span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+									<div class="form-floating">
+										{{ form.password }}
+										<label for="floatingInputGroupPassword">{% trans "Password" %}</label>
+									</div>					
+								</div>
+							</div>
+						</div>
+
+						<!-- Forgot Password -->
+						<div hidden class="form-group row justify-content-center px-3">
+							<div class="col-9">
+								<!-- Forgot Password Link -->
+								<div class="col-12 px-0 text-right">
+									<span><a href="#" class="text-danger"><b>{% trans "Forgot Password?" %}</b></a></span>
+								</div>
+							</div>
+						</div>
+
+						<!-- CAPTCHA Checkbox -->
+						<div class="row my-2 justify-content-center">
+							<div class="col-10 col-md-6">
+							  <div class="form-group">
+								{{ form.captcha }}
+							  </div>
+							</div>
+						</div>
+
+						<!-- Login button -->
+						<div class="row justify-content-center text-center">
+							<div class="col-6">
+								<input type="submit" value="{% trans 'Login' %}" class="btn btn-primary shadow-none">
+							</div>
+						</div>
+
+						<!-- Show errors if any -->
+						{% if form.errors %}
+						<div class="alert alert-danger text-center my-2" role="alert">
+							{{ form.captcha.errors.1 }}
+							{% for error in form.username.errors %}
+								{{ error }}
+							{% endfor %}
+						</div>
+						{% endif %}
+						
+					</form>
+
+				<!-- Register Now -->
+				<div class="row py-3 justify-content-center text-center">
+					<h5>{% trans "Don't have an account?" %} <span><a href="{% url 'signup' %}" class="text-danger">{% trans "Register Now!" %}</a></span></h5>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
 {% endblock %}

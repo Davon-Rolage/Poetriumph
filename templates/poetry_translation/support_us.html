@@ -3,50 +3,36 @@
 {% load i18n %}
 
 {% block content %}
-<style>
-  .row {
-    margin-top: 5px;
-    max-width: 300px;
-  }
-  .img-download {
-    color: aliceblue; 
-  }
-  .img-download:hover {
-    color: rgb(167, 214, 255);
-  }
-</style>
-<div class="container-fluid" style="padding-left: 25px">
-  <h1 style="margin-bottom: 0">{% trans "Support us" %}</h1>
-  <p style="font-size: 20px; margin-left: 30px;">{% trans "If you like what we do, consider supporting us =)" %}</p>
+<div class="mx-3 my-2">
+  <h1>{% trans "Support us" %}</h1>
   <div class="rows">
 
     <!-- Boosty logo -->
     <div class="row">
       <a href="https://boosty.to/davon.rolage/donate">
-        <img src="{% static 'images/logo_boosty.svg' %}" class="img-fluid" style="max-width: 162px;">
+        <img class="img-support-us" src="{% static 'images/logo_boosty.svg' %}">
       </a>
     </div>
     
     <!-- Boosty QR code -->
     <div class="row">
-      <img src="{% static 'images/qr_boosty.png' %}" class="img-fluid" style="max-width: 162px;">
+      <img class="img-support-us" src="{% static 'images/qr_boosty.png' %}">
     </div>
     
-    
     <!-- Buymeacoffee QR code -->
-    <div class="row">
-      <img src="{% static 'images/qr_buy_coffee.png' %}" class="img-fluid" style="max-width: 162px;">
+    <div class="row my-2">
+      <img class="img-support-us" src="{% static 'images/qr_buy_coffee.png' %}">
     </div>
 
     <!-- Buymeacoffee logo -->
     <div class="row">
       <a href="https://www.buymeacoffee.com/davon.rolage" target="_blank"><img
-          src="{% static 'images/logo_coffee.png' %}" alt="Buy Me A Coffee"
-          style="min-height: 60px !important;min-width: 217px !important;"></a>
+          id="logo-buy-me-a-coffee" src="{% static 'images/logo_coffee.png' %}" alt="Buy Me A Coffee">
+      </a>
     </div>
 
     <!-- Download background image -->
-    <div class="row" style="margin-top: 30px;">
+    <div class="row my-3">
       <a href="{% static 'images/background_16x9.jpg' %}" class="img-download" download>{% trans "Download this background image" %}</a>
     </div>
 

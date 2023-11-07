@@ -3,34 +3,20 @@
 
 {% block content %}
 
-<style>
-.alert-success {
-    color: #0c5460;   
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-}
-</style>
-
-{% if not user.is_authenticated %}
-<div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
-    <h class="display-6">{% trans 'To see your library, you need to' %} <a href="{% url "login" %}">{% trans 'sign in' %}</a>.</h>
-</div>
-{% else %}
-
-<div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
+<div class="container-fluid px-4 py-3">
     <h class="display-6">{% trans "My Library" %}</h>
     <p>{% trans "Total number of Poems:" %} {{ object_list|length }}</p>
 
     <!-- Poem table -->
     <div class="poems_list">
-        <table class="table table-hover" id="poems-table">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th scope="col">{% trans '#' %}</th>
                     <th scope="col">{% trans 'Title' %}</th>
                     <th scope="col">{% trans 'Author' %}</th>
                     <th scope="col">{% trans 'Target Language' %}</th>
-                    <th scope="col">{% trans 'Created at' %}</th>
+                    <th scope="col">{% trans 'Updated at' %}</th>
                     <th scope="col">{% trans 'Is hidden' %}</th>
                   </tr>
             </thead>
@@ -38,12 +24,12 @@
                 {% for poem in object_list %}
                 <tr class="poem">
                     <th scope="row">{{ forloop.counter }}</th>
-                    <td><a href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a></td>
+                    <td class="clickable-td"><a href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a></td>
                     <td>{{ poem.author }}</td>
                     <td>{{ poem.target_lang|capfirst }}</td>
-                    <td>{{ poem.created_at }}</td>
+                    <td>{{ poem.updated_at }}</td>
                     <!-- If poem is hidden, display a gray badge -->
-                    <td>{% if poem.is_hidden %} <h5 style="margin-bottom: 0;"><span class="badge badge-secondary">{% trans "Hidden" %}</span></h5>{% endif %}</td>
+                    <td>{% if poem.is_hidden %} <h4><span class="badge bg-secondary">{% trans "Hidden" %}</span></h4>{% endif %}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -51,5 +37,4 @@
     </div>
 </div>
 
-{% endif %}
 {% endblock %}

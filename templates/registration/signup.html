@@ -1,92 +1,133 @@
 {% extends "base.html" %}
+{% load static %}
 {% load i18n %}
 
-{% block title %}Sign Up{% endblock %}
 {% block content %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
+
 <div class="container-fluid">
-  <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-        <div class="container bg-white rounded mt-2 mb-2 px-0" style="border-radius: 10px !important;">
+        <div class="container bg-white">
 
           <!-- Register title -->
-          <div class="pt-3" style="text-align: center;">
+          <div class="row pt-2 text-center">
             <h1><strong>{% trans "Register" %}</strong></h1>
           </div>
 
-          <div class="pt-3 pb-3">
-            <form method="post">
-              {% csrf_token %}
-              <!-- Username input -->
-              <div class="form-group row justify-content-center px-3">
-                <div class="col-9 px-0">
-                  {{ form.username }}
+          <form id="form-signup" method="post">
+            {% csrf_token %}
+            <!-- Username input -->
+            <div class="row my-2 justify-content-center">
+              <div class="col-10 col-md-6">
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                  <div class="form-floating">
+                    {{ form.username }}
+                    <input type="hidden" id="url-check-username" value="{% url 'check_username_exists' %}">
+                    <label for="floatingInputGroupUsername">{% trans "Username" %}</label>
+                  </div>
+
+                  <div class="col-12">
+                    <span id="username-taken-error" class="text-danger display-none">{% trans 'This username is already taken.' %}</span>
+                  </div>
+
+                </div>
+
+                <div class="col-12">
                   {% for error in form.username.errors %}
-                  <p class="text-danger">{{ error }}</p>
+                  <span class="text-danger">{{ error }}</span>
                   {% endfor %}
                 </div>
-              </div>
 
-              <!-- Email input -->
-              <div class="form-group row justify-content-center px-3">
-                <div class="col-9 px-0">
-                  {{ form.email }}
-                  {% for error in form.email.errors %}
-                  <p class="text-danger">{{ error }}</p>
-                  {% endfor %}
+              </div>
+            </div>
+
+            <!-- Email input -->
+            <div class="row my-2 justify-content-center">
+              <div class="col-10 col-md-6">
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-envelope fa-sm"></i></span>
+                  <div class="form-floating">
+                    {{ form.email }}
+                    <label for="floatingInputGroupEmail">{% trans "Email" %}</label>
+                  </div>
+
+                  <div class="col-12">
+                    {% for error in form.email.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
+                  </div>
+
                 </div>
               </div>
+            </div>
 
-              <!-- Password Input -->
-              <div class="form-group row justify-content-center px-3">
-                <div class="col-9 px-0">
-                  {{ form.password1 }}
-                  {% for error in form.password1.errors %}
-                  <p class="text-danger">{{ error }}</p>
-                  {% endfor %}
+            <!-- Password Input -->
+            <div class="row my-2 justify-content-center">
+              <div class="col-10 col-md-6">
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                  <div class="form-floating">
+                    {{ form.password1 }}
+                    <label for="floatingInputGroupPassword1">{% trans "Password" %}</label>
+                  </div>
+
+                  <div class="col-12">
+                    <span class="text-danger">{{ form.password1.errors.0 }}</span>
+                  </div>
+
                 </div>
               </div>
+            </div>
 
-              <!-- Password confirmation input -->
-              <div class="form-group row justify-content-center px-3">
-                <div class="col-9 px-0">
-                  {{ form.password2 }}
-                  {% for error in form.password2.errors %}
-                  <p class="text-danger">{{ error }}</p>
-                  {% endfor %}
+            <!-- Password repeat input -->
+            <div class="row my-2 justify-content-center">
+              <div class="col-10 col-md-6">
+                <div class="input-group">
+                  <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                  <div class="form-floating">
+                    {{ form.password2 }}
+                    <label for="floatingInputGroupPassword2">{% trans "Repeat password" %}</label>
+                  </div>
+
+                  <div class="col-12">
+                    <span class="text-danger">{{ form.password2.errors.0 }}</span>
+                  </div>
+
                 </div>
               </div>
+            </div>
 
-              <!-- CAPTCHA Checkbox -->
-							<div class="form-group row justify-content-center px-3">
-								<div class="col-9 px-0">
-									{{ form.captcha }}
-								</div>
-							</div>
-              {% if form.captcha.errors %}
-							<div class="alert alert-danger" role="alert">below
-                {{ form.captcha.errors.1 }}
-              </div>
-                {% endif %}
-
-
-              <!-- Register button -->
-              <div class="form-group row justify-content-center">
-                <div class="col-3 px-3">
-                  <input type="submit" value="{% trans 'Register' %}" class="btn btn-block btn-info shadow-none" style="width: fit-content;">
+            <!-- CAPTCHA Checkbox -->
+            <div class="row my-2 justify-content-center">
+              <div class="col-10 col-md-6">
+                <div class="form-group">
+                  {{ form.captcha }}
+                </div>
+                
+                <div class="col-12">
+                  {% if form.captcha.errors %}
+                    <div class="alert alert-danger" role="alert">
+                      {{ form.captcha.errors.1 }}
+                    </div>
+                  {% endif %}
                 </div>
               </div>
+            </div>
 
-            </form>
+            <!-- Register button -->
+            <div class="row justify-content-center text-center">
+              <div class="col-6">
+                <input type="submit" value="{% trans 'Register' %}" class="btn btn-primary shadow-none">
+              </div>
+            </div>
 
-          </div>
+          </form>
+
 
           <!-- Sign in now -->
-          <div class="pt-2">
-            <div class="row justify-content-center" style="padding: 10px; text-align: center;">
-              <h5>{% trans "Already have an account?" %} <span><a href="{% url 'login' %}" class="text-danger">{% trans "Sign in now!" %}</a></span></h5>
-            </div>
+          <div class="row my-3 justify-content-center text-center">
+            <h5>{% trans "Already have an account?" %} <span><a href="{% url 'login' %}" class="text-danger">{% trans "Sign in now!" %}</a></span></h5>
           </div>
 
           <div class="card">
@@ -94,7 +135,7 @@
               <h5 class="card-title">{% trans 'Registration prerequisites' %}</h5>
               <ul>
                 <li>{% trans 'Only latin letters are allowed.' %}</li>
-                <li>{% trans 'Username must contain only letters, digits and' %} @ . + - _</li>
+                <li>{% trans 'Username must contain only letters, digits and' %} . + - _</li>
                 <li>{% trans 'Username must be at least 3 characters and no more than 15.' %}</li>
                 <li>{% trans "Your password can't be too similar to your other personal information." %}</li>
                 <li>{% trans 'Your password must contain at least 8 characters.' %}</li>
@@ -107,6 +148,8 @@
         </div>
       </div>
     </div>
-  </div>
 </div>
+
+<script src="{% static 'js/signup.js' %}"></script>
+
 {% endblock %}

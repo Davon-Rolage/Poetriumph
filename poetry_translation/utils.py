@@ -42,14 +42,17 @@ def translate(language_engine, source_lang, target_lang, original_text, proxies)
         return HttpResponse(str(e))
 
 
-def translate_gpt(original_text, language):
+def translate_gpt(original_text, language, character_limit):
+    max_tokens = int(character_limit / 5)
+    ai_role = AI_ROLE.format(language=language)
     try:
         completion = openai.ChatCompletion.create(
         model='gpt-3.5-turbo',
         messages=[
-            {'role':'system', 'content':AI_ROLE.format(language=language)}, 
+            {'role':'system', 'content':ai_role}, 
             {'role':'user', 'content':original_text},
         ],
+        max_tokens=max_tokens
     )
     except Exception as e:
         return HttpResponse(str(e))

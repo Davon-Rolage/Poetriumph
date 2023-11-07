@@ -8,20 +8,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Poetriumph</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-
-  <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" integrity="sha512-b2QcS5SsA8tZodcDtGRELiGv5SaKSk1vDHDaQRda0htPYWZ6046lr3kJ5bAAQdpV2mmA/4v0wQF9MyU6/pDIAg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   <script defer src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/58cc394653.js" crossorigin="anonymous"></script>
 
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
   <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
-
+  
   <style>
     body {
       background-image: url('{% static "images/background_full+.jpg" %}');
@@ -33,59 +30,44 @@
       flex-direction: column;
       min-height: 100vh;
     }
-
-    footer {
-      margin-top: auto;
-    }
-
-    /* country's flag icon settings */
-    a>img, .flag {
-      max-width: 23px;
-    }
-
-    /* Place 'search' to the left and 'pagination' to the right */
-    .dataTables_wrapper .dataTables_filter {
-      float: left;
-    }
-    .dataTables_wrapper .dataTables_length {
-      float: right;
-    }
   </style>
+  
 </head>
 
 <body>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js" integrity="sha512-X/YkDZyjTf4wyc2Vy16YGCPHwAY8rZJY+POgokZjQB2mhIRFJCckEGc6YyX9eNsPfn0PzThEuNs+uaomE5CO6A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
 
   <!-- navigation bar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="z-index: 2;">
-    <div class="container-fluid">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="navbar-brand"><a href="{% url 'translation' %}"><img src="{% static 'images/logo.png' %}" alt="logo"></a></div>
-
+      
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
+        <ul class="navbar-nav">
             <!-- Language interface selection -->
-            <div class="btn-group" style="margin-left: 10px; margin-right: 10px;">
-              <button type="button" style="min-width: 105px; max-height: 40px" class="btn btn-outline-secondary dropdown-toggle shadow-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {% if request.LANGUAGE_CODE == 'en' %}
-                <img class="flag" src="{% static 'images/flags/usa_uk1.png' %}" alt="flag_usa"> English
-                {% elif request.LANGUAGE_CODE == 'es' %}
-                <img class="flag" src="{% static 'images/flags/spain.png' %}" alt="flag_spain"> Español
-                {% elif request.LANGUAGE_CODE == 'ru' %}
-                <img class="flag" src="{% static 'images/flags/russia.png' %}" alt="flag_russia"> Русский
-                <!-- Add new languages here -->
+            <div class="dropdown mx-auto">
+              <div class="btn-group">
+                <button type="button" id="btn-language-dropdown" class="btn btn-outline-secondary dropdown-toggle shadow-none" data-bs-toggle="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {% if request.LANGUAGE_CODE == 'en' %}
+                  <img class="flag" src="{% static 'images/flags/usa_uk1.png' %}" alt="flag_usa"> English
+                  {% elif request.LANGUAGE_CODE == 'es' %}
+                  <img class="flag" src="{% static 'images/flags/spain.png' %}" alt="flag_spain"> Español
+                  {% elif request.LANGUAGE_CODE == 'ru' %}
+                  <img class="flag" src="{% static 'images/flags/russia.png' %}" alt="flag_russia"> Русский
+                  <!-- Add new languages here -->
 
-                {% endif %}
-              </button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="/en/{{ request.path|remove_language }}"><img src="{% static 'images/flags/usa_uk1.png' %}" alt="flag_usa"> {% trans "English" %}</a>
-                <a class="dropdown-item" href="/es/{{ request.path|remove_language }}"><img src="{% static 'images/flags/spain.png' %}" alt="flag_spain"> {% trans "Spanish" %}</a>
-                <a class="dropdown-item" href="/ru/{{ request.path|remove_language }}"><img src="{% static 'images/flags/russia.png' %}" alt="flag_russia"> {% trans "Russian" %}</a>
-                <!-- Add new languages here -->
-                
+                  {% endif %}
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/en/{{ request.path|remove_language }}"><img src="{% static 'images/flags/usa_uk1.png' %}" alt="flag_usa"> {% trans "English" %}</a>
+                  <a class="dropdown-item" href="/es/{{ request.path|remove_language }}"><img src="{% static 'images/flags/spain.png' %}" alt="flag_spain"> {% trans "Spanish" %}</a>
+                  <a class="dropdown-item" href="/ru/{{ request.path|remove_language }}"><img src="{% static 'images/flags/russia.png' %}" alt="flag_russia"> {% trans "Russian" %}</a>
+                  <!-- Add new languages here -->
+                  
+                </div>
               </div>
             </div>
 
@@ -104,23 +86,25 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'support_us' %}">{% trans "Support Us" %}</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item mx-auto">
             <a class="button_premium" href="{% url 'premium' %}">{% trans "Premium" %}</a>
           </li>
           <li>
-            <div class="user_authentication">
+            <div class="user_authentication text-center">
               {% if user.is_authenticated %}
-              {% trans "Hi" %} {% if user.is_premium %}<img style="max-width: 16px" src="{% static 'images/badges/badge_premium.png' %}" alt="premium_badge">{% endif %}
-              {{ user.username }}!
-              <br>
-              <a href="{% url 'my_profile' %}">{% trans "My Profile" %}</a>
-              ·
-              <a href="{% url 'logout' %}">{% trans "Log out" %}</a>
-              {% if user.is_staff %}
-              <a href="/admin/" style="text-decoration: none;">&#9881;{% trans "Admin" %}</a>
-              {% endif %}
+                {% trans "Hi" %} {% if user.is_premium %}<img id="premium-badge-icon" src="{% static 'images/badges/badge_premium.png' %}" alt="premium_badge">{% endif %}
+                {{ user.username }}!
+                <br>
+                <a href="{% url 'my_profile' %}">{% trans "My Profile" %}</a>
+                ·
+                <a href="{% url 'logout' %}">{% trans "Log out" %}</a>
+              
+                {% if user.is_staff %}
+                  <a href="/admin/" class="text-decoration-none">&#9881;{% trans "Admin" %}</a>
+                {% endif %}
+
               {% else %}
-              <div class="login_register" style="margin-top: 8px;">
+              <div class="login_register my-2">
                 <a href="{% url 'login' %}">{% trans "Login" %}</a>
                 ·
                 <a href="{% url 'signup' %}">{% trans "Register" %}</a>
@@ -128,75 +112,34 @@
               {% endif %}
           </li>
 
+          {% if user.is_staff %}
           <!-- New Features and Test Area, shown only to staff users -->
-          <li {% if not user.is_staff%}hidden{% endif %} style="position: absolute; right: 10px;">
-            <div class="new_features">
-              <a class="btn btn-outline-info shadow-none" href="{% url 'new_features' %}" style="margin-left: 10px">New Features</a>
-            </div>
-            <div class="test">
-              <a class="btn btn-warning shadow-none" href="{% url 'test' %}" style="margin-left: 10px">Test Area</a>
-            </div>
-          </li>
+          <div class="staff_area">  
+            <div class="new_features_area"><a class="btn btn-outline-info shadow-none" href="{% url 'new_features' %}">New Features</a></div>
+            <div class="test_area"><a class="btn btn-warning shadow-none" href="{% url 'test' %}">Test Area</a></div>
+          </div>
+          {% endif %}
 
         </ul>
       </div>
-    </div>
   </nav>
 
-<!-- Alerts -->
 {% for message in messages %}
+<!-- Alerts -->
 <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
   {{ message|safe }}
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endfor %}
+
+<script src="{% static 'js/base.js' %}"></script>
 
 {% block content %}
 {% endblock %}
 
-<footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
-  <p class="col-md-4 mb-0" style="color: aliceblue;">&copy; 2023 Poetriumph, <a href="https://newa.fun" target="_blank" style="text-decoration: none; color: inherit;">Newa Fun</a>. {% trans "All Rights Reserved" %}</p>
+<footer class="mx-3 py-3 border-top">
+  <p>&copy; 2023 Poetriumph, <a href="https://newa.fun" target="_blank">Newa Fun</a>. {% trans "All Rights Reserved" %}</p>
 </footer>
-
-<!-- Adjust textarea's height based on its content -->
-<script>
-  $('textarea').each(function () {
-    this.setAttribute('style', 'height:' + (this.scrollHeight) + 'px;overflow-y:hidden;');
-  }).on('input', function () {
-    this.style.height = 'auto';
-    this.style.height = (this.scrollHeight) + 5 + 'px';
-  });
-</script>
-
-<!-- Activate bootstrap tooltips -->
-<script>
-  const tooltips = document.querySelectorAll('.tt')
-  tooltips.forEach(t => {
-    new bootstrap.Tooltip(t)
-  })
-</script>
-
-<!-- Change table's language -->
-<script>
-  $(document).ready(function () {
-    let user_language = window.location.pathname.split('/')[1];
-    user_language = user_language === 'es' ? 'es_es' : user_language;
-    let table = $('#poems-table').DataTable({
-      'language': {
-        'url': '//cdn.datatables.net/plug-ins/1.11.3/i18n/' + user_language + '.json'
-      },
-    });
-  
-    // Reload the table when the language parameter changes
-    $(window).on('popstate', function() {
-      user_language = window.location.pathname.split('/')[1];
-      user_language = user_language === 'es' ? 'es_es' : user_language;
-      table.ajax.reload();
-    });
-  });
-</script>
 
 </body>
 </html>

@@ -2,25 +2,27 @@
 {% load i18n %}
 
 {% block content %}
-<style>
-    .clickable {
-      cursor: pointer;
-    }
-</style>
 
-<div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
+<div class="container-fluid px-4 py-2">
     <h class="display-6">{% trans "Poem Library" %}</h>
 
     {% if user.is_staff %}
-    <br>
-    <a class="btn btn-secondary shadow-none" href="/admin/poetry_translation/poem/" role="button" style="margin: 10px;">{% trans "Change the list (moderator)" %}</a>
+    <div class="row">
+        <div class="col-auto">
+            <a class="btn btn-secondary shadow-none" href="/admin/poetry_translation/poem/" role="button">{% trans "Change the list (moderator)" %}</a>
+        </div>
+    </div>
     {% endif %}
-    <p>
-        {% trans "Total number of Poems:" %} {{ object_list|length }}
-    </p>
+    <div class="row">
+        <div class="col-auto">
+            <span class="badge rounded-pill bg-primary my-2 p-2">
+                {% trans "Total number of Poems:" %} {{ object_list|length }}
+            </span>
+        </div>
+    </div>
     
     <div class="poems_list">
-        <table class="table table-hover" id="poems-table">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th scope="col">{% trans '#' %}</th>
@@ -28,18 +30,18 @@
                     <th scope="col">{% trans 'Author' %}</th>
                     <th scope="col">{% trans 'Target Language' %}</th>
                     <th scope="col">{% trans 'Saved by' %}</th>
-                    <th scope="col">{% trans 'Created at' %}</th>
+                    <th scope="col">{% trans 'Updated at' %}</th>
                   </tr>
             </thead>
             <tbody>
                 {% for poem in object_list %}
                 <tr class="poem">
                     <th scope="row">{{ forloop.counter }}</th>
-                    <td class="clickable" onclick="window.location='{% url 'poem_detail' poem.id %}'"><a href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a></td>
+                    <td class="clickable-td"><a href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a></td>
                     <td>{{ poem.author }}</td>
                     <td>{{ poem.target_lang|capfirst }}</td>
                     <td>{{ poem.saved_by }}</td>
-                    <td>{{ poem.created_at }}</td>
+                    <td>{{ poem.updated_at }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

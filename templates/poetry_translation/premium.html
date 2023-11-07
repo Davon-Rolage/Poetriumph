@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load i18n %}
 
 {% block content %}
+
 {% if not user.is_authenticated %}
-<div class="container-fluid" style="background-color: aliceblue; padding: 40px; padding-top: 20px;">
+<div class="container-fluid px-4 py-2">
     <h class="display-6">{% trans "Premium is only available for registered users." %} <a href="{% url 'login' %}">{% trans "Sign in" %}</a> {% trans "and try again." %}</h>
 </div>
 {% else %}
+
 {% if not user.is_premium %}
-<div class="container-fluid" style="background-color: aliceblue; padding: 40px;">
-    <h1 style="color: #50586C;">{% trans "Premium" %}</h1>
-    <p style="color: #50586C;">
-        {% trans "What you get with premium:" %}
-    </p>
+<div class="container-fluid container-premium-get px-4 py-3">
+    <h1>{% trans "Premium" %}</h1>
+    <p>{% trans "What you get with premium:" %}</p>
     <ol>
         <li class="feature">
             {% trans "Premium users can translate poetry between a wider range of languages" %}
@@ -31,37 +32,36 @@
         </li>
     </ol>
 
-    <form action="{% url 'get_premium' %}" method="post" id="premium-form">
+    <form action="{% url 'get_premium' %}" method="post" id="form-premium">
         {% csrf_token %}
-        <div class="stage">
-            <button class="button_get_premium" style="line-height: 25px;" type="submit" onclick="submitForm()">
-                {% trans "Try out for free!" %}
-            </button>
-        </div>
+        <button class="btn-get-premium" type="submit">
+            {% trans "Try out for free!" %}
+        </button>
     </form>
 </div>
 
-<script>
-    function submitForm() {
-        window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley', '_blank');
-        document.getElementById("premium-form").submit();
-    }
-</script>
+<script src="{% static 'js/premium.js' %}"></script>
 
 {% else %}
-<div class="container-fluid" style="background-color: aliceblue; padding: 40px;">
-    <h1 style="color: #50586C;">Never give up, premium user {{ user.username }}!</h1>
-    <div class="thank_you_premium" style="font-size: 32px;">
-        <p>
-            {% trans "Thanks for upgrading to premium! Enjoy all the features we have to offer!" %}
-        </p>
+<div class="container-fluid container-premium-thank-you py-3">
+    <div class="row justify-content-center text-center">
+        <div class="col-sm-12 col-md-6">
+            <h1>Never give up, premium user {{ user.username }}!</h1>
+            <div class="thank-you-premium">
+                {% trans "Thank you for upgrading to premium!" %}<br>
+                {% trans "Enjoy all the features we have to offer!" %}
+            </div>
+
+            <!-- Cancel premium form -->
+            <form id="form-cancel-premium" action="{% url 'cancel_premium' %}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-outline-danger shadow-none my-3" type="submit">
+                    {% trans "Cancel Premium Status" %}
+                </button>
+            </form>
+
+        </div>
     </div>
-    <form action="{% url 'cancel_premium' %}" method="post">
-        {% csrf_token %}
-        <button style="margin-top: 20px;" class="btn btn-outline-danger shadow-none" type="submit">
-            {% trans "Cancel Premium Status" %}
-        </button>
-    </form>
 </div>
 {% endif %}
 {% endif %}

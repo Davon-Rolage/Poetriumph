@@ -1,28 +1,68 @@
-.message_text {
+.container-fluid {
+  background-color: aliceblue;
+  padding: 0 20px 20px 20px;
+}
+
+.container-index {
+  background: linear-gradient(to bottom, rgba(240, 248, 255, 0.8), aliceblue);
+}
+.container-index p {
+  font-size: 24px;
+}
+
+.container-about-us {
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 30px;
+}
+
+.container-premium-get {
+  color: #50586C;
+  font-size: 20px;
+}
+
+.container-premium-thank-you {
+  color: #50586C;
+}
+
+.container-translation-settings {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.container-new-features {
+  font-size: 24px;
+}
+
+.container-test-area {
+  height: 500px;
+}
+
+.poem-textarea {
     width: 100%;
-    float: left;
     font-size: 18px;
     color: #666666;
     background-color: white;
-    padding-right: 20px;
-    padding-left: 15px;
-    padding-top: 10px;
+    padding: 10px 35px 22px 15px;
     border: 1px solid silver;
     border-radius: 5px;
     line-height: 1.3;
-    min-height: 2;
 }
 
-.message_text:focus {
+.poem-textarea:focus {
     outline-width: 0;
 }
 
 .navbar {
-    opacity: 0.95;
+    z-index: 2;
 }
 
 .navbar-brand img {
     max-width: 150px;
+    margin-left: 10px;
 }
 
 .nav-item>a {
@@ -58,24 +98,15 @@
     text-decoration: none;
 }
 
-.translation-settings-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
-
 .user_authentication {
     line-height: 20px;
 }
 
-.stage {
-    box-sizing: border-box;
-  }
+.thank-you-premium {
+    font-size: 32px;
+}
   
-  .button_get_premium {
+.btn-get-premium {
     background-color: #50586C;
     width: 200px;
     font-size: 20px;
@@ -87,9 +118,10 @@
     position: relative;
     z-index: 0;
     border-radius: 20px;
-  }
-  
-  .button_get_premium::before {
+    line-height: 25px;
+}
+
+.btn-get-premium::before {
     position: absolute;
     content: "";
     width: calc(100% + 4px);
@@ -114,13 +146,13 @@
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
     border-radius: 10px;
-  }
-  
-  .button_get_premium:hover::before {
+}
+
+.btn-get-premium:hover::before {
     opacity: 1;
-  }
-  
-  .button_get_premium::after {
+}
+
+.btn-get-premium::after {
     z-index: -1;
     content: "";
     position: absolute;
@@ -130,22 +162,18 @@
     left: 0;
     top: 0;
     border-radius: 10px;
-  }
-  
-  @keyframes move {
-    0% {
-      background-position: 0 0;
-    }
-    50% {
-      background-position: 400% 0;
-    }
-    100% {
-      background-position: 0 0;
-    }
-  }
+}
 
-.placeicon {
-	font-family: fontawesome;
+@keyframes move {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
 }
 
 .custom-control-label::before {
@@ -206,12 +234,12 @@
 }
 
 .alert-success {
-  font-size: 26px;
-  top: 60px;
   position: fixed;
   align-self: center;
+  font-size: 26px;
+  top: 60px;
   z-index: 1000;
-  animation: fadeOutSuccess 7s forwards;
+  animation: fadeOutSuccess 5s forwards;
   box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.5);
 }
 
@@ -230,4 +258,111 @@
 
 .tooltip {
   pointer-events: none;
+}
+
+.copy-to-clipboard {
+  cursor: pointer;
+  color: aliceblue;
+  font-size: 12px;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #333;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.copy-to-clipboard:hover {
+  background-color: #4d4d4d;
+}
+
+.copyable-textbox {
+  position: relative !important;
+}
+
+.save-check {
+  color: #45d35d;
+  display: none;
+  margin-left: 2px;
+}
+
+.clickable-td {
+  cursor: pointer;
+}
+
+.character_counter {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+}
+
+footer {
+  margin-top: auto;
+}
+footer p {
+  color: aliceblue;
+}
+footer a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* country's flag icon settings */
+a>img, .flag {
+  max-width: 23px;
+}
+
+/* Place 'search' to the left and 'pagination' to the right */
+.dataTables_wrapper .dataTables_filter {
+  float: left;
+}
+.dataTables_wrapper .dataTables_length {
+  float: right;
+}
+
+.staff_area {
+  position: fixed;
+  right: 10px;
+}
+
+#premium-badge {
+  max-width: 130px;
+}
+
+#premium-badge-icon {
+  max-width: 16px;
+}
+
+#btn-language-dropdown {
+  width: auto;
+  max-height: 40px;
+}
+
+.display-none {
+  display: none;
+}
+
+.img-download {
+  color: aliceblue;
+}
+.img-download:hover {
+  color: rgb(167, 214, 255);
+}
+
+.img-support-us {
+  max-width: 162px;
+}
+
+#logo-buy-me-a-coffee {
+  min-width: 200px;
+}
+
+.img-github {
+  min-width: 45px;
+}
+
+.poem_count_badge {
+  max-height: 120px;
+  padding: 0 30px;
 }

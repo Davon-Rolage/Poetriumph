@@ -21,9 +21,13 @@ EMAIL_USE_TLS = True
 PASSWORD_RESET_TIMEOUT = 14400 # 4 hours or 240 minutes
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', False)
 
 ALLOWED_HOSTS = []
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -35,9 +39,11 @@ INSTALLED_APPS = [
     'poetry_translation',
     'accounts',
     'captcha',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -74,7 +80,7 @@ DATABASES = {
         'NAME': os.environ.get('POSTGRES_DB'),
         'USER': os.environ.get('POSTGRES_USER'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': '127.0.0.1',
+        'HOST': os.environ.get('PG_CONTAINER_HOST', '127.0.0.1'),
         'PORT': 5432,
     }
 }

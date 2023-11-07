@@ -3,125 +3,148 @@
 
 {% block content %}
 
-<style>
-  .row > * {
-    padding-left: 0;
-  }
-</style>
-
 {% if not user.username == poem.saved_by %}
-<div class="container-fluid" style="margin-left: 0px; background-color: aliceblue; text-align: center; padding-bottom: 10px; padding-left: 30px;">
+<div class="container-fluid text-center">
   <h class="display-6">{% trans 'You are not authorized to edit this poem.' %}</h>
 </div>
 {% else %}
-<div class="container-fluid" style="margin-left: 0px; background-color: aliceblue; padding-bottom: 10px; padding-left: 30px;">
+<div class="container-fluid">
 
-  <!-- Form to delete the poem -->
-  <div class="row">
-    <form id="delete-form" action="{% url 'poem_delete' poem.id %}" method="post" style="margin-top: 10px">
-      {% csrf_token %}
-      <button onclick="return confirm('{% trans 'Are you sure you want to delete this poem?' %}')" {% if not user.username == poem.saved_by %}disabled{% endif %}
-        class="btn btn-outline-danger shadow-none" style="width: 200px;">{% trans "Delete" %}</button>
-    </form>
+  <div class="row gy-5 justify-content-start align-items-center">
+    
+    <!-- Form to delete the poem -->
+    <div class="col-auto py-1">
+      <form id="delete-form" action="{% url 'poem_delete' poem.id %}" method="post">
+        {% csrf_token %}
+        <button onclick="return confirm('{{ confirm_poem_delete }}')" class="btn btn-outline-danger shadow-none">{% trans "Delete" %}</button>
+      </form>
+    </div>
+
+    <!-- Save button -->
+    <div class="col-auto py-1">
+      <button onclick="$('#form-update').submit()" class="btn btn-success shadow-none" type="submit">
+        {% trans "Save Changes" %}
+      </button>
+    </div>
+
   </div>
 
-  <form action="{% url 'poem_update' poem.id %}" method="post">
+  <form id="form-update" action="{% url 'poem_update' poem.id %}" method="post">
     {% csrf_token %}
 
     <!-- Updated at -->
-    <div class="row" style="margin-top: 15px;">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
+    <div class="row gy-1">
+      <div class="input-group">
+        <div class="col-auto py-1 input-group-prepend">
           <span class="input-group-text" id="inputGroup-sizing-default">{% trans "Updated at" %}</span>
         </div>
+        <div class="col-auto py-1">
           {{ form.updated_at }}
+        </div>
       </div>
     </div>
 
-    <div class="row" style="max-width: fit-content;">
+    <div class="row gy-2 align-items-center">
       
       <!-- Language engine -->
-      <div class="col">
+      <div class="col-auto py-1">
         {{ form.language_engine }}
       </div>
 
       <!-- Is hidden from library -->
-      <div class="col form-check form-switch" style="margin-left: 45px; display: flex; align-items: center;">
+      <div class="col-auto my-1 mx-3 form-check form-switch">
         {{ form.is_hidden }}
         <label class="form-check-label" for="flexSwitchCheckDefault">{% trans "Hide from Poem Library" %}</label>
       </div>
 
     </div>
 
-    <div class="row" style="max-width: fit-content; margin-top: 10px;">
+    <div class="row gy-1 justify-content-start align-items-center">
 
       <!-- Source language -->
-      <div class="col">{{ form.source_lang }}</div>
-
-      <!-- A simple right arrow -> -->
-      <div class="col-1 my-auto"><svg style="margin-left: 10px; margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" /></svg></div>
-
-      <!-- Target language -->
-      <div class="col">{{ form.target_lang }}</div>
-
-      <!-- Save button -->
-      <div class="col">
-        <button class="btn btn-success shadow-none" type="submit" style="width: 200px" {% if not user.username == poem.saved_by %}disabled{% endif %}>
-          {% trans "Save Changes" %}
-        </button>
+      <div class="col-auto">
+        {{ form.source_lang }}
       </div>
+    
+      <!-- Simple right arrow -> -->
+      <div class="col-auto"><i class="fa-solid fa-arrow-right fa-beat fa-xl"></i></div>
+      
+      <!-- Target language -->
+      <div class="col-auto">
+        {{ form.target_lang }}
+      </div>
+      
     </div>
     
-    <div class="row">
-    {% if form.source_lang.errors %}
-      {% for error in form.source_lang.errors %}
-      <p class="text-danger">{{ error }}</p>
-      {% endfor %}
-      {% endif %}
-    </div>
-
-    <div class="row" style="margin-top: 20px">
-
-      <!-- Title -->
-      <div class="col">
-        <h class="display-6" for="title">{% trans "Title" %}</h>
+    <!-- Title -->
+    <div class="row gy-5 justify-content-start align-items-center">
+      <div class="col-auto py-1">
+        <h3 for="title">{% trans "Title" %}</h3>
+      </div>
+      <div class="col-auto py-1">
         {{ form.title|safe }}
       </div>
+      {% if form.title.errors %}
+      <div class="col-auto py-1">
+        {% for error in form.title.errors %}
+        <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+      
+    </div>
 
-      <!-- Author -->
-      <div class="col">
-        <h class="display-6" for="author">{% trans "Author" %}</h>
+    <!-- Author -->
+    <div class="row gy-5 justify-content-start">
+      <div class="col-auto py-1">
+        <h3 for="author">{% trans "Author" %}</h3>
+      </div>
+      <div class="col-auto py-1">
         {{ form.author|safe }}
       </div>
+    </div>
 
-      <!-- Saved By (user) -->
-      <div class="col">
-        <h class="display-6" for="saved_by">{% trans "Saved by" %}</h>
-        {{ form.saved_by|safe }}
+    <!-- Saved By (user) -->
+    <div class="row gy-5 justify-content-start">
+      <div class="col-auto py-1">
+        <h3 for="saved_by">{% trans "Saved by" %}</h3>
       </div>
-
-      <div class="col"></div>
-      <div class="col"></div>
+      <div class="col-auto py-1">
+        <h3>{{ user.username }}</h3>
+      </div>
     </div>
 
     <div class="row">
 
       <!-- Original text -->
-      <div class="col">
-        <h class="display-6">
-          {% trans "Original Text" %}
-        </h>
-        {{ form.original_text|safe }}
+      <div class="col-sm-12 col-md-6">
+        <div class="row"><h1>{% trans "Original Text" %}</h1></div>
+          <div class="copyable-textbox">
+            {{ form.original_text|safe }}
+            
+            <!-- Copy to clipboard icon -->
+            <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
+              <i id="check-icon" class="fa-solid fa-check save-check"></i>
+            </i>
+        </div>
       </div>
 
       <!-- Translation text -->
-      <div class="col">
-        <h class="display-6">
-          {% trans "Translation" %}
-        </h>
-        {{ form.translation|safe }}
+      <div class="col-sm-12 col-md-6">
+        <div class="row"><h1>{% trans "Translation" %}</h1></div>
+          <div class="copyable-textbox">
+            {{ form.translation|safe }}
+
+            <!-- Copy to clipboard icon -->
+            <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
+              <i id="check-icon" class="fa-solid fa-check save-check"></i>
+            </i>
+          </div>          
+
       </div>
+      
     </div>
+
   </form>
 </div>
 {% endif %}

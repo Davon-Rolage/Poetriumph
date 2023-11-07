@@ -4,17 +4,17 @@
 {% block content %}
 
 <style>
-  .row > * {
-    padding-left: 0;
+  .row {
+    margin-top: 5px;
   }
 </style>
 
 {% if poem.is_hidden and not user.username == poem.saved_by %}
-<div class="container-fluid" style="margin-left: 0px; background-color: aliceblue; text-align: center; padding-bottom: 10px; padding-left: 30px;">
-  <h class="display-6">{% trans 'This poem is hidden by its author.' %}</h>
+<div class="container-fluid text-center">
+  <h class="display-6">{% trans 'This poem is hidden by its author' %}</h>
 </div>
 {% else %}
-<div class="container-fluid" style="margin-left: 0px; background-color: aliceblue; padding-bottom: 10px; padding-left: 30px;">
+<div class="container-fluid px-4">
   <form action="{% url 'poem_update' poem.id %}" method="post">
     {% csrf_token %}
 
@@ -22,29 +22,32 @@
     <input type="text" hidden value="1" name="edit">
 
     <!-- Language engine -->
-    <h class="display-6">{% trans "Translation Service" %} - {{ poem.language_engine }}</h>
+    <div class="row my-3"><h class="display-6">{% trans "Translation Service" %} - <span class="fw-bold">{{ poem.language_engine }}</span></h></div>
+
     <div class="row" hidden>{{ form.language_engine }}</div>
 
-    <div class="row" style="max-width: fit-content; margin-top: 10px;">
+    <div class="row justify-content-start align-items-center">
     
       <!-- Source language -->
-      <div class="col">
-        <input hidden type="text" value="{{ form.souce_lang.value }}" name="souce_lang">
+      <div class="col-auto">
+        <input hidden type="text" value="{{ form.source_lang.value }}" name="source_lang">
         {{ form.source_lang }}
       </div>
     
       <!-- A simple right arrow -> -->
-      <div class="col my-auto"><svg style="margin-left: 10px; margin-right: 10px;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" /></svg></div>
-    
+      <div class="col-auto">
+        <i class="fa-solid fa-arrow-right fa-beat fa-xl"></i>
+      </div>
+      
       <!-- Target language -->
-      <div class="col">
+      <div class="col-auto">
         <input hidden type="text" value="{{ form.target_lang.value }}" name="target_lang">
         {{ form.target_lang }}
       </div>
     
       <!-- If user is poem's author, show the Change button -->
       {% if user.username == poem.saved_by %}
-      <div class="col">
+      <div class="col-sm-auto">
         <button class="btn btn-primary shadow-none" type="submit">{% trans "Change Poem" %}</button>
       </div>
       {% endif %}
@@ -54,56 +57,87 @@
     <!-- Updated at (hidden) -->
     <div class="col" hidden>{{ form.updated_at }}</div>
 
-    <div class="row" style="margin-top: 20px">
-
-      <!-- Title -->
-      <div class="col">
-        <h class="display-6" for="title">{% trans "Title" %}</h>
+    <!-- Title -->
+    <div class="row justify-content-start">
+      <div class="col-auto">
+        <h3 for="title">{% trans "Title" %}</h3>
+      </div>
+      <div class="col-5">
         {{ form.title|safe }}
       </div>
+    </div>
 
-      <!-- Author -->
-      <div class="col">
-        <h class="display-6" for="author">{% trans "Author" %}</h>
+    <!-- Author -->
+    <div class="row justify-content-start">
+      <div class="col-auto">
+        <h3 for="author">{% trans "Author" %}</h3>
+      </div>
+      <div class="col-5">
         {{ form.author|safe }}
       </div>
+    </div>
 
-      <!-- Saved By (user) -->
-      <div class="col">
-        <h class="display-6" for="saved_by">{% trans "Saved by" %}</h>
-        {{ form.saved_by|safe }}
+    <!-- Saved By (user) -->
+    <div class="row justify-content-start">
+      <div class="col-auto">
+        <h3 for="saved_by">{% trans "Saved by" %}</h3>
       </div>
+      <div class="col-auto">
+        <h3>{{ poem.saved_by }}</h3>
+      </div>
+    </div>
 
       <!-- Is hidden from library -->
-      <div class="col-lg-2 col-md-3 col-sm-6 form-check form-switch" style="margin-left: 45px; position: relative;">
-        <div style="position: absolute; bottom: 0;">
+      <div class="row justify-content-start">
+        <div class="col">
           {{ form.is_hidden|safe }}
           <input hidden type="text" value="{{ form.is_hidden.value }}" name="is_hidden">
           <label class="form-check-label" for="flexSwitchCheckDefault">{% trans "Hide from Poem Library" %}</label>
         </div>
       </div>
-
-      <div class="col"></div>
-      <div class="col"></div>
-    </div>
+      
 
     <div class="row">
       
       <!-- Original text -->
-      <div class="col">
-        <h class="display-6">
-          {% trans "Original Text" %}
-        </h>
-        {{ form.original_text|safe }}
+      <div class="col-sm-12 col-md-6">
+        <div class="row">
+          <h1>
+            {% trans "Original Text" %}
+          </h1>
+        </div>
+        <div class="row">
+          <div class="copyable-textbox">
+            {{ form.original_text|safe }}
+
+            <!-- Copy to clipboard icon -->
+            <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
+              <i id="check-icon" class="fa-solid fa-check save-check"></i>
+            </i>
+          </div>
+        </div>
+
       </div>
 
       <!-- Translation text -->
-      <div class="col">
-        <h class="display-6">
+      <div class="col-sm-12 col-md-6">
+        <div class="row">
+        <h1>
           {% trans "Translation" %}
-        </h>
-        {{ form.translation|safe }}
+        </h1>
       </div>
+      <div class="row">
+        <div class="copyable-textbox">
+          {{ form.translation|safe }}
+
+          <!-- Copy to clipboard icon -->
+          <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
+            <i id="check-icon" class="fa-solid fa-check save-check"></i>
+          </i>
+        </div>
+      </div>
+      </div>
+      
     </div>
   </form>
 </div>

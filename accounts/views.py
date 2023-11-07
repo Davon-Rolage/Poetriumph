@@ -1,28 +1,35 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth import authenticate, get_user_model, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponseRedirect
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.translation import gettext as _
+from django.views.decorators.cache import cache_page
 from django.views.generic import DeleteView, View
 
 from accounts.models import MyProfile
+from poetry_translation.config import GUI_MESSAGES
 from poetry_translation.models import Poem
 
 from .forms import CustomUserCreationForm, CustomUserLoginForm
 from .models import CustomUser
 from .tokens import account_activation_token
 
-from django.template.loader import render_to_string
-from django.contrib.sites.shortcuts import get_current_site
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_str
-from django.core.mail import EmailMessage
-
 
 class SignUpView(View):
     template_name = 'registration/signup.html'
+    
+    @method_decorator(cache_page(60 * 60 * 24))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
     
     def get(self, request):
         form = CustomUserCreationForm()
@@ -38,6 +45,15 @@ class SignUpView(View):
      
         return render(request, self.template_name, {'form': form})
     
+
+def check_username_exists(request):
+    if request.method == 'GET':
+        username = request.GET.get('username')
+        if CustomUser.objects.filter(username=username).exists():
+            return HttpResponse('true')
+        else:
+            return HttpResponse('false')
+    
     
 def activate(request, uidb64, token):
     User = get_user_model()
@@ -51,16 +67,16 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         
-        messages.success(request, _('Thank you for confirming your email. You can now log in to your account.'))
+        messages.success(request, GUI_MESSAGES['messages']['activation_successful'])
         return HttpResponseRedirect(reverse('login'))
     else:
-        messages.error(request, _('Activation link is invalid!'))
+        messages.error(request, GUI_MESSAGES['error_messages']['activation_failed'])
     
     return HttpResponseRedirect(reverse('translation'))
     
 
 def activate_email(request, user, to_email):
-    mail_subject = _('Confirm your account on Poetriumph')
+    mail_subject = GUI_MESSAGES['messages']['email_subject']
     message = render_to_string('registration/activate_email.html', {
         'user': user.username,
         'domain': get_current_site(request).domain,
@@ -70,13 +86,18 @@ def activate_email(request, user, to_email):
     })
     email = EmailMessage(mail_subject, message, to=[to_email])
     if email.send():
-        messages.success(request, _(f'<b>{user}</b>, please check your email <b>{to_email}</b> to activate your account.'))
+        success_message = GUI_MESSAGES['messages']['email_sent'].format(user=user, to_email=to_email)
+        messages.success(request, success_message)
     else:
-        messages.error(request, _(f'Problem sending email to <b>{to_email}</b>, please try again.'))
+        messages.error(request, GUI_MESSAGES['error_messages']['email_sent'].format(to_email=to_email))
 
 
 class LoginView(View):
     template_name = 'registration/login.html'
+    
+    @method_decorator(cache_page(60 * 60 * 24))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
     
     def get(self, request):
         form = CustomUserLoginForm()
@@ -99,11 +120,16 @@ class MyProfileView(View):
     template_name = 'poetry_translation/my_profile.html'
     model = MyProfile
     
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
     def get(self, request):
         total_poems = Poem.objects.filter(saved_by=request.user).count()
         context = {
             'model': self.model,
             'total_poems': total_poems,
+            'confirm_account_delete': GUI_MESSAGES['confirm_account_delete'],
         }
         return render(request, self.template_name, context=context)
 
@@ -111,7 +137,7 @@ class MyProfileView(View):
 class DeleteUserView(SuccessMessageMixin, DeleteView):
     model = CustomUser
     success_url = reverse_lazy('translation')    
-    success_message = _('The user has been successfully deleted.')
+    success_message = GUI_MESSAGES['messages']['user_deleted']
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
