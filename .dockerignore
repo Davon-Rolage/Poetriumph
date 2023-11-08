@@ -6,7 +6,6 @@
 **/.git
 **/.gitignore
 **/.project
-**/.settings
 **/.toolstarget
 **/.vs
 **/.vscode
@@ -25,6 +24,4 @@
 **/values.dev.yaml
 LICENSE
 README.md
-**/settings
-**/templates
 **/venv

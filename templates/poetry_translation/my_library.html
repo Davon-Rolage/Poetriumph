@@ -3,43 +3,45 @@
 
 {% block content %}
 
-<div class="container-fluid px-4 py-3">
-    <h class="display-6">{{ gui_messages.my_library_title }}</h>
-    <div class="row">
-        <div class="col-auto">
-            <span class="badge rounded-pill bg-primary my-2 p-2">
-                {{ gui_messages.total_poems }} {{ poems|length }}
-            </span>
+<div class="container-wrapper">
+    <div class="container-fluid px-4 py-3">
+        <h class="display-6">{{ gui_messages.my_library_title }}</h>
+        <div class="row">
+            <div class="col-auto">
+                <span class="badge rounded-pill bg-primary my-2 p-2">
+                    {{ gui_messages.total_poems }} {{ poems|length }}
+                </span>
+            </div>
         </div>
-    </div>
 
-    <!-- Poem table -->
-    <div class="poems_list">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">{{ gui_messages.poem_counter }}</th>
-                    <th scope="col">{{ gui_messages.poem_title }}</th>
-                    <th scope="col">{{ gui_messages.poem_author }}</th>
-                    <th scope="col">{{ gui_messages.poem_target_language }}</th>
-                    <th scope="col">{{ gui_messages.poem_updated_at }}</th>
-                    <th scope="col">{{ gui_messages.poem_is_hidden }}</th>
-                  </tr>
-            </thead>
-            <tbody>
-                {% for poem in poems %}
-                <tr class="poem">
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td><a class="linker" href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a></td>
-                    <td>{{ poem.author }}</td>
-                    <td>{{ poem.target_lang|capfirst }}</td>
-                    <td>{{ poem.updated_at }}</td>
-                    <!-- If poem is hidden, display a gray badge -->
-                    <td>{% if poem.is_hidden %} <h5 class="my-0"><span class="badge bg-secondary">{{ gui_messages.hidden_state }}</span></h5>{% endif %}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <!-- Poem table -->
+        <div class="poems_list">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">{{ gui_messages.poem_counter }}</th>
+                        <th scope="col">{{ gui_messages.poem_title }}</th>
+                        <th scope="col">{{ gui_messages.poem_author }}</th>
+                        <th scope="col">{{ gui_messages.poem_target_language }}</th>
+                        <th scope="col">{{ gui_messages.poem_updated_at }}</th>
+                        <th scope="col">{{ gui_messages.poem_is_hidden }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for poem in poems %}
+                    <tr class="poem">
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td><a class="linker" href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a></td>
+                        <td>{{ poem.author }}</td>
+                        <td>{{ poem.target_lang|capfirst }}</td>
+                        <td>{{ poem.updated_at }}</td>
+                        <!-- If poem is hidden, display a gray badge -->
+                        <td>{% if poem.is_hidden %} <h5 class="my-0"><span class="badge bg-secondary">{{ gui_messages.hidden_state }}</span></h5>{% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

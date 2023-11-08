@@ -1,13 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
-from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
-from django.views.decorators.cache import cache_page
 from django.views.generic import DeleteView, View
 
 from accounts.models import MyProfile
@@ -22,10 +19,6 @@ from .utils import *
 class SignUpView(View):
     template_name = 'registration/signup.html'
     form_class = CustomUserCreationForm
-
-    @method_decorator(cache_page(60 * 60 * 24))
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
         
     def get(self, request):
         form = self.form_class()
@@ -52,10 +45,6 @@ class SignUpView(View):
 
 class LoginView(View):
     template_name = 'registration/login.html'
-    
-    @method_decorator(cache_page(60 * 60 * 24))
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
     
     def get(self, request):
         form = CustomUserLoginForm()
@@ -85,10 +74,6 @@ class LoginView(View):
 class MyProfileView(View):
     template_name = 'poetry_translation/my_profile.html'
     model = MyProfile
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
     
     def get(self, request):
         total_poems = Poem.objects.filter(saved_by=request.user).count()

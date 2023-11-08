@@ -47,13 +47,10 @@ services:
     volumes:
       - ./templates:/app/templates
       - ./static:/app/static
-
     ports:
       - "8008:8000"
-
     depends_on:
       - postgres
-
     networks:
           - network
 

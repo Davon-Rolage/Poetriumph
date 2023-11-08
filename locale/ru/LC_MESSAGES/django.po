@@ -591,7 +591,9 @@ msgstr "Попробуй бесплатно!"
 msgid ""
 "Thank you for upgrading to premium!\n"
 "Enjoy all the features we have to offer!"
-msgstr "Наслаждайтесь всеми функциями премиум-аккаунта!"
+msgstr ""
+"Спасибо за обновление до премиума!\n"
+"Наслаждайтесь всеми функциями премиум-аккаунта!"
 
 #. Translators: this is a "Cancel Premium" button
 #: .\poetry_translation\config.py:256

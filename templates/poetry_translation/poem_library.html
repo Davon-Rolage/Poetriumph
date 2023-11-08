@@ -3,49 +3,50 @@
 
 {% block content %}
 
-<div class="container-fluid px-4 py-2">
-    <h class="display-6">{{ gui_messages.poem_library_title }}</h>
+<div class="container-wrapper">
+    <div class="container-fluid px-4 py-2">
+        <h class="display-6">{{ gui_messages.poem_library_title }}</h>
 
-    {% if user.is_staff %}
-    <div class="row">
-        <div class="col-auto">
-            <a class="btn btn-secondary shadow-none" href="/admin/poetry_translation/poem/" role="button">Change the list (moderator)</a>
+        {% if user.is_staff %}
+        <div class="row">
+            <div class="col-auto">
+                <a class="btn btn-secondary shadow-none" href="/admin/poetry_translation/poem/" role="button">Change the list (moderator)</a>
+            </div>
         </div>
-    </div>
-    {% endif %}
-    <div class="row">
-        <div class="col-auto">
-            <span class="badge rounded-pill bg-primary my-2 p-2">
-                {{ gui_messages.total_poems }} {{ poems|length }}
-            </span>
+        {% endif %}
+        <div class="row">
+            <div class="col-auto">
+                <span class="badge rounded-pill bg-primary my-2 p-2">
+                    {{ gui_messages.total_poems }} {{ poems|length }}
+                </span>
+            </div>
         </div>
-    </div>
-    <div class="poems_list">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">{{ gui_messages.poem_counter }}</th>
-                    <th scope="col">{{ gui_messages.poem_title }}</th>
-                    <th scope="col">{{ gui_messages.poem_author }}</th>
-                    <th scope="col">{{ gui_messages.poem_target_language }}</th>
-                    <th scope="col">{{ gui_messages.poem_saved_by }}</th>
-                    <th scope="col">{{ gui_messages.poem_updated_at }}</th>
-                  </tr>
-            </thead>
-            <tbody>
-                {% for poem in poems %}
-                <tr class="poem">
-                    <th scope="row">{{ forloop.counter }}</th>
-                    <td><a class="linker" href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a></td>
-                    <td>{{ poem.author }}</td>
-                    <td>{{ poem.target_lang|capfirst }}</td>
-                    <td>{{ poem.saved_by }}</td>
-                    <td>{{ poem.updated_at }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="poems_list">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">{{ gui_messages.poem_counter }}</th>
+                        <th scope="col">{{ gui_messages.poem_title }}</th>
+                        <th scope="col">{{ gui_messages.poem_author }}</th>
+                        <th scope="col">{{ gui_messages.poem_target_language }}</th>
+                        <th scope="col">{{ gui_messages.poem_saved_by }}</th>
+                        <th scope="col">{{ gui_messages.poem_updated_at }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for poem in poems %}
+                    <tr class="poem">
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td><a class="linker" href="{% url 'poem_detail' poem.id %}">{{ poem.title }}</a></td>
+                        <td>{{ poem.author }}</td>
+                        <td>{{ poem.target_lang|capfirst }}</td>
+                        <td>{{ poem.saved_by }}</td>
+                        <td>{{ poem.updated_at }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-
 {% endblock %}

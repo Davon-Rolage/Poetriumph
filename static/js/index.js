@@ -96,7 +96,7 @@ $("#btn-translate").click(function () {
     } else {
         $('.tt').tooltip('hide');
         buttonTranslate.prop("disabled", true);
-        $("#button-translate-text").text(loadingButtonText);
+        // $("#button-translate-text").text(loadingButtonText);
         $("#spinner").css("display", "inline-block");
         if (languageEngineDropdown.val().includes('ChatGpt')) {
             activateTooltipLoadingGPT();

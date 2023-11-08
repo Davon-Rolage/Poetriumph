@@ -92,7 +92,7 @@
             {% if user.is_authenticated %}
             <span class="row my-1 justify-content-center">
 
-              {{ gui_messages.greetings }} {% if user.is_premium %}<img id="premium-badge-icon" src="{% static 'images/badges/badge_premium.png' %}" alt="premium_badge">{% endif %}
+              {{ gui_messages.greetings }} {% if user.is_premium %}<img id="premium-badge-icon" class="gx-0 mx-1" src="{% static 'images/badges/badge_premium.png' %}" alt="premium_badge">{% endif %}
               {{ user.username }}!
             </span>
               

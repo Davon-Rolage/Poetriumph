@@ -1,5 +1,3 @@
-{% autoescape off %}
-{% load i18n %}
-{% trans 'Click on the link below to activate your Poetriumph account:' %}
+{% autoescape off %}{% load i18n %}{% trans 'Click on the link below to activate your Poetriumph account:' %}
 {{ protocol }}://{{ domain }}{% url 'activate' uidb64=uid token=token %}
 {% endautoescape %}
