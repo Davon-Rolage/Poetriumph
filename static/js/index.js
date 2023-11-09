@@ -110,6 +110,7 @@ $("#btn-translate").click(function () {
                 $("#spinner").css("display", "none");
                 $("#button-translate-text").text(buttonTranslateInitialText);
                 $("#translation-text").val(data.translation);
+                $("#translation-text").trigger("input");
                 buttonTranslate.prop("disabled", false);
             }
         })

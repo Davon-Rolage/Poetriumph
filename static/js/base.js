@@ -4,7 +4,14 @@ $(document).ready(function () {
     activateCopyToClipboard();
     activateTooltips();
     
-    $(".poem-textarea").on("input", function() {
+    let poemTextarea = $(".poem-textarea");
+    // Adjust textarea's height on page load
+    poemTextarea.each(function() {
+        adjustTextareaHeight(this);
+    })
+    
+    // Adjust textarea's height on input
+    poemTextarea.on("input", function() {
         adjustTextareaHeight(this);
     });
 });
@@ -13,7 +20,7 @@ $(document).ready(function () {
 function adjustTextareaHeight(textbox) {
     let rowsNum = textbox.value.split("\n").length;
     if (rowsNum > 10) {
-        $(textbox).attr("rows", $(textbox).val().split("\n").length);
+        $(textbox).attr("rows", rowsNum);
     } else {
         $(textbox).attr("rows", 10);
     }
