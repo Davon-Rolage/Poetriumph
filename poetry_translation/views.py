@@ -2,7 +2,7 @@ import json
 
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
@@ -52,12 +52,12 @@ class IndexView(View):
 
 
 class GetTranslation(View):
-    def get(self, request):
+    def post(self, request):
         user = request.user
-        language_engine = request.GET.get('language_engine')
-        source_lang = request.GET.get('source_lang')
-        target_lang = request.GET.get('target_lang').lower()
-        original_text = request.GET.get('original_text')
+        language_engine = request.POST.get('language_engine')
+        source_lang = request.POST.get('source_lang')
+        target_lang = request.POST.get('target_lang').lower()
+        original_text = request.POST.get('original_text')
 
         if user.is_authenticated and user.is_premium:
             character_limit = CHARACTER_LIMIT_PREMIUM
@@ -84,12 +84,8 @@ class GetTranslation(View):
         return HttpResponse(json_data)
     
     
-class SaveTranslation(DetailView):
+class SaveTranslation(LoginRequiredMixin, DetailView):
     model = Poem
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
     
     def post(self, request):
         user = request.user
@@ -131,15 +127,11 @@ class PoemDetailView(DetailView):
         return render(request, self.template_name, context)
 
 
-class PoemUpdateView(UpdateView):
+class PoemUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'poetry_translation/poem_update.html'
     form_class = PoemUpdateForm
     model = Poem
     success_message = GUI_MESSAGES['messages']['poem_updated']
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
     
     def get(self, request, *args, **kwargs):
         poem = get_object_or_404(self.model, pk=kwargs.get('pk'))
@@ -217,13 +209,9 @@ class PoemLibraryListView(ListView):
         return self.model.objects.filter(is_hidden=False).order_by('-updated_at')
     
     
-class MyLibraryView(ListView):
+class MyLibraryView(LoginRequiredMixin, ListView):
     template_name = 'poetry_translation/my_library.html'
     model = Poem
-    
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

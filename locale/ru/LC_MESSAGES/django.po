@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-07 18:05+0400\n"
+"POT-Creation-Date: 2023-11-18 20:16+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -621,10 +621,9 @@ msgstr "Ваш перевод будет здесь..."
 msgid "%(gui_messages.have_n_poems)s"
 msgstr "%(gui_messages.have_n_poems)s"
 
-#: .\templates\registration\activate_email.html:3
+#: .\templates\registration\activate_email.html:1
 msgid "Click on the link below to activate your Poetriumph account:"
-msgstr ""
-"Нажмите на ссылку ниже, чтобы активировать свою учетную запись Poetriumph:"
+msgstr "Нажмите на ссылку ниже, чтобы активировать свою учетную запись Poetriumph:"
 
 #: .\venv\Lib\site-packages\captcha\fields.py:20
 #: .\venv\Lib\site-packages\captcha\fields.py:21

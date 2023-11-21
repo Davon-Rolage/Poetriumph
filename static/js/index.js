@@ -103,7 +103,7 @@ $("#btn-translate").click(function () {
         }
         $.ajax({
             url: urlGetTranslation,
-            type: "GET",
+            type: "POST",
             data: $("#save-form").serialize(),
             success: function (data) {
                 data = JSON.parse(data)[0];
