@@ -77,9 +77,10 @@ class MyProfileView(View):
     
     def get(self, request):
         total_poems = Poem.objects.filter(saved_by=request.user).count()
-        
+        badge_count = [1, 5, 20, 50, 100]
         context = {
             'total_poems': total_poems,
+            'badge_count': badge_count,
             'gui_messages': GUI_MESSAGES['base']
                           | GUI_MESSAGES['my_profile']
                           | { 'total_poems': GUI_MESSAGES['total_poems'] },

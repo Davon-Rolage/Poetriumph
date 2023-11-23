@@ -181,16 +181,6 @@ class SupportUsView(View):
         return render(request, self.template_name, context)
 
 
-class PremiumView(View):
-    template_name = 'poetry_translation/premium.html'
-
-    def get(self, request):
-        context = {
-            'gui_messages': GUI_MESSAGES['base'] | GUI_MESSAGES['premium'],
-        }
-        return render(request, self.template_name, context)
-
-
 class PoemLibraryListView(ListView):
     template_name = 'poetry_translation/poem_library.html'
     model = Poem
@@ -235,6 +225,16 @@ class PoemDeleteView(SuccessMessageMixin, DeleteView):
     def form_valid(self, form):
         messages.success(self.request, self.success_message)
         return super().form_valid(form)
+
+
+class PremiumView(View):
+    template_name = 'poetry_translation/premium.html'
+
+    def get(self, request):
+        context = {
+            'gui_messages': GUI_MESSAGES['base'] | GUI_MESSAGES['premium'],
+        }
+        return render(request, self.template_name, context)
 
 
 class GetPremiumView(View):

@@ -34,7 +34,7 @@
             <!-- Home -->
             <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
               <ul>
-                <h5 class="text-start">
+                <span class="text-start">
                   <li>
                     {{ gui_messages.total_poems }} {{ total_poems }}
                   </li>
@@ -48,7 +48,7 @@
                     <li>{{ gui_messages.no_premium }} <a href="{% url 'premium' %}">{{ gui_messages.upgrade_to_premium }}</a></li>
                   {% endif %}
                   
-                </h5>
+                </span>
               </ul>
             </div>
 
@@ -69,47 +69,25 @@
             <div class="tab-pane fade" id="v-pills-achievements" role="tabpanel" aria-labelledby="v-pills-achievements-tab">
               <h3 class="py-1">{{ gui_messages.total_poems }} {{ total_poems }}</h3>
               <div class="row">
+
+                <!-- Never give up badge -->
                 <div class="col">
                   <span class="tt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ gui_messages.never_give_up }}">
                     {% if user.is_premium %}<img id="premium-badge" src="{% static 'images/badges/badge_premium.png' %}"
                       alt="premium_badge">{% endif %}
                   </span>
                 </div>
-                {% if total_poems > 0 %}
-                <div class="col">
-                  <span class="tt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ gui_messages.have_1_poem }}">
-                    <img class="poem_count_badge" src="{% static 'images/badges/badge_poems_1.png' %}" alt="badge_poems_1">
-                  </span>
-                {% endif %}
-                </div>
-                {% if total_poems >= 5 %}
-                <div class="col">
-                  <span class="tt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% blocktranslate with n_poems=5 %}{{ gui_messages.have_n_poems }}{% endblocktranslate %}">
-                    <img class="poem_count_badge" src="{% static 'images/badges/badge_poems_5.png' %}" alt="badge_poems_5">
-                  </span>
-                {% endif %}
-                </div>
-                {% if total_poems >= 20 %}
-                <div class="col">
-                  <span class="tt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% blocktranslate with n_poems=20 %}{{ gui_messages.have_n_poems }}{% endblocktranslate %}">
-                    <img class="poem_count_badge" src="{% static 'images/badges/badge_poems_20.png' %}" alt="badge_poems_20">
-                  </span>
-                {% endif %}
-                </div>
-                {% if total_poems >= 50 %}
-                <div class="col">
-                  <span class="tt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% blocktranslate with n_poems=50 %}{{ gui_messages.have_n_poems }}{% endblocktranslate %}">
-                    <img class="poem_count_badge" src="{% static 'images/badges/badge_poems_50.png' %}" alt="badge_poems_50">
-                  </span>
-                {% endif %}
-                </div>
-                {% if total_poems >= 100 %}
-                <div class="col">
-                  <span class="tt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{% blocktranslate with n_poems=100 %}{{ gui_messages.have_n_poems }}{% endblocktranslate %}">
-                    <img class="poem_count_badge" src="{% static 'images/badges/badge_poems_100.png' %}" alt="badge_poems_100">
-                  </span>
-                {% endif %}
-                </div>
+
+                <!-- Poem count badges -->
+                {% for badge in badge_count %}
+                  {% if total_poems >= badge %}
+                    <div class="col">
+                      <span class="tt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ gui_messages.have_n_poems }} {{ badge }}">
+                        <img id="badge_poems_{{ badge }}" class="achievement_badge" src="" alt="badge_poems_{{ badge }}">
+                      </span>
+                    </div>
+                  {% endif %}
+                {% endfor %}
 
               </div>
             </div>
@@ -119,5 +97,7 @@
 
   </div>
 </div>
+
+<script src="{% static 'js/my_profile.js' %}"></script>
 
 {% endblock %}

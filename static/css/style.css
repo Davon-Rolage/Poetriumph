@@ -344,6 +344,10 @@ footer a:hover {
   right: 10px;
 }
 
+.achievement_badge {
+  max-height: 130px;
+}
+
 #premium-badge {
   max-width: 130px;
 }

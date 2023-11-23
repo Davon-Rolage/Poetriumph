@@ -1,10 +1,6 @@
-from django.utils.functional import lazy
-from django.utils.safestring import mark_safe
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 
-
-mark_safe_lazy = lazy(mark_safe, str)
 
 AI_ROLE = "You are a talented poet who can transform these lines into a beautiful rhyming {language} poem. It is important to preserve the general sense and meaning of each verse while incorporating rhymes in {language}. Ensure that the words used in the original lines are preserved in the new poem. Remember, rhyming and rhythm are key elements in this task. Follow the rhyming pattern of the original text, but if it doesn't contain rhymes, then don't limit yourself to only using aabb rhyming style. It is also important that you don't write any more lines than I have in the original text. Your goal is to create a poetic masterpiece that captures the essence of the original lines in an eloquent and lyrical manner. Let your creativity flow as you weave together words and emotions to create a captivating rhyming poem."
 
@@ -70,7 +66,7 @@ GUI_MESSAGES = {
         # Translators: this appears on the register page
         'registration_requirements': _('Registration requirements'),
         # Translators: this appears on the register page
-        'registration_requirements_text': mark_safe_lazy("""<li>Only latin letters are allowed.</li>
+        'registration_requirements_text': _("""<li>Only latin letters are allowed.</li>
 <li>Username must contain only letters, digits and . + - _</li>
 <li>Username must be at least 3 characters and no more than 15.</li>
 <li>Your password can't be too similar to your other personal information.</li>
@@ -136,7 +132,7 @@ GUI_MESSAGES = {
         # Translators: this is an achievement text
         'have_1_poem': _('Save your first poem to the library!'),
         # Translators: this is an achievement text
-        'have_n_poems': format_lazy('Have {n_poems} saved to your library'),
+        'have_n_poems': _('Poems in the library:'),
     },
     'about': {
         'about_poetriumph': _('About Poetriumph'),
@@ -244,14 +240,14 @@ GUI_MESSAGES = {
         # Translators: this is the title of the "Premium" page
         'premium_title': _('Premium'),
         'premium_description': _('Get access to the following premium features:'),
-        'premium_features': mark_safe_lazy('''<li>Premium users can translate poetry between a wider range of languages</li>
+        'premium_features': _('''<li>Premium users can translate poetry into more languages</li>
 <li>You can save your poems to the library and edit them</li>
 <li>You get your own premium badge on your profile</li>
 <li>You will be able to earn badges for saving poems</li>
-<li>And many more...</li>'''),
+<li>Character limit is increased to 2000 characters</li>'''),
         # Translators: this is a "Get Premium" button
         'button_get_premium': _('Try out for free!'),
-        'thank_you_premium': _('Thank you for upgrading to premium!\nEnjoy all the features we have to offer!'),
+        'thank_you_premium': _('Thank you for upgrading to premium!<br>Enjoy all the features we have to offer!'),
         # Translators: this is a "Cancel Premium" button
         'button_cancel_premium': _('Cancel Premium'),
     },

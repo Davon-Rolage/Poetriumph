@@ -34,7 +34,7 @@
         <div class="row justify-content-center text-center">
             <div class="col-sm-12 col-md-6">
                 <h1>Never give up, premium user {{ user.username }}!</h1>
-                <div class="thank-you-premium">{{ gui_messages.thank_you_premium }}</div>
+                <div class="thank-you-premium">{{ gui_messages.thank_you_premium|safe }}</div>
 
                 <!-- Cancel premium form -->
                 <form id="form-cancel-premium" action="{% url 'cancel_premium' %}" method="post">
