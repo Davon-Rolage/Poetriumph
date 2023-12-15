@@ -96,7 +96,7 @@
               {{ user.username }}!
             </span>
               
-              <a href="{% url 'my_profile' %}">{{ gui_messages.my_profile }}</a>
+              <a href="{% url 'profile' %}">{{ gui_messages.profile }}</a>
               ·
               <a href="{% url 'logout' %}">{{ gui_messages.logout }}</a>
             
@@ -139,7 +139,7 @@
   {% endblock %}
 
   <footer class="ps-3 pt-3 ms-3">
-    <p>&copy; 2023 Poetriumph, <a href="https://newa.fun" target="_blank">Newa Fun</a>. {{ gui_messages.copyright }}</p>
+    <p>2023 Poetriumph, <a href="https://newa.fun" target="_blank">Newa Fun</a></p>
   </footer>
 
 </body>

@@ -106,7 +106,6 @@ $("#btn-translate").click(function () {
             type: "POST",
             data: $("#save-form").serialize(),
             success: function (data) {
-                data = JSON.parse(data)[0];
                 $("#spinner").css("display", "none");
                 $("#button-translate-text").text(buttonTranslateInitialText);
                 $("#translation-text").val(data.translation);

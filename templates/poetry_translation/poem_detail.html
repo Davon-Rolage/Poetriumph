@@ -3,7 +3,7 @@
 
 {% block content %}
 
-{% if poem.is_hidden and not user.username == poem.saved_by %}
+{% if poem.is_hidden and user != poem.saved_by %}
 <div class="container-fluid text-center">
   <h class="display-6">{{ gui_messages.poem_hidden }}</h>
 </div>
@@ -31,9 +31,9 @@
       </div>
     
       <!-- If user is poem's author, show the Change button -->
-      {% if user.username == poem.saved_by %}
+      {% if user == poem.saved_by %}
       <div class="col-sm-auto">
-        <a class="btn btn-primary shadow-none" href="{% url 'poem_update' poem.id %}" role="button">{{ gui_messages.button_change_poem }}</a>
+        <a id="btn-change-poem" class="btn btn-primary shadow-none" href="{% url 'poem_update' poem.id %}" role="button">{{ gui_messages.button_change_poem }}</a>
       </div>
       {% endif %}
     

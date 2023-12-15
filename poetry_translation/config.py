@@ -1,4 +1,3 @@
-from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 
 
@@ -32,6 +31,17 @@ SUPPORTED_LANGUAGES = [
     ('turkish', _('Turkish')),
     ('indonesian', _('Indonesian')),
 ]
+
+
+def get_gui_messages(keys_to_get: list) -> dict:
+    gui_messages = dict()
+    for key in keys_to_get:
+        try:
+            gui_messages.update(GUI_MESSAGES[key])
+        except KeyError:
+            pass
+    return gui_messages
+
 
 GUI_MESSAGES = {
     'accounts': {
@@ -91,7 +101,7 @@ GUI_MESSAGES = {
         # Translators: this appears in the navbar
         'greetings': _('Hi'),
         # Translators: this is a navbar item
-        'my_profile': _('My Profile'),
+        'profile': _('My Profile'),
         # Translators: this is a navbar item
         'logout': _('Log out'),
         # Translators: this is a navbar item
@@ -100,11 +110,11 @@ GUI_MESSAGES = {
         'login': _('Login'),
         # Translators: this is a navbar item
         'register': _('Register'),
-        'copyright': _('All Rights Reserved'),
     },
     'index': {
         # Translators: this is the title of the index page
         'index_title': _('Poem Translation'),
+        # Translators: this is the description of the index page
         'index_description': _('Insert your poem and choose translation engine.'),
         # Translators: this is a translate button text
         'button_translate_text': _('Translate'),
@@ -114,18 +124,35 @@ GUI_MESSAGES = {
         'button_download_text': _('Download'),
         # Translators: this is a "save to library" button text
         'button_save_to_library': _('Save to library'),
+        # Translators: this is a placeholder for the input textarea
+        'placeholder_original_text': _('Insert your poem...'),
+        # Translators: this is a placeholder for the translation textarea
+        'placeholder_translation': _('Your translation will be here...'),
     },
-    'my_profile': {
+    'profile': {
+        # Translators: this is a profile page title
         'welcome': _('Welcome'),
+        # Translators: this is a profile settings option
         'home': _('Home'),
+        # Translators: this is a profile settings option
         'profile': _('Profile'),
+        # Translators: this is a profile settings option
         'settings': _('Settings'),
+        # Translators: this is a profile settings option
         'achievements': _('Achievements'),
+        # Translators: this is profile info
+        'total_poems': _('Total number of poems:'),
+        # Translators: this is profile info
         'date_joined': _('Date joined'),
+        # Translators: this is profile info
         'has_premium': _('You have premium status'),
+        # Translators: this is profile info
         'no_premium': _('You have free status.'),
+        # Translators: this is profile info. Goes after 'You have free status'
         'upgrade_to_premium': _('Upgrade to premium'),
+        # Translators: this is a profile settings option (button)
         'delete_account': _('Delete account'),
+        # Translators: this is a confirmation text for the delete account
         'delete_account_confirm': _('Are you sure you want to delete your account?'),
         # Translators: this is an achievement text
         'never_give_up': _('Never give up!'),
@@ -157,13 +184,13 @@ GUI_MESSAGES = {
         'placeholder_translation_text': _('Translation text...'),
         
         'error_captcha': _('You must pass the reCAPTCHA test'),
+        'error_username_required': _('Username is required'),
         'error_username_contains_spaces': _('Username cannot contain spaces'),
-        'error_username_contains_invalid_chars': _('Username contains invalid characters'),
-        'error_username_too_short': _('Username is too short'),
-        'error_username_too_long': _('Username is too long'),
-        'error_invalid_email': _('Email contains invalid characters'),
-        'error_password_too_short': _('Password is too short'),
-        'error_passwords_do_not_match': _('Passwords do not match'),
+        'error_username_invalid_chars': _('Username contains invalid characters'),
+        'error_username_min_length': _('Username is too short'),
+        'error_username_max_length': _('Username is too long'),
+        'error_email_invalid': _('Email is invalid'),
+        'error_password_min_length': _('Password is too short'),
         'error_invalid_credentials': _('Invalid username or password'),
     },
     'messages': {
@@ -197,6 +224,14 @@ GUI_MESSAGES = {
         'poem_is_hidden': _('Is hidden'),
         # Translators: this is a "Hidden" poem badge
         'hidden_state': _('Hidden'),
+    },
+    'poem_library': {
+        # Translators: this is the title of the "Poem Library" page
+        'poem_library_title': _('Poem Library'),
+    },
+    'poem_my_library': {
+        # Translators: this is the title of the "My Library" page
+        'my_library_title': _('My Library'),    
     },
     'poem_detail': {
         # Translators: this appears if a poem is hidden
@@ -241,21 +276,13 @@ GUI_MESSAGES = {
         'premium_title': _('Premium'),
         'premium_description': _('Get access to the following premium features:'),
         'premium_features': _('''<li>Premium users can translate poetry into more languages</li>
-<li>You can save your poems to the library and edit them</li>
+<li>Character limit is increased to 2000 characters</li>
 <li>You get your own premium badge on your profile</li>
-<li>You will be able to earn badges for saving poems</li>
-<li>Character limit is increased to 2000 characters</li>'''),
+<li>You will be able to earn badges for saving poems</li>'''),
         # Translators: this is a "Get Premium" button
         'button_get_premium': _('Try out for free!'),
         'thank_you_premium': _('Thank you for upgrading to premium!<br>Enjoy all the features we have to offer!'),
         # Translators: this is a "Cancel Premium" button
         'button_cancel_premium': _('Cancel Premium'),
     },
-    # Translators: this appears on the pages with a list of poems
-    'total_poems': _('Total number of poems:'),
-    # Translators: this is the title of the "My Library" page
-    'my_library_title': _('My Library'),
-    # Translators: this is the title of the "Poem Library" page
-    'poem_library_title': _('Poem Library'),
-    
 }

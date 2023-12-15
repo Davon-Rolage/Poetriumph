@@ -13,10 +13,10 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PGDATA: ${PGDATA}
     volumes:
-       - postgres_data_poetry:/data/davon-postgres
+      - postgres_data_poetry:/data/davon-postgres
     restart: unless-stopped
     networks:
-          - network
+      - network
     ports:
       - "5432:5432"
 
@@ -52,7 +52,7 @@ services:
     depends_on:
       - postgres
     networks:
-          - network
+      - network
 
 
 networks:
@@ -60,5 +60,5 @@ networks:
     driver: bridge
 
 volumes:
-    postgres_data_poetry:
-      external: true
+  postgres_data_poetry:
+    external: true

@@ -1,0 +1,26 @@
+[
+    {
+        "model": "accounts.Profile",
+        "fields": {
+            "user": 1
+        }
+    },
+    {
+        "model": "accounts.Profile",
+        "fields": {
+            "user": 2
+        }
+    },
+    {
+        "model": "accounts.Profile",
+        "fields": {
+            "user": 3
+        }
+    },
+    {
+        "model": "accounts.Profile",
+        "fields": {
+            "user": 4
+        }
+    }
+]

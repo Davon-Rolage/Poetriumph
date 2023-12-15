@@ -35,14 +35,11 @@ def translate(language_engine, source_lang, target_lang, original_text, proxies)
         translated = translator.translate(original_text)
         return translated if language_engine != ChatGptTranslator else translated.strip('"')
     
-    except requests.exceptions.ConnectionError:
-        return HttpResponse('Oh no! Check your internet connection!')
-    
-    except Exception as e:
+    except Exception as e: # pragma: no cover
         return HttpResponse(str(e))
 
 
-def translate_gpt(original_text, language, character_limit):
+def translate_gpt(original_text, language, character_limit): # pragma: no cover
     max_tokens = int(character_limit / 5)
     ai_role = AI_ROLE.format(language=language)
     try:

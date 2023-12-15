@@ -1,0 +1,10 @@
+[run]
+branch = True
+omit = 
+    poetriumph/*
+    manage.py
+    poetry_translation/config.py
+    */tests/*
+    */migrations/*
+    __init__.py
+    apps.py

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load i18n %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <style>
+        .btn-activate-account {
+            display: inline-block;
+            background-color: #5685bd;
+            color: white !important;
+            font-weight: 400;
+            font-size: 1.25rem;
+            border: 1px solid transparent;
+            border-radius: 0.3rem;
+            padding: 0.7rem 1.1rem;
+            text-decoration: none;
+        }
+        #logo-poetry {
+            width: 225px;
+        }
+    </style>
+</head>
+<body>
+    <a href="{{ protocol }}://{{ domain }}" target="_blank"><img id="logo-poetry" src="https://poetry.newa.fun/static/images/logo.png"></a>
+    
+    <div class="message" style="margin: 10px 0 10px 0">
+        <p style="font-family:'Cera Round Pro',' Proxima Nova Soft',' Proxima Nova',' Helvetica Neue',Helvetica,Arial,sans-serif;
+        color:#183153;
+        font-size:16px;
+        font-weight:400"><strong>{{ username }}</strong>, {% trans 'click on the button below to activate your Poetriumph account:' %}
+        </p>
+        <a class="btn-activate-account" href="{{ protocol }}://{{ domain }}{% url 'activate_user' token=token %}"
+        >{% trans 'Activate Account' %}</a>
+        <p>{% trans "If you're having trouble clicking the Activate button, copy and paste the URL below into your web browser:" %}</p>
+        {{ protocol }}://{{ domain }}{% url 'activate_user' token=token %}
+    </div>
+</body>
+</html>

@@ -2,7 +2,8 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import EmailMessage
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import (HttpResponse, HttpResponseNotAllowed,
+                         HttpResponseRedirect, JsonResponse)
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.encoding import force_bytes, force_str
@@ -10,52 +11,41 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 
 from poetry_translation.config import GUI_MESSAGES
 
-from .models import CustomUser
+from .models import CustomUser, CustomUserToken, Profile
+from django.views.generic import View
 from .tokens import account_activation_token
 
 
 def check_username_exists(request):
     if request.method == 'GET':
-        username = request.GET.get('username')
-        if CustomUser.objects.filter(username=username).exists():
-            return HttpResponse('true')
+        username = request.GET.get('username').strip()
+        if username:
+            exists = CustomUser.objects.filter(username=username).exists()
+            return JsonResponse({'exists': exists})
         else:
-            return HttpResponse('false')
+            return HttpResponse(status=204)
+    return HttpResponseNotAllowed(['GET'])
     
     
-def activate(request, uidb64, token):
-    User = get_user_model()
-    try:
-        uid = force_str(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except:
-        user = None
+class ActivateUserView(View):
     
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
+    def get(self, request, *args, **kwargs):
+        token = kwargs.get('token')
+        try:
+            user_token_instance = CustomUserToken.objects.get(token=token)
+            user = user_token_instance.user
+            if not user_token_instance.is_expired:
+                user.is_active = True
+                user.save()
+                Profile.objects.create(user=user)
+                user_token_instance.delete()
+                messages.success(request, GUI_MESSAGES['messages']['activation_successful'])
+                return HttpResponseRedirect(reverse('login'))
+            else:
+                user_token_instance.delete()
         
-        messages.success(request, GUI_MESSAGES['messages']['activation_successful'])
-        return HttpResponseRedirect(reverse('login'))
-    else:
+        except CustomUserToken.DoesNotExist:
+            pass
+            
         messages.error(request, GUI_MESSAGES['error_messages']['activation_failed'])
-    
-    return HttpResponseRedirect(reverse('translation'))
-    
-
-def activate_email(request, user, to_email):
-    mail_subject = GUI_MESSAGES['messages']['email_subject']
-    message = render_to_string('registration/activate_email.html', {
-        'user': user.username,
-        'domain': get_current_site(request).domain,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': account_activation_token.make_token(user),
-        'protocol': 'https' if request.is_secure() else 'http'
-    })
-    email = EmailMessage(mail_subject, message, to=[to_email])
-    if email.send():
-        success_message = GUI_MESSAGES['messages']['email_sent'].format(user=user, to_email=to_email)
-        messages.success(request, success_message)
-    else:
-        messages.error(request, GUI_MESSAGES['error_messages']['email_sent'].format(to_email=to_email))
-        
+        return HttpResponseRedirect(reverse('signup'))

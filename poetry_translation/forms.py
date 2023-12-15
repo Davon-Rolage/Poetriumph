@@ -32,7 +32,7 @@ class ComposePoemForm(forms.ModelForm):
     original_text = forms.CharField(widget=forms.Textarea(
         attrs={
             'class': 'poem-textarea text-to-copy',
-            'placeholder': _("Insert your poem..."), 
+            'placeholder': GUI_MESSAGES['index']['placeholder_original_text'], 
             'rows': '10', 
             'id': 'original-text', 
             'name': 'original_text'
@@ -41,7 +41,7 @@ class ComposePoemForm(forms.ModelForm):
     translation = forms.CharField(widget=forms.Textarea(
         attrs={
             'class': 'poem-textarea translation_text text-to-copy',
-            'placeholder': _("Your translation will be here..."), 
+            'placeholder': GUI_MESSAGES['index']['placeholder_translation'], 
             'rows': '10', 
             'id': 'translation-text', 
             'name': 'translation'
@@ -54,12 +54,9 @@ class ComposePoemForm(forms.ModelForm):
         target_languages = kwargs.pop('target_languages', None)
         language_engines = kwargs.pop('language_engines', None)
         super().__init__(*args, **kwargs)
-        if source_languages:
-            self.fields['source_lang'].choices = source_languages
-        if target_languages:
-            self.fields['target_lang'].choices = target_languages
-        if language_engines:
-            self.fields['language_engine'].choices = language_engines
+        self.fields['source_lang'].choices = source_languages
+        self.fields['target_lang'].choices = target_languages
+        self.fields['language_engine'].choices = language_engines
 
 
 class PoemDetailForm(forms.ModelForm):
@@ -132,26 +129,17 @@ class PoemDetailForm(forms.ModelForm):
         language_engine = kwargs.pop('language_engine', None)
         title = kwargs.pop('title', None)
         author = kwargs.pop('author', None)
-        is_hidden = kwargs.pop('is_hidden', None)
         original_text = kwargs.pop('original_text', None)
         translation = kwargs.pop('translation', None)
         super().__init__(*args, **kwargs)
-        if source_lang:
-            self.fields['source_lang'].initial = source_lang
-        if target_lang:
-            self.fields['target_lang'].initial = target_lang
-        if language_engine:
-            self.fields['language_engine'].initial = language_engine
-        if title:
-            self.fields['title'].initial = title
-        if author:
-            self.fields['author'].initial = author
-        if is_hidden:
-            self.fields['is_hidden'].initial = is_hidden
-        if original_text:
-            self.fields['original_text'].initial = original_text
-        if translation:
-            self.fields['translation'].initial = translation
+        
+        self.fields['source_lang'].initial = source_lang
+        self.fields['target_lang'].initial = target_lang
+        self.fields['language_engine'].initial = language_engine
+        self.fields['title'].initial = title
+        self.fields['author'].initial = author
+        self.fields['original_text'].initial = original_text
+        self.fields['translation'].initial = translation
 
 
 class PoemUpdateForm(forms.ModelForm):

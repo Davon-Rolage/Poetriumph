@@ -17,7 +17,7 @@
     <div class="container-fluid container-premium-get px-4 py-3">
         <h1>{{ gui_messages.premium_title }}</h1>
         <p>{{ gui_messages.premium_description }}</p>
-        <ol>{{ gui_messages.premium_features }}</ol>
+        <ol>{{ gui_messages.premium_features|safe }}</ol>
 
         <form action="{% url 'get_premium' %}" method="post" id="form-premium">
             {% csrf_token %}

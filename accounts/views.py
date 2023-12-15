@@ -1,89 +1,79 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
-from django.views.generic import DeleteView, View
+from django.views.generic import DeleteView, FormView, View
 
-from accounts.models import MyProfile
-from poetry_translation.config import GUI_MESSAGES
-from poetry_translation.models import Poem
+from accounts.models import CustomUserToken, Profile
+from poetry_translation.config import get_gui_messages
 
 from .forms import CustomUserCreationForm, CustomUserLoginForm
 from .models import CustomUser
 from .utils import *
 
 
-class SignUpView(View):
-    template_name = 'registration/signup.html'
+class SignUpView(FormView):
+    template_name = 'accounts/signup.html'
     form_class = CustomUserCreationForm
-        
-    def get(self, request):
-        form = self.form_class()
-        context = {
-            'gui_messages': GUI_MESSAGES['base'] | GUI_MESSAGES['accounts'],
-            'form': form
-        }
-        return render(request, self.template_name, context)
+    success_url = reverse_lazy('translation')
     
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.save()
-            activate_email(request, user, form.cleaned_data.get('email'))
-            return HttpResponseRedirect(reverse('translation'))
-
-        context = {
-            'gui_messages': GUI_MESSAGES['base'] | GUI_MESSAGES['accounts'],
-            'form': form
-        }
-        return render(request, self.template_name, context)
-
-
-class LoginView(View):
-    template_name = 'registration/login.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['gui_messages'] = get_gui_messages(['base', 'accounts'])
+        return context
     
-    def get(self, request):
-        form = CustomUserLoginForm()
-        context = {
-            'gui_messages': GUI_MESSAGES['base'] | GUI_MESSAGES['accounts'],
-            'form': form
-        }
-        return render(request, self.template_name, context)
-    
-    def post(self, request):
-        form = CustomUserLoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return HttpResponseRedirect(reverse('translation'))
+    def form_valid(self, form):
+        user = form.save(commit=False)
+        user.save()
+        user_token = CustomUserToken.objects.create(
+            user=user,
+            token=account_activation_token.make_token(user),
+        )
+        if form.send_activation_email(self.request, user, user_token.token):
+            success_message = GUI_MESSAGES['messages']['email_sent'].format(
+                user=user, to_email=form.cleaned_data.get('email')
+            )
+            messages.success(self.request, success_message)
             
-        context = {
-            'gui_messages': GUI_MESSAGES['base'] | GUI_MESSAGES['accounts'],
-            'form': form
-        }
-        return render(request, self.template_name, context)
+        return super().form_valid(form)
 
 
-class MyProfileView(View):
-    template_name = 'poetry_translation/my_profile.html'
-    model = MyProfile
+class LoginView(FormView):
+    template_name = 'accounts/login.html'
+    form_class = CustomUserLoginForm
+    success_url = reverse_lazy('translation')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['gui_messages'] = get_gui_messages(['base', 'accounts'])
+        return context
+    
+    def form_valid(self, form):
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        login(self.request, authenticate(username=username, password=password))
+        return super().form_valid(form)
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('translation'))
+
+
+class ProfileView(LoginRequiredMixin, View):
+    template_name = 'accounts/profile.html'
+    model = Profile
     
     def get(self, request):
-        total_poems = Poem.objects.filter(saved_by=request.user).count()
         badge_count = [1, 5, 20, 50, 100]
+        user_profile = request.user.profile
         context = {
-            'total_poems': total_poems,
+            'gui_messages': get_gui_messages(['base', 'profile', 'total_poems']),
             'badge_count': badge_count,
-            'gui_messages': GUI_MESSAGES['base']
-                          | GUI_MESSAGES['my_profile']
-                          | { 'total_poems': GUI_MESSAGES['total_poems'] },
+            'user_profile': user_profile,
         }
         return render(request, self.template_name, context=context)
 
@@ -92,8 +82,35 @@ class DeleteUserView(SuccessMessageMixin, DeleteView):
     model = CustomUser
     success_url = reverse_lazy('translation')    
     success_message = GUI_MESSAGES['messages']['user_deleted']
-
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, self.success_message)
-        return super().delete(request, *args, **kwargs)
     
+    def form_valid(self, form):
+        messages.success(self.request, self.success_message)
+        return super().form_valid(form)
+
+
+class PremiumView(View):
+    template_name = 'poetry_translation/premium.html'
+
+    def get(self, request):
+        context = {
+            'gui_messages': GUI_MESSAGES['base'] | GUI_MESSAGES['premium'],
+        }
+        return render(request, self.template_name, context)
+
+
+class GetPremiumView(View):
+    model = CustomUser
+    
+    def post(self, request):
+        user = request.user
+        CustomUser.objects.filter(username=user.username).update(is_premium=True)
+        return HttpResponseRedirect(reverse('premium'))
+
+
+class CancelPremiumView(View):
+    model = CustomUser
+    
+    def post(self, request):
+        user = request.user
+        CustomUser.objects.filter(username=user.username).update(is_premium=False)
+        return HttpResponseRedirect(reverse('premium'))

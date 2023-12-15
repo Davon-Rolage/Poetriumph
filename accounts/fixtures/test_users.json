@@ -1,0 +1,45 @@
+[
+    {
+      "model": "accounts.CustomUser",
+      "fields": {
+        "id": 1,
+        "username": "test_user",
+        "password": "pbkdf2_sha256$600000$aJ6y5LjAvuLyzul0EDuTrn$jH1y8JEBpDKmtvZfCWpkledQN2gKs8Oikelw87bSGM4=",
+        "email": "test@example.com",
+        "is_active": true
+      }
+    },
+    {
+      "model": "accounts.CustomUser",
+      "fields": {
+        "id": 2,
+        "username": "test_user_staff",
+        "password": "pbkdf2_sha256$600000$aJ6y5LjAvuLyzul0EDuTrn$jH1y8JEBpDKmtvZfCWpkledQN2gKs8Oikelw87bSGM4=",
+        "email": "test@example.com",
+        "is_staff": true,
+        "is_active": true
+      }
+    },
+    {
+      "model": "accounts.CustomUser",
+      "fields": {
+        "id": 3,
+        "username": "test_superuser",
+        "password": "pbkdf2_sha256$600000$aJ6y5LjAvuLyzul0EDuTrn$jH1y8JEBpDKmtvZfCWpkledQN2gKs8Oikelw87bSGM4=",
+        "email": "test@example.com",
+        "is_superuser": true,
+        "is_active": true
+      }
+    },
+    {
+      "model": "accounts.CustomUser",
+      "fields": {
+        "id": 4,
+        "username": "test_user_premium",
+        "password": "pbkdf2_sha256$600000$aJ6y5LjAvuLyzul0EDuTrn$jH1y8JEBpDKmtvZfCWpkledQN2gKs8Oikelw87bSGM4=",
+        "email": "test@example.com",
+        "is_premium": true,
+        "is_active": true
+      }
+    }
+]

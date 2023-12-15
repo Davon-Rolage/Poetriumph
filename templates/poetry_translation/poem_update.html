@@ -3,8 +3,8 @@
 
 {% block content %}
 
-{% if not user.username == poem.saved_by %}
-<div class="container-fluid text-center">
+{% if user != poem.saved_by %}
+<div class="container-fluid text-center py-4">
   <h class="display-6">{{ gui_messages.not_allowed }}</h>
 </div>
 {% else %}

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import CustomUser
+from .models import CustomUser, CustomUserToken, Profile
 
 
 class CustomUserAdmin(UserAdmin, admin.ModelAdmin):
@@ -15,5 +15,22 @@ class CustomUserAdmin(UserAdmin, admin.ModelAdmin):
     fieldsets = UserAdmin.fieldsets + (
         (None, {'fields': ('is_premium',)}),
     )
+    
+    
+class CustomUserTokenAdmin(admin.ModelAdmin):
+    model = CustomUserToken
+    list_display = ['user', 'token', 'expire_date', 'is_expired']
+    list_filter = ['user', 'expire_date']
+    sortable_by = ['user', 'token', 'expire_date', 'is_expired']
+
+
+class ProfileAdmin(admin.ModelAdmin):
+    model = Profile
+    list_display = ['user', 'total_poems']
+    list_filter = ['user__is_premium']
+    sortable_by = ['user']
+
 
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(CustomUserToken, CustomUserTokenAdmin)
+admin.site.register(Profile, ProfileAdmin)

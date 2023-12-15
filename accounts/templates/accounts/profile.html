@@ -36,10 +36,10 @@
               <ul>
                 <span class="text-start">
                   <li>
-                    {{ gui_messages.total_poems }} {{ total_poems }}
+                    {{ gui_messages.total_poems }} {{ user_profile.total_poems }}
                   </li>
                   <li>
-                    {{ gui_messages.date_joined }} {{ user.date_joined }}
+                    {{ gui_messages.date_joined }} {{ user.date_joined|date:"d.m.Y" }}
                   </li>
 
                   {% if user.is_premium %}
@@ -67,7 +67,7 @@
 
             <!-- Achievements -->
             <div class="tab-pane fade" id="v-pills-achievements" role="tabpanel" aria-labelledby="v-pills-achievements-tab">
-              <h3 class="py-1">{{ gui_messages.total_poems }} {{ total_poems }}</h3>
+              <h3 class="py-1">{{ gui_messages.total_poems }} {{ user_profile.total_poems }}</h3>
               <div class="row">
 
                 <!-- Never give up badge -->
@@ -98,6 +98,6 @@
   </div>
 </div>
 
-<script src="{% static 'js/my_profile.js' %}"></script>
+<script src="{% static 'js/profile.js' %}"></script>
 
 {% endblock %}
