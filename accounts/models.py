@@ -34,11 +34,7 @@ class CustomUserToken(models.Model):
         if not self.expire_date:
             self.expire_date = timezone.now() + timezone.timedelta(days=3)
         super().save(*args, **kwargs)
-    
-    @property
-    def is_expired(self):
-        return self.expire_date < timezone.now()
-    
+
     
 class Profile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)

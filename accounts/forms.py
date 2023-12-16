@@ -106,8 +106,7 @@ class CustomUserCreationForm(UserCreationForm):
             'token': user_token,
             'protocol': 'https' if request.is_secure() else 'http'
         })
-        success = send_mail(mail_subject, message, html_message=message, from_email=None, recipient_list=[to_email])
-        return success
+        send_mail(mail_subject, message, html_message=message, from_email=None, recipient_list=[to_email])
 
 
 class CustomUserChangeForm(UserChangeForm):

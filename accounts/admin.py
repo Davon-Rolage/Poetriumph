@@ -19,9 +19,9 @@ class CustomUserAdmin(UserAdmin, admin.ModelAdmin):
     
 class CustomUserTokenAdmin(admin.ModelAdmin):
     model = CustomUserToken
-    list_display = ['user', 'token', 'expire_date', 'is_expired']
+    list_display = ['user', 'token', 'expire_date']
     list_filter = ['user', 'expire_date']
-    sortable_by = ['user', 'token', 'expire_date', 'is_expired']
+    sortable_by = ['user', 'token', 'expire_date']
 
 
 class ProfileAdmin(admin.ModelAdmin):

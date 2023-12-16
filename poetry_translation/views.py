@@ -30,6 +30,9 @@ class IndexView(View):
             character_limit = CHARACTER_LIMIT
             target_languages = SUPPORTED_LANGUAGES[1:4]
         
+        if user.is_superuser: # pragma: no cover
+            character_limit = 10_000
+        
         form_data = {
             'source_languages': SUPPORTED_LANGUAGES,
             'target_languages': target_languages,

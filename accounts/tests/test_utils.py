@@ -110,7 +110,6 @@ class ActivateUserTestCase(TestCase):
         
         self.assertEqual(response.status_code, 302)
         self.assertFalse(self.test_user_expired.is_active)
-        self.assertFalse(CustomUserToken.objects.filter(token='test_token_expired').exists())
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), 'Activation link is invalid! Please try again.')

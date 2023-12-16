@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
@@ -12,6 +12,7 @@ from poetry_translation.config import get_gui_messages
 
 from .forms import CustomUserCreationForm, CustomUserLoginForm
 from .models import CustomUser
+from .tokens import account_activation_token
 from .utils import *
 
 
@@ -32,12 +33,11 @@ class SignUpView(FormView):
             user=user,
             token=account_activation_token.make_token(user),
         )
-        if form.send_activation_email(self.request, user, user_token.token):
-            success_message = GUI_MESSAGES['messages']['email_sent'].format(
-                user=user, to_email=form.cleaned_data.get('email')
-            )
-            messages.success(self.request, success_message)
-            
+        form.send_activation_email(self.request, user, user_token.token)
+        success_message = GUI_MESSAGES['messages']['email_sent'].format(
+            user=user, to_email=form.cleaned_data.get('email')
+        )
+        messages.success(self.request, success_message)
         return super().form_valid(form)
 
 
