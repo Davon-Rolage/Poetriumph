@@ -24,7 +24,7 @@ services:
     image: newa/poetriumph
     build:
       context: .
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./docker/web_image/Dockerfile
     container_name: ${WEB_CONTAINER_NAME}
     environment:
       DEBUG: ${DEBUG}

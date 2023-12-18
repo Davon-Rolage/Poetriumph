@@ -6,5 +6,5 @@ omit =
     poetry_translation/config.py
     */tests/*
     */migrations/*
-    __init__.py
-    apps.py
+    */__init__.py/*
+    */apps.py/*
