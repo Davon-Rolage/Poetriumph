@@ -82,7 +82,7 @@
         <h3 for="title">{{ gui_messages.poem_title }}</h3>
       </div>
       <div class="col-sm-12 col-md-4">
-        {{ form.title|safe }}
+        {{ form.title }}
         {% if form.title.errors %}
           {% for error in form.title.errors %}
           <span class="text-danger">{{ error }}</span>
@@ -98,7 +98,7 @@
         <h3 for="author">{{ gui_messages.poem_author }}</h3>
       </div>
       <div class="col-sm-12 col-md-4">
-        {{ form.author|safe }}
+        {{ form.author }}
       </div>
     </div>
 
@@ -118,7 +118,7 @@
       <div class="col-sm-12 col-md-6">
         <div class="row"><h1>{{ gui_messages.original_text }}</h1></div>
           <div class="copyable-textbox">
-            {{ form.original_text|safe }}
+            {{ form.original_text }}
             
             <!-- Copy to clipboard icon -->
             <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
@@ -131,7 +131,7 @@
       <div class="col-sm-12 col-md-6">
         <div class="row"><h1>{{ gui_messages.translation_text }}</h1></div>
           <div class="copyable-textbox">
-            {{ form.translation|safe }}
+            {{ form.translation }}
 
             <!-- Copy to clipboard icon -->
             <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">

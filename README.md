@@ -14,11 +14,11 @@ Poetriumph is a Python/Django project to translate poems from one language to an
 ## Installation
 * Create and activate a virtual environment:
 ```
-python -m venv venv && venv\Scripts\activate
+python3 -m venv venv && source venv/bin/activate
 ```
 * Install required dependencies:
 ```
-python -m pip install -r requirements.txt
+python3 -m pip install -r requirements.txt
 ```
 * Create a `.env` file in the root directory of your project. Add the following variables (replace values with your own):
 ```
@@ -28,12 +28,12 @@ OPENAI_API_KEY="your_openai_api_key"
 POSTGRES_DB=poetriumph
 POSTGRES_USER=poetriumph
 POSTGRES_PASSWORD="your_postgresql_password"
+PGDATA=/data/davon-postgres
 PG_CONTAINER_HOST=127.0.0.1
 PG_CONTAINER_NAME=poetriumph-postgres
 
-REDIS_CONTAINER_NAME=poetriumph-redis
 WEB_CONTAINER_NAME=poetriumph
-PGDATA=/data/davon-postgres
+REDIS_CONTAINER_NAME=poetriumph-redis
 
 EMAIL_FROM=example@gmail.com
 EMAIL_HOST_USER=example@gmail.com
@@ -50,7 +50,7 @@ DEBUG=1
 ```
 > By default, `django-admin startproject` creates an insecure `SECRET_KEY` (see [Django docs](https://docs.djangoproject.com/en/5.0/ref/checks/#:~:text=connections%20to%20HTTPS.-,security.W009,-%3A%20Your%20SECRET_KEY%20has)). Generate a secure django secret key for your project:
 ```
-python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
+python3 -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())'
 ```
 
 
@@ -70,43 +70,80 @@ python -c 'from django.core.management.utils import get_random_secret_key; print
 ___
 * Create a docker volume:
 ```
-docker volume create postgres_data_poetry
+sudo docker volume create postgres_data_poetry
 ```
-* Build and start a Docker container with the local services:
+* Build and start Docker containers with the local services:
 ```
-docker-compose -f docker-compose-dev.yml up -d --build
+sudo docker-compose -f docker-compose-dev.yml up -d --build
 ```
 * Make migrations and migrate:
 ```
-python manage.py makemigrations && python manage.py migrate
+python3 manage.py makemigrations && python3 manage.py migrate
 ```
 * Create a super user:
 ```
-python manage.py createsuperuser
+python3 manage.py createsuperuser
 ```
-* Before deploying to production, set `DEBUG` to `False` in `.env` by not assigning any value to DEBUG:
+* Manually create a profile for the super user:
+```
+python3 manage.py shell
+
+from django.contrib.auth import get_user_model
+from accounts.models import Profile
+
+User = get_user_model()
+Profile.objects.create(user=User.objects.get(is_superuser=True))
+
+exit()
+```
+* Before deploying to production, set `DEBUG` to False in `.env` by not assigning any value to DEBUG:
 ```
 DEBUG=
 ```
-* Start a local development web server:
+* Start a celery worker (used for sending activation emails in the background):
 ```
-python manage.py runserver
+celery -A poetriumph.celery worker -l info
+```
+> [!NOTE]  
+> Celery doesn't support Windows since [version 4](https://docs.celeryq.dev/en/stable/faq.html#does-celery-support-windows), so either use a UNIX system or use a different task queue.
+* Start a development web server:
+```
+python3 manage.py runserver
 ```
 
 
-## Add a new language interface
-1. Add a folder for a new language with `django-admin makemessages -l <language-code>`
-<br>For example, if you want to add French, enter `django-admin makemessages -l fr`
-* [Full list of languages and language codes (Wikipedia)](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
-2. Go to the file with translations: `locale/<language-code>/LC_MESSAGES/django.po`
-1. Fill the empty space of every `msgstr` with the translation. For example:
+## Add a New Language Interface
+To use Django's localization, you need to install `GNU gettext tools` 0.15 or newer:
+```
+sudo apt install gettext
+```
+[How to install GNU on other platforms](https://stackoverflow.com/questions/35101850/cant-find-msguniq-make-sure-you-have-gnu-gettext-tools-0-15-or-newer-installed)
+
+1. Add a folder for a new language:
+```
+django-admin makemessages -l <language-code>
+```
+For example, if you want to add French:
+```
+django-admin makemessages -l fr
+```
+[Full list of languages and language codes (Wikipedia)](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+
+2. Go to the file with translations:
+```
+locale/<language-code>/LC_MESSAGES/django.po
+```
+3. Fill the empty space of every `msgstr` with the translation. For example:
 ```
 #: .\poetry_translation\config.py:4
 msgid "Detect language"
 msgstr "Détecter la langue"
 ```
-4. Compile all translations with `python manage.py compilemessages`
-1. Update `base.html` to add the new language to the dropdown menu. Change `language_code` with your language:
+4. Compile all translations:
+```
+python3 manage.py compilemessages
+```
+5. Update `base.html` to add the new language to the dropdown menu. Replace `<lang_code>` and `<country>` with your language:
 ```html
 ...
 {% elif request.LANGUAGE_CODE == '<language_code>' %}

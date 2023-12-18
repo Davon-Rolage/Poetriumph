@@ -29,13 +29,19 @@ class SignUpView(FormView):
     def form_valid(self, form):
         user = form.save(commit=False)
         user.save()
-        user_token = CustomUserToken.objects.create(
+        email = form.cleaned_data.get('email')
+        CustomUserToken.objects.create(
             user=user,
             token=account_activation_token.make_token(user),
         )
-        form.send_activation_email(self.request, user, user_token.token)
+        form.send_activation_email(
+            user_id=user.id,
+            domain=self.request.META['HTTP_HOST'],
+            protocol=self.request.scheme,
+            to_email=email,
+        )
         success_message = GUI_MESSAGES['messages']['email_sent'].format(
-            user=user, to_email=form.cleaned_data.get('email')
+            user=user, to_email=email
         )
         messages.success(self.request, success_message)
         return super().form_valid(form)
@@ -103,7 +109,7 @@ class GetPremiumView(View):
     
     def post(self, request):
         user = request.user
-        CustomUser.objects.filter(username=user.username).update(is_premium=True)
+        CustomUser.objects.filter(username=user.get_username()).update(is_premium=True)
         return HttpResponseRedirect(reverse('premium'))
 
 

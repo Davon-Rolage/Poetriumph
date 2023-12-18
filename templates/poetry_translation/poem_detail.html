@@ -45,7 +45,7 @@
         <h3 for="title">{{ gui_messages.poem_title }}</h3>
       </div>
       <div class="col-sm-12 col-md-4">
-        {{ form.title|safe }}
+        {{ form.title }}
       </div>
     </div>
 
@@ -55,7 +55,7 @@
         <h3 for="author">{{ gui_messages.poem_author }}</h3>
       </div>
       <div class="col-sm-12 col-md-4">
-        {{ form.author|safe }}
+        {{ form.author }}
       </div>
     </div>
 
@@ -90,7 +90,7 @@
         </div>
 
         <div class="copyable-textbox">
-          {{ form.original_text|safe }}
+          {{ form.original_text }}
 
           <!-- Copy to clipboard icon -->
           <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">
@@ -109,7 +109,7 @@
         </div>
         
         <div class="copyable-textbox">
-          {{ form.translation|safe }}
+          {{ form.translation }}
 
           <!-- Copy to clipboard icon -->
           <i id="copy_to_clipboard" class="far fa-copy copy-to-clipboard">

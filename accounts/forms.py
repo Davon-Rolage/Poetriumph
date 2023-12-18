@@ -5,13 +5,11 @@ from captcha.widgets import ReCaptchaV2Checkbox
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
-from django.contrib.sites.shortcuts import get_current_site
-from django.core.mail import send_mail
 from django.forms import ValidationError
-from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
 from poetry_translation.config import GUI_MESSAGES
+from poetry_translation.tasks import send_activation_email_task
 
 from .models import CustomUser
 
@@ -97,16 +95,13 @@ class CustomUserCreationForm(UserCreationForm):
         
         return cleaned_data
 
-    def send_activation_email(self, request=None, user=None, user_token=None):
-        mail_subject = GUI_MESSAGES['messages']['email_subject']
-        to_email = self.cleaned_data.get('email')
-        message = render_to_string('accounts/activate_email.html', {
-            'username': user.username,
-            'domain': get_current_site(request).domain,
-            'token': user_token,
-            'protocol': 'https' if request.is_secure() else 'http'
-        })
-        send_mail(mail_subject, message, html_message=message, from_email=None, recipient_list=[to_email])
+    def send_activation_email(self, user_id=None, domain=None, protocol=None, to_email=None):
+        send_activation_email_task.delay(
+            user_id=user_id, 
+            domain=domain, 
+            protocol=protocol, 
+            to_email=to_email
+        )
 
 
 class CustomUserChangeForm(UserChangeForm):

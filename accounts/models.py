@@ -13,7 +13,7 @@ class CustomUser(AbstractUser):
     )
     
     def __str__(self):
-        return self.username
+        return self.get_username()
     
     def save(self, *args, **kwargs):
         if self.is_staff or self.is_superuser:
@@ -28,7 +28,7 @@ class CustomUserToken(models.Model):
     expire_date = models.DateTimeField(verbose_name="Token expire date")
 
     def __str__(self):
-        return self.user.username + ' - ' + self.token
+        return self.user.get_username() + ' - ' + self.token
     
     def save(self, *args, **kwargs):
         if not self.expire_date:
@@ -40,7 +40,7 @@ class Profile(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'Profile {self.user.username}'
+        return f'Profile {self.user.get_username()}'
     
     @property
     def total_poems(self):
