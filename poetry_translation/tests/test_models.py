@@ -23,7 +23,8 @@ class PoemTestCase(TestCase):
     
     def test_poem_model_default_str(self):
         self.assertEqual(self.default_poem.title, 'Untitled')
-        self.assertEqual(str(self.default_poem), '3 - test_user')
+        poem_id = self.default_poem.pk
+        self.assertEqual(str(self.default_poem), f'{poem_id} - test_user')
         self.assertTrue(self.default_poem.is_hidden)
         self.assertFalse(self.default_poem.original_text)
         self.assertFalse(self.default_poem.translation)

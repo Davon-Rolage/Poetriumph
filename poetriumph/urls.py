@@ -13,6 +13,5 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('', include('poetry_translation.urls')),
     path('accounts/', include('accounts.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
     path('__debug__/', include(debug_toolbar.urls)),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

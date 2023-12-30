@@ -22,5 +22,17 @@
         "fields": {
             "user": 4
         }
+    },
+    {
+        "model": "accounts.Profile",
+        "fields": {
+            "user": 5
+        }
+    },
+    {
+        "model": "accounts.Profile",
+        "fields": {
+            "user": 6
+        }
     }
 ]

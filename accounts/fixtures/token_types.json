@@ -1,0 +1,34 @@
+[
+    {
+        "model": "accounts.CustomUserTokenType",
+        "fields": {
+            "id": 1,
+            "name": "User activation",
+            "description": null
+        }
+    },
+    {
+        "model": "accounts.CustomUserTokenType",
+        "fields": {
+            "id": 2,
+            "name": "Password reset",
+            "description": null
+        }
+    },
+    {
+        "model": "accounts.CustomUserTokenType",
+        "fields": {
+            "id": 3,
+            "name": "Username change",
+            "description": null
+        }
+    },
+    {
+        "model": "accounts.CustomUserTokenType",
+        "fields": {
+            "id": 4,
+            "name": "Email change",
+            "description": null
+        }
+    }
+]

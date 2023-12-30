@@ -4,7 +4,7 @@ from django.urls import resolve, reverse
 from accounts.views import *
 
 
-@tag("accounts", "url", "url_accounts")
+@tag("url", "url_accounts")
 class AccountsUrlsTestCase(SimpleTestCase):
     
     def test_signup_url_resolves(self):
@@ -27,9 +27,9 @@ class AccountsUrlsTestCase(SimpleTestCase):
         url = reverse('profile')
         self.assertEqual(resolve(url).func.view_class, ProfileView)
 
-    def test_delete_user_url_resolves(self):      
-        url = reverse('delete_user', args=[1])
-        self.assertEqual(resolve(url).func.view_class, DeleteUserView)
+    def test_deactivate_user_url_resolves(self):      
+        url = reverse('deactivate_user')
+        self.assertEqual(resolve(url).func.view_class, DeactivateUserView)
 
     def test_check_username_exists_url_resolves(self):
         url = reverse('check_username_exists')

@@ -2,48 +2,29 @@ version: '3.9'
 
 services:
   postgres:
-    image: poetriumph/postgres
-    build:
-      context: .
-      dockerfile: ./docker/postgres_image/Dockerfile
+    image: postgres:15
     container_name: ${PG_CONTAINER_NAME}
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      PGDATA: ${PGDATA}
-    volumes:
-      - postgres_data_poetry:/data/davon-postgres
     restart: unless-stopped
+    env_file: ./.env
+    volumes:
+      - postgres_data_poetry:/data/poetry-postgres
     networks:
       - network
-    ports:
-      - "5432:5432"
-
+  
+  redis:
+    image: redis:7
+    container_name: ${REDIS_CONTAINER_NAME}
+    networks:
+      - network
+  
   web:
-    image: newa/poetriumph
+    image: poetriumph
+    container_name: ${WEB_CONTAINER_NAME}
     build:
       context: .
-      dockerfile: ./docker/web_image/Dockerfile
-    container_name: ${WEB_CONTAINER_NAME}
-    environment:
-      DEBUG: ${DEBUG}
-      SECRET_KEY: ${SECRET_KEY}
-      OPENAI_API_KEY: ${OPENAI_API_KEY}
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      PG_CONTAINER_HOST: ${PG_CONTAINER_HOST}
-      PG_CONTAINER_NAME: ${PG_CONTAINER_NAME}
-      WEB_CONTAINER_NAME: ${WEB_CONTAINER_NAME}
-      EMAIL_FROM: ${EMAIL_FROM}
-      EMAIL_HOST_USER: ${EMAIL_HOST_USER}
-      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD}
-      RECAPTCHA_PUBLIC_KEY: ${RECAPTCHA_PUBLIC_KEY}
-      RECAPTCHA_PRIVATE_KEY: ${RECAPTCHA_PRIVATE_KEY}
-      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
-      CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
-
+      dockerfile: ./docker/Dockerfile
+    command: /start
+    env_file: ./.env
     volumes:
       - ./templates:/app/templates
       - ./static:/app/static
@@ -51,9 +32,42 @@ services:
       - "8008:8000"
     depends_on:
       - postgres
+      - redis
     networks:
       - network
 
+  celery_worker:
+    image: poetriumph/celery_worker
+    container_name: ${CELERY_WORKER_CONTAINER_NAME}
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    command: /start-celeryworker
+    env_file: ./.env
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - network
+  
+  celery_beat:
+    image: poetriumph/celery_beat
+    container_name: ${CELERY_BEAT_CONTAINER_NAME}
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    command: /start-celerybeat
+    volumes:
+      - .:/app
+    env_file:
+      - ./.env
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - network
 
 networks:
   network:
@@ -61,4 +75,4 @@ networks:
 
 volumes:
   postgres_data_poetry:
-    external: true
+    external: true  

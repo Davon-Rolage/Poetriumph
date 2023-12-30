@@ -1,7 +1,14 @@
 from django.utils.translation import gettext_lazy as _
 
 
-AI_ROLE = "You are a talented poet who can transform these lines into a beautiful rhyming {language} poem. It is important to preserve the general sense and meaning of each verse while incorporating rhymes in {language}. Ensure that the words used in the original lines are preserved in the new poem. Remember, rhyming and rhythm are key elements in this task. Follow the rhyming pattern of the original text, but if it doesn't contain rhymes, then don't limit yourself to only using aabb rhyming style. It is also important that you don't write any more lines than I have in the original text. Your goal is to create a poetic masterpiece that captures the essence of the original lines in an eloquent and lyrical manner. Let your creativity flow as you weave together words and emotions to create a captivating rhyming poem."
+AI_ROLE = """You are a talented poet who can transform these lines into a beautiful rhyming {language} poem.
+It is important to preserve the general sense and meaning of each verse while incorporating rhymes in {language}.
+Ensure that the words used in the original lines are preserved in the new poem.
+Remember, rhyming and rhythm are key elements in this task.
+Follow the rhyming pattern of the original text, but if it doesn't contain rhymes, then don't limit yourself to only using aabb rhyming style.
+It is also important that you don't write any more lines than I have in the original text.
+Your goal is to create a poetic masterpiece that captures the essence of the original lines in an eloquent and lyrical manner.
+Let your creativity flow as you weave together words and emotions to create a captivating rhyming poem."""
 
 CHARACTER_LIMIT = 800
 CHARACTER_LIMIT_PREMIUM = 2000
@@ -53,6 +60,16 @@ GUI_MESSAGES = {
         'register_title': _('Register'),
         # Translators: this is a register button
         'register_button': _('Register'),
+        # Translators: this is a reset password title
+        'password_reset_title': _('Forgot Password'),
+        # Translators: this is a reset password description
+        'password_reset_description': _('Please enter the email associated with your account.'),
+        # Translators: this is a reset password button
+        'password_reset_button': _('Reset password'),
+        # Translators: this is an "Enter new password" title
+        'enter_new_password_title': _('Enter new password'),
+        # Translators: this is a set new password button
+        'change_password_button': _('Change password'),
         # Translators: this is an input form element
         'username': _('Username'),
         # Translators: this is an error message
@@ -65,6 +82,8 @@ GUI_MESSAGES = {
         'password_forgot': _('Forgot Password?'),
         # Translators: this is an input form element
         'email': _('Email'),
+        # Translators:this is a checkbox on the login page
+        'stay_signed_in': _('Stay signed in'),
         # Translators: this appears on the login page
         "do_not_have_account": _("Don't have an account?"),
         # Translators: this appears on the login page
@@ -187,25 +206,35 @@ GUI_MESSAGES = {
         'error_username_required': _('Username is required'),
         'error_username_contains_spaces': _('Username cannot contain spaces'),
         'error_username_invalid_chars': _('Username contains invalid characters'),
-        'error_username_min_length': _('Username is too short'),
         'error_username_max_length': _('Username is too long'),
+        'error_username_min_length': _('Username is too short'),
         'error_email_invalid': _('Email is invalid'),
-        'error_password_min_length': _('Password is too short'),
+        'error_email_doesnt_exist': _('There is no user associated with this email'),
+        'error_email_already_exists': _('This email is already in use'),
+        'error_password_min_length': _('Password is too short (min 8)'),
+        'error_password_mismatch': _('Passwords do not match'),
         'error_invalid_credentials': _('Invalid username or password'),
+        'error_title_required': _('Title is required'),
     },
     'messages': {
         'poem_updated': _('The poem has been successfully updated'),
         'poem_deleted': _('The poem has been successfully deleted'),
+        'user_deactivated': _('The user has been successfully deleted'),
         'badge_earned': _('You have earned a badge! Check out your profile!'),
-        'user_deleted': _('The user has been successfully deleted'),
-        'email_subject': _('Confirm your account on Poetriumph'),
-        'email_sent': _('<b>{user}</b>, please check your email <b>{to_email}</b> to activate your account.'),
+        'password_reset_successful': _('Your password has been reset.'),
+
+        'email_subject_activation': _('Confirm your account on Poetriumph'),
+        'email_subject_password_reset': _('Reset your password on Poetriumph'),
+
+        'activation_email_sent': _('<b>{user}</b>, please check your email <b>{to_email}</b> to activate your account.'),
+        'password_reset_email_sent': _('Please check your email <b>{to_email}</b> to reset your password.'),
         'activation_successful': _('Thank you for confirming your email. You can now sign in to your account.'),
     },
     'error_messages': {
         'email_sent': _('Problem sending email to <b>{to_email}</b>, please try again.'),
         'activation_failed': _('Activation link is invalid! Please try again.'),
-        'poem_update': _('Please fill out all the required fields.'),
+        'password_reset_failed': _('Password reset link is invalid! Please try again.'),
+        'all_fields_required': _('Please fill out all the required fields.'),
     },
     'table_columns': {
         # Translators: this is a table id header

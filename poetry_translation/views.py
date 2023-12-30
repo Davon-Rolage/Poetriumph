@@ -1,15 +1,14 @@
-import json
-
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
-from django.views.generic import DeleteView, DetailView, ListView, UpdateView, View
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  TemplateView, UpdateView, View)
 
 from .config import *
 from .forms import *
@@ -30,7 +29,7 @@ class IndexView(View):
             character_limit = CHARACTER_LIMIT
             target_languages = SUPPORTED_LANGUAGES[1:4]
         
-        if user.is_superuser: # pragma: no cover
+        if user.is_superuser:
             character_limit = 10_000
         
         form_data = {
@@ -82,30 +81,21 @@ class GetTranslation(View):
         }, safe=False)
     
     
-class SaveTranslation(LoginRequiredMixin, View):
+class SaveTranslation(LoginRequiredMixin, CreateView):
+    template_name = 'poetry_translation/index.html'
     model = Poem
+    fields = [
+        'source_lang', 'target_lang', 'language_engine',
+        'original_text', 'translation',
+    ]
     
-    def post(self, request):
-        user = request.user
-        user_profile = user.profile
-        original_text = request.POST.get('original_text')
-        translation = request.POST.get('translation')
-        source_lang = request.POST.get('source_lang')
-        target_lang = request.POST.get('target_lang')
-        language_engine = request.POST.get('language_engine')
-
-        poem = Poem.objects.create(
-            original_text=original_text,
-            translation=translation,
-            source_lang=source_lang,
-            target_lang=target_lang,
-            language_engine=language_engine,
-            saved_by=request.user
-        )
-        if user_profile.total_poems in (1, 5, 20, 50, 100): # pragma: no cover
-            messages.warning(request, GUI_MESSAGES['messages']['badge_earned'])
-        
-        return HttpResponseRedirect(reverse('poem_update', args=[poem.pk]), {'poem': poem})
+    def form_valid(self, form):
+        form.instance.saved_by = self.request.user
+        form.instance.save()
+        user_profile = self.request.user.profile
+        if user_profile.total_poems in (1, 5, 20, 50, 100):
+            messages.warning(self.request, GUI_MESSAGES['messages']['badge_earned'])
+        return super().form_valid(form)
     
     
 class PoemDetailView(DetailView):
@@ -125,7 +115,7 @@ class PoemUpdateView(LoginRequiredMixin, UpdateView):
     model = Poem
     form_class = PoemUpdateForm
     success_message = GUI_MESSAGES['messages']['poem_updated']
-    error_message = GUI_MESSAGES['error_messages']['poem_update']
+    error_message = GUI_MESSAGES['error_messages']['all_fields_required']
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -156,26 +146,6 @@ class PoemDeleteView(SuccessMessageMixin, DeleteView):
         return super().form_valid(form)
 
 
-class AboutView(View):
-    template_name = 'poetry_translation/about.html'
-
-    def get(self, request):
-        context = {
-            'gui_messages': get_gui_messages(['base', 'about']),
-        }
-        return render(request, self.template_name, context)
-
-
-class SupportUsView(View):
-    template_name = 'poetry_translation/support_us.html'
-
-    def get(self, request):
-        context = {
-            'gui_messages': get_gui_messages(['base', 'support_us']),
-        }
-        return render(request, self.template_name, context)
-
-
 class PoemLibraryListView(ListView):
     template_name = 'poetry_translation/poem_library.html'
     context_object_name = 'poems'
@@ -204,23 +174,37 @@ class MyLibraryListView(LoginRequiredMixin, ListView):
         return self.model.objects.filter(saved_by=self.request.user).order_by('-updated_at')
 
 
-class NewFeaturesView(View):
-    template_name = 'poetry_translation/new_features.html'
+class AboutView(TemplateView):
+    template_name = 'poetry_translation/about.html'
 
-    @method_decorator(staff_member_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['gui_messages'] = get_gui_messages(['base', 'about'])
+        return context
+
+
+class SupportUsView(TemplateView):
+    template_name = 'poetry_translation/support_us.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['gui_messages'] = get_gui_messages(['base', 'support_us'])
+        return context
     
-    def get(self, request):
-        return render(request, self.template_name, context={'gui_messages': get_gui_messages(['base'])})
+
+@method_decorator(staff_member_required, name='dispatch')
+class NewFeaturesView(TemplateView):
+    template_name = 'poetry_translation/new_features.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['gui_messages'] = get_gui_messages(['base'])
+        return context
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class TestView(View):
     template_name = 'poetry_translation/test.html'
-    
-    @method_decorator(staff_member_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
     
     def get(self, request):
         return render(request, self.template_name, context={'gui_messages': get_gui_messages(['base'])})

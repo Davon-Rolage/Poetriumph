@@ -65,81 +65,56 @@ class PoemDetailForm(forms.ModelForm):
         fields = '__all__'
         exclude = ['saved_by']
         
-    source_lang = forms.ChoiceField(choices=SUPPORTED_LANGUAGES, widget=forms.Select(
+    source_lang = forms.ChoiceField(disabled=True, choices=SUPPORTED_LANGUAGES, widget=forms.Select(
         attrs={
-            'disabled': True,
             'class': 'form-select', 
             'aria-select': 'Source Language'
         }
     ))
-    target_lang = forms.ChoiceField(choices=SUPPORTED_LANGUAGES[1:], widget=forms.Select(
+    target_lang = forms.ChoiceField(disabled=True, choices=SUPPORTED_LANGUAGES[1:], widget=forms.Select(
         attrs={
-            'disabled': True,
             'class': 'form-select', 
             'aria-select': 'Target Language'
         }
     ))
-    language_engine = forms.ChoiceField(choices=LANGUAGE_ENGINES, widget=forms.Select(
+    language_engine = forms.ChoiceField(disabled=True, choices=LANGUAGE_ENGINES, widget=forms.Select(
         attrs={
-            'readonly': True,
             'class': 'form-select', 
             'aria-select': 'Language Engine'
         }
     ))
-    title = forms.CharField(max_length=50, widget=forms.TextInput(
+    title = forms.CharField(disabled=True, widget=forms.TextInput(
         attrs={
-            'readonly': 'true',
             'id': 'title',
             'name': 'title',
             'class': 'form-control',
             'placeholder': GUI_MESSAGES['forms']['placeholder_title'],
         }
     ))
-    author = forms.CharField(max_length=50, widget=forms.TextInput(
+    author = forms.CharField(disabled=True, widget=forms.TextInput(
         attrs={
-            'readonly': 'true',
             'id': 'author',
             'name': 'author',
             'class': 'form-control',
             'placeholder': GUI_MESSAGES['forms']['placeholder_author'],
         }
     ))
-    original_text = forms.CharField(widget=forms.Textarea(
+    original_text = forms.CharField(disabled=True, widget=forms.Textarea(
         attrs={
-            'readonly': True,
             'rows': 10,
             'name': 'original_text',
             'class': 'poem-textarea text-to-copy',
             'placeholder': GUI_MESSAGES['forms']['placeholder_original_text'],
         }
     ))
-    translation = forms.CharField(widget=forms.Textarea(
+    translation = forms.CharField(disabled=True, widget=forms.Textarea(
         attrs={
-            'readonly': True,
             'rows': 10,
             'name': 'translation_text',
             'class': 'poem-textarea text-to-copy',
             'placeholder': GUI_MESSAGES['forms']['placeholder_translation_text'],
         }
     ))
-    
-    def __init__(self, *args, **kwargs):
-        source_lang = kwargs.pop('source_lang', None)
-        target_lang = kwargs.pop('target_lang', None)
-        language_engine = kwargs.pop('language_engine', None)
-        title = kwargs.pop('title', None)
-        author = kwargs.pop('author', None)
-        original_text = kwargs.pop('original_text', None)
-        translation = kwargs.pop('translation', None)
-        super().__init__(*args, **kwargs)
-        
-        self.fields['source_lang'].initial = source_lang
-        self.fields['target_lang'].initial = target_lang
-        self.fields['language_engine'].initial = language_engine
-        self.fields['title'].initial = title
-        self.fields['author'].initial = author
-        self.fields['original_text'].initial = original_text
-        self.fields['translation'].initial = translation
 
 
 class PoemUpdateForm(forms.ModelForm):
@@ -148,7 +123,7 @@ class PoemUpdateForm(forms.ModelForm):
         fields = '__all__'
         exclude = ['saved_by']
         
-    source_lang = forms.ChoiceField(required=False, choices=SUPPORTED_LANGUAGES, widget=forms.Select(
+    source_lang = forms.ChoiceField(choices=SUPPORTED_LANGUAGES, widget=forms.Select(
         attrs={
             'class': 'form-select', 
             'aria-select': 'Source Language',
@@ -172,8 +147,11 @@ class PoemUpdateForm(forms.ModelForm):
             'name': 'title',
             'class': 'form-control',
             'placeholder': GUI_MESSAGES['forms']['placeholder_title'],
+        }),
+        error_messages={
+            'required': GUI_MESSAGES['forms']['error_title_required'],
         }
-    ))
+    )
     author = forms.CharField(required=False, max_length=50, widget=forms.TextInput(
         attrs={
             'id': 'author',
@@ -205,35 +183,13 @@ class PoemUpdateForm(forms.ModelForm):
             'placeholder': GUI_MESSAGES['forms']['placeholder_translation_text'],
         }
     ))
-    updated_at = forms.DateTimeField(widget=forms.DateTimeInput(
+    updated_at = forms.DateTimeField(disabled=True, widget=forms.DateTimeInput(
         attrs={
-            'readonly': True,
             'id': 'updated_at',
             'name': 'updated_at',
             'class': 'form-control',
         }
     ))
-    
-    def __init__(self, *args, **kwargs):
-        source_lang = kwargs.get('source_lang')
-        target_lang = kwargs.get('target_lang')
-        language_engine = kwargs.get('language_engine')
-        title = kwargs.get('title')
-        author = kwargs.get('author')
-        is_hidden = kwargs.get('is_hidden')
-        original_text = kwargs.get('original_text')
-        translation = kwargs.get('translation')
-        updated_at = kwargs.get('updated_at')
-        super().__init__(*args, **kwargs)
-        self.fields['source_lang'].initial = source_lang
-        self.fields['target_lang'].initial = target_lang
-        self.fields['language_engine'].initial = language_engine
-        self.fields['title'].initial = title
-        self.fields['author'].initial = author
-        self.fields['is_hidden'].initial = is_hidden
-        self.fields['original_text'].initial = original_text
-        self.fields['translation'].initial = translation
-        self.fields['updated_at'].initial = updated_at
     
     def clean(self):
         cleaned_data = super().clean()

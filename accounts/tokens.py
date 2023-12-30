@@ -1,11 +1,14 @@
-import six
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.core.signing import TimestampSigner
 
 
-class AccountActivationTokenGenerator(PasswordResetTokenGenerator):
-    def _make_hash_value(self, user, timestamp):
-        return (
-            six.text_type(user.pk) + six.text_type(timestamp) + six.text_type(user.is_active)
-        )
-        
-account_activation_token = AccountActivationTokenGenerator()
+def generate_user_token(user_id):
+    user_specific_signer = TimestampSigner(salt=f"user_{user_id}")
+    payload = {'user_id': user_id}
+    token = user_specific_signer.sign_object(payload)
+    return token
+
+
+def verify_user_token(user_id, token, max_age=None):
+    user_specific_signer = TimestampSigner(salt=f"user_{user_id}")
+    payload = user_specific_signer.unsign_object(token, max_age=max_age)
+    return payload

@@ -32,6 +32,10 @@
   color: #50586C;
 }
 
+#dance-speaker {
+  cursor: pointer;
+}
+
 .container-translation-settings {
   display: flex;
   flex-direction: row;
@@ -109,7 +113,7 @@
 }
 
 .thank-you-premium {
-    font-size: 32px;
+    font-size: 30px;
 }
   
 .btn-get-premium {
@@ -187,35 +191,6 @@
 	border: #dee2e6;     
 }
 
-.alert-error {
-  color: #721c24;
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-  font-size: 20px;
-  top: 10vh;
-  position: fixed;
-  align-self: center;
-  z-index: 1000;
-  animation: fadeOutError 3s forwards;
-  box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.5);
-}
-
-@keyframes fadeOutError {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 1;
-  }
-  70% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    display: none;
-  }
-}
-
 .alert-warning {
   font-size: 26px;
   top: 60px;
@@ -245,7 +220,7 @@
   font-size: 22px;
   top: 70px;
   z-index: 1000;
-  animation: fadeOutSuccess 4s forwards;
+  animation: fadeOutSuccess 7s forwards;
   box-shadow: 3px 2px 5px 0 rgba(0, 0, 0, 0.5);
 }
 

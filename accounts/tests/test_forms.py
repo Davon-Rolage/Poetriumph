@@ -3,15 +3,23 @@ from unittest import mock
 from django.contrib.auth import get_user_model
 from django.test import TestCase, tag
 
-from accounts.forms import CustomUserCreationForm, CustomUserLoginForm
+from accounts.forms import *
 from poetry_translation.config import GUI_MESSAGES
 
 
 GUI_MESSAGES_FORMS = GUI_MESSAGES['forms']
 
 
-@tag("accounts", "form", "form_custom_user_creation")
+@tag("form", "form_custom_user_creation")
 class CustomUserCreationFormTestCase(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.User = get_user_model()
+        cls.User.objects.create_user(
+            username='user_with_email',
+            password='test_password',
+            email='example@example.com',
+        )
     
     def create_invalid_form(self, error_fields):
         form_data = {
@@ -86,9 +94,19 @@ class CustomUserCreationFormTestCase(TestCase):
         
         self.assertFalse(form.is_valid())
         self.assertFormError(form, 'password2', 'The two password fields didn’t match.')
+        
+    def test_custom_user_creation_form_email_exists(self):
+        form = CustomUserCreationForm(data={
+            'username': 'test_user',
+            'email': 'example@example.com',
+            'password1': 'test_password',
+            'password2': 'test_password',
+        })
+        self.assertFalse(form.is_valid())
+        self.assertFormError(form, 'email', GUI_MESSAGES_FORMS['error_email_already_exists'])
 
 
-@tag("accounts", "form", "form_custom_user_login")
+@tag("form", "form_custom_user_login")
 class CustomUserLoginFormTestCase(TestCase):
     fixtures = ['test_users.json']
     
@@ -142,4 +160,59 @@ class CustomUserLoginFormTestCase(TestCase):
         })
         self.assertFalse(form.is_valid())
         self.assertFormError(form, 'username', GUI_MESSAGES_FORMS['error_invalid_credentials'])
+
+
+@tag('form', 'form_password_reset')
+class PasswordResetFormTestCase(TestCase):
+    fixtures = ['test_users.json']
+    
+    @classmethod
+    def setUpTestData(cls):
+        cls.User = get_user_model()
+        cls.test_user_poet = cls.User.objects.get(username='test_user_poet')
+        cls.test_email = cls.test_user_poet.email
+
+    def test_password_reset_form_valid_data(self):
+        form = PasswordResetForm(data={'email': self.test_email})
+        self.assertTrue(form.is_valid())
+    
+    def test_password_reset_form_email_doesnt_exist(self):
+        form = PasswordResetForm(data={'email': 'example@example.com'})
+        
+        self.assertFalse(form.is_valid())
+        self.assertFormError(form, 'email', GUI_MESSAGES_FORMS['error_email_doesnt_exist'])
+    
+    def test_password_reset_form_email_invalid(self):
+        form = PasswordResetForm(data={'email': 'invalidemail'})
+        
+        self.assertFalse(form.is_valid())
+        self.assertFormError(form, 'email', GUI_MESSAGES_FORMS['error_email_invalid'])
+
+
+@tag('form', 'form_set_password')
+class SetPasswordFormTestCase(TestCase):
+    def test_set_password_form_valid_data(self):
+        form = SetPasswordForm(data={
+            'password1': 'test_password',
+            'password2': 'test_password',
+        })
+        self.assertTrue(form.is_valid())
+
+    def test_set_password_form_invalid_passwords_do_not_match(self):
+        form = SetPasswordForm(data={
+            'password1': 'test_password',
+            'password2': 'mismatchedpassword',
+        })
+        
+        self.assertFalse(form.is_valid())
+        self.assertFormError(form, 'password2', GUI_MESSAGES_FORMS['error_password_mismatch'])
+
+    def test_set_password_form_invalid_password_min_length(self):
+        form = SetPasswordForm(data={
+            'password1': 't',
+            'password2': 't',
+        })
+        
+        self.assertFalse(form.is_valid())
+        self.assertFormError(form, 'password1', GUI_MESSAGES_FORMS['error_password_min_length'])
     

@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: poetriumph-postgres-dev
+    restart: unless-stopped
+    env_file: ./.env.dev
+    volumes:
+      - postgres_data_poetry:/data/poetry-postgres
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data_poetry:
+    external: true  

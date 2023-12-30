@@ -1,14 +1,17 @@
 import os
 from pathlib import Path
 
+from celery.schedules import crontab
+from django.contrib.messages import constants as message_constants
 from dotenv import load_dotenv
 
-load_dotenv()
+
+load_dotenv(dotenv_path='.env.dev')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -18,10 +21,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-PASSWORD_RESET_TIMEOUT = 14400 # 4 hours or 240 minutes
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.environ.get('DEBUG') else False
+DEBUG = int(os.environ.get('DEBUG', 0))
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split()
 CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', '').split()
@@ -38,16 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'poetry_translation',
     'accounts',
     'captcha',
+    'poetry_translation',
     'debug_toolbar',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,13 +78,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'poetriumph.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_DB'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('PG_CONTAINER_HOST', '127.0.0.1'),
-        'PORT': 5432,
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
 
@@ -104,7 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Paris'
 
 USE_I18N = True
 
@@ -112,7 +113,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 if DEBUG:
-    STATICFILES_DIRS = [BASE_DIR / 'static']
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static',
+        BASE_DIR / 'accounts' / 'static',
+    ]
 else:
     STATIC_ROOT = BASE_DIR / 'static'
 
@@ -135,6 +139,21 @@ RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY')
 RECAPTCHA_PRIVATE_KEY = os.environ.get('RECAPTCHA_PRIVATE_KEY')
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_BACKEND", "redis://redis:6379/0")
+CELERY_TIMEZONE = 'Europe/Paris'
 
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_BEAT_SCHEDULE = {
+    'delete_expired_tokens_at_midnight': {
+        'task': 'accounts.tasks.delete_expired_tokens_task',
+        'schedule': crontab(hour=0, minute=0),
+    },
+    'clean_out_expired_sessions_at_midnight': {
+        'task': 'accounts.tasks.clean_out_expired_sessions_task',
+        'schedule': crontab(hour=0, minute=0),
+    },
+}
+
+MESSAGE_TAGS = {
+    message_constants.ERROR: "danger", # Bootstrap's error tag class is "danger"
+}

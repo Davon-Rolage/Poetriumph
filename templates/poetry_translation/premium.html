@@ -11,41 +11,51 @@
     </div>
 </div>
 {% else %}
-
-{% if not user.is_premium %}
+{{ user.is_premium|json_script:"is-premium" }}
 <div class="container-wrapper">
-    <div class="container-fluid container-premium-get px-4 py-3">
-        <h1>{{ gui_messages.premium_title }}</h1>
-        <p>{{ gui_messages.premium_description }}</p>
-        <ol>{{ gui_messages.premium_features|safe }}</ol>
+    <div class="container-fluid" style="min-height: 400px">
+        <div id="container-no-premium">
+            <div class="container-fluid container-premium-get px-4 pt-3 pb-5">
+                <h1>{{ gui_messages.premium_title }}</h1>
+                <p>{{ gui_messages.premium_description }}</p>
+                <ol>{{ gui_messages.premium_features|safe }}</ol>
 
-        <form action="{% url 'get_premium' %}" method="post" id="form-premium">
-            {% csrf_token %}
-            <button class="btn-get-premium" type="submit">{{ gui_messages.button_get_premium }}</button>
-        </form>
+                <form id="form-premium" action="{% url 'get_premium' %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn-get-premium" type="submit">{{ gui_messages.button_get_premium }}</button>
+                </form>
+            </div>
+        </div>
+
+        <div hidden id="container-has-premium">
+            <div class="container-fluid container-premium-thank-you py-3">
+                <div class="row justify-content-center text-center">
+                    <div class="col-sm-12 col-md-8">
+
+                        <h1>Never give up, premium user {{ user.username }}!</h1>
+                        <img src="{% static 'media/dance.gif' %}"></img>
+                        <img id="dance-speaker" src="{% static 'media/speaker.gif' %}" alt="stop_music">
+                        <audio hidden id="inspiring-audio" preload="auto" loop>
+                            <source src="{% static 'media/8bit.mp3' %}" type="audio/mp3">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <div class="thank-you-premium">{{ gui_messages.thank_you_premium|safe }}</div>
+
+                        <!-- Cancel premium form -->
+                        <form id="form-cancel-premium" action="{% url 'cancel_premium' %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-danger shadow-none my-3" type="submit">{{ gui_messages.button_cancel_premium }}</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <script src="{% static 'js/premium.js' %}"></script>
 
-{% else %}
-<div class="container-wrapper">
-    <div class="container-fluid container-premium-thank-you py-3">
-        <div class="row justify-content-center text-center">
-            <div class="col-sm-12 col-md-6">
-                <h1>Never give up, premium user {{ user.username }}!</h1>
-                <div class="thank-you-premium">{{ gui_messages.thank_you_premium|safe }}</div>
-
-                <!-- Cancel premium form -->
-                <form id="form-cancel-premium" action="{% url 'cancel_premium' %}" method="post">
-                    {% csrf_token %}
-                    <button class="btn btn-outline-danger shadow-none my-3" type="submit">{{ gui_messages.button_cancel_premium }}</button>
-                </form>
-
-            </div>
-        </div>
-    </div>
-</div>
 {% endif %}
-{% endif %}
+
 {% endblock %}

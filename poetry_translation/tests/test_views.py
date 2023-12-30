@@ -19,6 +19,7 @@ class IndexViewTestCase(TestCase):
         cls.template_name = 'poetry_translation/index.html'
         cls.test_user = cls.User.objects.first()
         cls.test_user_premium = cls.User.objects.get(username='test_user_premium')
+        cls.test_superuser = cls.User.objects.get(username='test_superuser')
 
     def test_index_view_as_anonymous_user_GET(self):
         response = self.client.get(self.url)
@@ -51,6 +52,17 @@ class IndexViewTestCase(TestCase):
         self.assertEqual(len(response.context['language_engines']), len(LANGUAGE_ENGINES))
         self.assertEqual(len(response.context['source_languages']), len(SUPPORTED_LANGUAGES))
         self.assertEqual(len(response.context['target_languages']), len(SUPPORTED_LANGUAGES[1:]))
+    
+    def test_index_view_as_superuser_GET(self):
+        self.client.force_login(self.test_superuser)
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, self.template_name)
+        self.assertEqual(response.context['character_limit'], 10_000)
+        self.assertEqual(len(response.context['language_engines']), len(LANGUAGE_ENGINES))
+        self.assertEqual(len(response.context['source_languages']), len(SUPPORTED_LANGUAGES))
+        self.assertEqual(len(response.context['target_languages']), 3)
     
     def test_index_view_method_not_allowed_POST(self):
         response = self.client.post(self.url)
@@ -119,13 +131,15 @@ class GetTranslationViewTestCase(TestCase):
 
 @tag('views', 'views_poetry_save_translation')
 class SaveTranslationViewTestCase(TestCase):
-    fixtures = ['test_users.json', 'test_profiles.json']
+    fixtures = ['test_users.json', 'test_profiles.json', 'test_poems.json']
     
     @classmethod
     def setUpTestData(cls):
         cls.User = get_user_model()
         cls.url = reverse('save_translation')
-        cls.template_name = 'poetry_translation/poem_update.html'
+        cls.template_name = 'poetry_translation/poem_detail.html'
+
+        cls.test_user_poet = cls.User.objects.get(username='test_user_poet')
         cls.test_user_staff = cls.User.objects.get(username='test_user_staff')
         cls.request_data = {
             'original_text': 'Hello',
@@ -137,8 +151,8 @@ class SaveTranslationViewTestCase(TestCase):
 
     def test_save_translation_view_method_not_allowed_GET(self):
         self.client.force_login(self.test_user_staff)
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 405)
+        response = self.client.get(self.url, self.request_data, follow=True)
+        self.assertEqual(response.status_code, 200)
     
     def test_save_translation_view_as_anonymous_user_POST(self):
         response = self.client.post(self.url, self.request_data, follow=True)
@@ -148,14 +162,31 @@ class SaveTranslationViewTestCase(TestCase):
     
     def test_save_translation_view_as_authenticated_user_POST(self):
         self.client.force_login(self.test_user_staff)
-        response = self.client.post(self.url, self.request_data)
-        
+        response = self.client.post(self.url, self.request_data, follow=True)
+
         poem_test_user_staff = Poem.objects.get(saved_by=self.test_user_staff)
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('poem_update', kwargs={'pk': poem_test_user_staff.pk}))
+        self.assertEqual(response.status_code, 200)
+        self.assertRedirects(response, reverse('poem_detail', kwargs={'pk': poem_test_user_staff.pk}))
+        self.assertTemplateUsed(response, self.template_name)
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), GUI_MESSAGES['messages']['badge_earned'])
+        
+    def test_save_translation_view_no_badge_earned_POST(self):
+        self.client.force_login(self.test_user_poet)
+        request_data = {
+            'original_text': 'latest_poem', 'translation': 'Hola',
+            'source_lang': 'english', 'target_lang': 'spanish',
+            'language_engine': 'GoogleTranslator',
+        }
+        response = self.client.post(self.url, request_data, follow=True)
+        
+        last_poem = Poem.objects.get(saved_by=self.test_user_poet, original_text='latest_poem')
+        self.assertEqual(response.status_code, 200)
+        self.assertRedirects(response, reverse('poem_detail', kwargs={'pk': last_poem.pk}))
+        self.assertTemplateUsed(response, self.template_name)
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 0)
         
         
 @tag('views', 'views_poetry_poem_detail')

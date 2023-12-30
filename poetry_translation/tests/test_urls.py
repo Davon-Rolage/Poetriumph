@@ -4,7 +4,7 @@ from django.urls import resolve, reverse
 from poetry_translation.views import *
 
 
-@tag('urls', 'urls_poetry')
+@tag('url', 'urls_poetry')
 class PoetryUrlTestCase(SimpleTestCase):
     
     def test_translation_url_resolves(self):

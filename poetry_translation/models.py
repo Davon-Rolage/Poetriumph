@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 
 from poetry_translation.config import LANGUAGE_ENGINES, SUPPORTED_LANGUAGES
@@ -24,4 +25,7 @@ class Poem(models.Model):
         if self.title == 'Untitled':
             return f'{self.pk} - {self.saved_by}'
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('poem_detail', kwargs={'pk': self.pk})
     

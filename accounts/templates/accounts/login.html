@@ -1,7 +1,10 @@
 {% extends "base.html" %}
+
+{% load static %}
 {% load i18n %}
 
 {% block content %}
+
 <div class="container-wrapper">
 	<div class="container-fluid">
 		<div class="row justify-content-center">
@@ -14,7 +17,7 @@
 					</div>
 
 						<!-- Login Form -->
-						<form method="post">
+						<form id="login-form" method="post">
 							{% csrf_token %}
 
 							<!-- Username input -->
@@ -43,14 +46,21 @@
 								</div>
 							</div>
 
-							<!-- Forgot Password -->
-							<div hidden class="form-group row justify-content-center px-3">
-								<div class="col-9">
-									<!-- Forgot Password Link -->
-									<div class="col-12 px-0 text-right">
-										<span><a href="#" class="text-danger"><b>{{ gui_messages.forgot_password }}</b></a></span>
+							<!-- Stay signed in and Forgot Password -->
+							<div class="row my-3 justify-content-center">
+								<!-- Stay signed in checkbox -->
+								<div class="col-6 col-md-3">
+									<div class="form-check form-switch">
+										{{ form.stay_signed_in }}
+										<label id="stay-signed-in-label" class="form-check-label" for="stay-signed-in">{{ gui_messages.stay_signed_in }}</label>
 									</div>
 								</div>
+								
+								<!-- Forgot Password link -->
+								<div class="col-6 col-md-3 text-end">
+									<a href="{% url 'password_reset' %}" class="text-danger text-decoration-none">{{ gui_messages.password_forgot }}</a>
+								</div>
+
 							</div>
 
 							<!-- CAPTCHA Checkbox -->
@@ -65,7 +75,7 @@
 							<!-- Login button -->
 							<div class="row justify-content-center text-center">
 								<div class="col-6">
-									<input type="submit" value="{{ gui_messages.login_button }}" class="btn btn-primary shadow-none">
+									<input id="btn-login" type="submit" value="{{ gui_messages.login_button }}" class="btn btn-primary shadow-none">
 								</div>
 							</div>
 
@@ -90,4 +100,5 @@
 		</div>
 	</div>
 </div>
+
 {% endblock %}

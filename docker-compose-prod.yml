@@ -1,0 +1,77 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: ${PG_CONTAINER_NAME}
+    restart: unless-stopped
+    env_file: ./.env
+    volumes:
+      - postgres_data_poetry:/data/poetry-postgres
+    networks:
+      - network
+  
+  redis:
+    image: redis:7
+    container_name: ${REDIS_CONTAINER_NAME}
+    networks:
+      - network
+  
+  web:
+    image: poetriumph
+    container_name: ${WEB_CONTAINER_NAME}
+    build:
+      context: .
+      dockerfile: ./docker/web_image/Dockerfile
+    command: /start
+    env_file: ./.env
+    volumes:
+      - ./templates:/app/templates
+      - ./static:/app/static
+    ports:
+      - "8008:8000"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - network
+
+  celery_worker:
+    image: poetriumph/celery_worker
+    container_name: ${CELERY_WORKER_CONTAINER_NAME}
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    command: /start-celeryworker
+    env_file: ./.env
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - network
+  
+  celery_beat:
+    image: poetriumph/celery_beat
+    container_name: ${CELERY_BEAT_CONTAINER_NAME}
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    command: /start-celerybeat
+    volumes:
+      - .:/app
+    env_file: ./.env
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - network
+  
+networks:
+  network:
+    driver: bridge
+
+volumes:
+  postgres_data_poetry:
+    external: true  

@@ -1,7 +1,7 @@
+from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
-from accounts.models import CustomUser
 from poetry_translation.models import Poem
 
 
@@ -17,7 +17,7 @@ class Command(BaseCommand):
         self.stdout.write("Total number of users:", ending=" ")
         self.stdout.write(self.style.SUCCESS(str(num_word_infos)))
 
-        num_users = CustomUser.objects.count()
+        num_users = get_user_model().objects.count()
         self.stdout.write("Total number of poems:", ending=" ")
         self.stdout.write(self.style.SUCCESS(num_users))
         

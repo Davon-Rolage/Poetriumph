@@ -54,7 +54,7 @@
 
             <!-- Profile -->
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-              <form action="{% url 'delete_user' user.id %}" method="post">
+              <form action="{% url 'deactivate_user' %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline-danger shadow-none" onclick="return confirm('{{ gui_messages.delete_account_confirm }}')">{{ gui_messages.delete_account }}</button>
               </form>
