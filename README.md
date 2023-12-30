@@ -1,6 +1,6 @@
 <div align = "center">
 
-<img src="./static/images/logo_white.png"></img>
+<img src="./static/images/logo_white.webp"></img>
 
 <p>Bridging Verses, Connecting Cultures</p>
 
