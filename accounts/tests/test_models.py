@@ -6,7 +6,7 @@ from accounts.models import CustomUserToken, CustomUserTokenType
 
 @tag("model", "model_custom_user")
 class CustomUserModelTestCase(TestCase):
-    fixtures = ['test_users.json', 'test_profiles.json']
+    fixtures = ['test_users.json']
     
     @classmethod
     def setUpTestData(cls):
@@ -48,13 +48,13 @@ class CustomUserModelTestCase(TestCase):
     def test_custom_user_user_profile_exists_when_user_is_active(self):
         self.assertTrue(self.test_user.profile)
     
-    def test_custom_user_user_profile_does_not_exist_when_user_is_inactive(self):
-        self.assertFalse(hasattr(self.test_user_inactive, 'profile'))
+    def test_custom_user_profile_exists_when_user_is_inactive(self):
+        self.assertTrue(hasattr(self.test_user_inactive, 'profile'))
 
 
 @tag("model", "model_profile")
 class ProfileTestCase(TestCase):
-    fixtures = ['test_users.json', 'test_profiles.json']
+    fixtures = ['test_users.json']
     
     @classmethod
     def setUpTestData(cls):

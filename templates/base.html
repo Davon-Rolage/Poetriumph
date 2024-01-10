@@ -17,7 +17,7 @@
   <script src="https://kit.fontawesome.com/58cc394653.js" crossorigin="anonymous"></script>
 
   <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-  <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+  <link rel="shortcut icon" type="image/webp" href="{% static 'images/favicon.webp' %}">
   
   <style>
     body {
@@ -85,20 +85,20 @@
           <a class="nav-link" href="{% url 'support_us' %}">{{ gui_messages.support_us }}</a>
         </li>
         <li class="nav-item mx-3">
-          <a class="button_premium" href="{% url 'premium' %}">{{ gui_messages.premium }}</a>
+          <a class="button_premium" href="{% url 'accounts:premium' %}">{{ gui_messages.premium }}</a>
         </li>
         <li>
           <div class="user_authentication text-center">
             {% if user.is_authenticated %}
             <span class="row my-1 justify-content-center">
 
-              {{ gui_messages.greetings }} {% if user.is_premium %}<img id="premium-badge-icon" class="gx-0 mx-1" src="{% static 'images/badges/badge_premium.png' %}" alt="premium_badge">{% endif %}
+              {{ gui_messages.greetings }} {% if user.is_premium %}<img id="premium-badge-icon" class="gx-0 mx-1" src="{% static 'images/badges/badge_premium.webp' %}" alt="premium_badge">{% endif %}
               {{ user.username }}!
             </span>
               
-              <a href="{% url 'profile' %}">{{ gui_messages.profile }}</a>
+              <a href="{% url 'accounts:profile' %}">{{ gui_messages.profile }}</a>
               ·
-              <a href="{% url 'logout' %}">{{ gui_messages.logout }}</a>
+              <a href="{% url 'accounts:logout' %}">{{ gui_messages.logout }}</a>
             
               {% if user.is_staff %}
                 <a href="/admin/" class="text-decoration-none">&#9881;{{ gui_messages.admin_panel }}</a>
@@ -106,9 +106,9 @@
 
             {% else %}
             <div class="login_register my-2">
-              <a href="{% url 'login' %}">{{ gui_messages.login }}</a>
+              <a href="{% url 'accounts:login' %}">{{ gui_messages.login }}</a>
               ·
-              <a href="{% url 'signup' %}">{{ gui_messages.register }}</a>
+              <a href="{% url 'accounts:signup' %}">{{ gui_messages.register }}</a>
             </div>
             {% endif %}
         </li>
@@ -124,7 +124,6 @@
       </ul>
     </div>
   </nav>
-
   {% for message in messages %}
   <!-- Alerts -->
   <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">

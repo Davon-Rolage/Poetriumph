@@ -6,10 +6,10 @@ from django.contrib.messages import constants as message_constants
 from dotenv import load_dotenv
 
 
-load_dotenv(dotenv_path='.env.dev')
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(dotenv_path=BASE_DIR / '.env')
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
@@ -21,7 +21,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-DEBUG = int(os.environ.get('DEBUG', 0))
+DEBUG = True if os.environ.get('DEBUG') else False
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split()
 CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', '').split()
@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
+    'accounts.apps.AccountsConfig',
     'captcha',
     'poetry_translation',
     'debug_toolbar',
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'poetriumph.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "NAME": os.environ.get("SQL_DATABASE", BASE_DIR / "db.sqlite3"),
         "USER": os.environ.get("SQL_USER", "user"),
         "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
         "HOST": os.environ.get("SQL_HOST", "localhost"),
@@ -132,7 +132,7 @@ LOGOUT_REDIRECT_URL = "translation"
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 LOCALE_PATHS = [
-    os.path.join(BASE_DIR / 'locale'),
+    BASE_DIR / 'locale',
 ]
 
 RECAPTCHA_PUBLIC_KEY = os.environ.get('RECAPTCHA_PUBLIC_KEY')

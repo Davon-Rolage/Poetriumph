@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import FormView, RedirectView, View
 
-from poetry_translation.config import get_gui_messages
+from poetry_translation.gui_messages import get_gui_messages
 
 from .forms import *
 from .models import CustomUserTokenType
@@ -57,7 +57,6 @@ class SignUpView(FormView):
 class LoginView(FormView):
     template_name = 'accounts/login.html'
     form_class = CustomUserLoginForm
-    success_url = reverse_lazy('translation')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -77,6 +76,11 @@ class LoginView(FormView):
             # Some browsers, like Chrome, can interfere with session expiration on browser close:
             # https://docs.djangoproject.com/en/4.2/topics/http/sessions/#browser-length-sessions-vs-persistent-sessions
         return super().form_valid(form)
+
+    def get_success_url(self) -> str:
+        if 'next' in self.request.POST:
+            return self.request.POST.get('next')
+        return reverse_lazy('translation')
 
 
 def logout_view(request):
@@ -111,7 +115,7 @@ class DeactivateUserView(SuccessMessageMixin, View):
     
 
 class PasswordResetView(FormView):
-    template_name = 'accounts/password_reset.html'
+    template_name = 'accounts/password_forgot.html'
     form_class = PasswordResetForm
     success_url = reverse_lazy('translation')
     token_generator = PasswordResetTokenGenerator()
@@ -159,7 +163,7 @@ class PasswordResetCheckView(RedirectView):
             user = user_token.user
 
             if token_generator.check_token(user, token):
-                return reverse('set_password', args=[token])
+                return reverse('accounts:set_password', args=[token])
             else:
                 messages.error(self.request, GUI_MESSAGES['error_messages']['password_reset_failed'])
                 user_token.delete()
@@ -171,13 +175,13 @@ class PasswordResetCheckView(RedirectView):
             messages.error(self.request, GUI_MESSAGES['error_messages']['password_reset_failed'])
             user_token.delete()
 
-        return reverse('login')
+        return reverse('accounts:login')
 
 
 class SetPasswordView(FormView):
     template_name = 'accounts/password_set.html'
     form_class = SetPasswordForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('accounts:login')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -226,4 +230,4 @@ class CancelPremiumView(View):
         if user.is_authenticated:
             user.is_premium = False
             user.save()
-        return HttpResponseRedirect(reverse('premium'))
+        return HttpResponseRedirect(reverse('accounts:premium'))

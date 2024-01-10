@@ -23,7 +23,7 @@
                   <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
                   <div class="form-floating">
                     {{ form.username }}
-                    <input type="hidden" id="url-check-username" value="{% url 'check_username_exists' %}">
+                    <input type="hidden" id="url-check-username" value="{% url 'accounts:check_username_exists' %}">
                     <label for="floatingInputGroupUsername">{{ gui_messages.username }}</label>
                   </div>
 
@@ -127,7 +127,7 @@
 
           <!-- Sign in now -->
           <div class="row my-3 justify-content-center text-center">
-            <h5>{{ gui_messages.already_have_account }} <span><a href="{% url 'login' %}" class="text-danger">{{ gui_messages.sign_in_now }}</a></span></h5>
+            <h5>{{ gui_messages.already_have_account }} <span><a href="{% url 'accounts:login' %}" class="text-danger">{{ gui_messages.sign_in_now }}</a></span></h5>
           </div>
 
           <!-- Registration requirements -->

@@ -1,28 +1,17 @@
-import os
-
 import openai
-import requests.exceptions
-from deep_translator import (ChatGptTranslator, DeeplTranslator,
-                             GoogleTranslator, LingueeTranslator,
-                             MicrosoftTranslator, MyMemoryTranslator,
-                             PapagoTranslator, PonsTranslator, QcriTranslator,
-                             YandexTranslator, batch_detection, exceptions,
-                             single_detection)
+from deep_translator import (ChatGptTranslator, GoogleTranslator,
+                             MyMemoryTranslator)
 from django.http import HttpResponse
-from dotenv import load_dotenv
 from openai.error import *
 
 from .config import AI_ROLE
 
 
-load_dotenv()
-
-openai.api_key = os.environ.get('OPENAI_API_KEY')
-
-def translate(language_engine, source_lang, target_lang, original_text, proxies):
+def translate(language_engine, source_lang, target_lang, original_text, proxies=None):
     lang_engine_map = {
         "GoogleTranslator": GoogleTranslator,
         "ChatGptTranslator": ChatGptTranslator,
+        "MyMemoryTranslator": MyMemoryTranslator,
     }
     language_engine = lang_engine_map[language_engine]
     translator = language_engine(
@@ -33,13 +22,13 @@ def translate(language_engine, source_lang, target_lang, original_text, proxies)
     )
     try:
         translated = translator.translate(original_text)
-        return translated if language_engine != ChatGptTranslator else translated.strip('"')
+        return translated
     
     except Exception as e: # pragma: no cover
         return HttpResponse(str(e))
 
 
-def translate_gpt(original_text, language, character_limit): # pragma: no cover
+def translate_gpt(original_text, language, character_limit) -> (str | HttpResponse): # pragma: no cover
     max_tokens = int(character_limit / 5)
     ai_role = AI_ROLE.format(language=language)
     try:
@@ -52,7 +41,7 @@ def translate_gpt(original_text, language, character_limit): # pragma: no cover
         max_tokens=max_tokens
     )
     except Exception as e:
-        return HttpResponse(str(e))
+        return str(e)
     
     answer = completion.choices[0].message.content
     return answer

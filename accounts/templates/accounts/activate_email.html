@@ -24,7 +24,7 @@
     </style>
 </head>
 <body>
-    <a href="{{ protocol }}://{{ domain }}" target="_blank"><img id="logo-poetry" src="https://poetry.newa.fun/static/images/logo.webp"></a>
+    <a href="{{ protocol }}://{{ domain }}" target="_blank"><img id="logo-poetry" src="https://poetry.newa.fun/static/images/logo.png"></a>
     
     <div class="message" style="margin: 10px 0 10px 0">
         <p style="font-family:'Cera Round Pro',' Proxima Nova Soft',' Proxima Nova',' Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -32,10 +32,10 @@
         font-size:16px;
         font-weight:400"><strong>{{ username }}</strong>, {% trans 'click on the button below to activate your Poetriumph account:' %}
         </p>
-        <a class="btn-activate-account" href="{{ protocol }}://{{ domain }}{% url 'activate_user' token=token %}"
+        <a class="btn-activate-account" href="{{ protocol }}://{{ domain }}{% url 'accounts:activate_user' token=token %}"
         >{% trans 'Activate Account' %}</a>
         <p>{% trans "If you're having trouble clicking the Activate button, copy and paste the URL below into your web browser:" %}</p>
-        {{ protocol }}://{{ domain }}{% url 'activate_user' token=token %}
+        {{ protocol }}://{{ domain }}{% url 'accounts:activate_user' token=token %}
     </div>
 </body>
 </html>

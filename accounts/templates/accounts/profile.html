@@ -45,7 +45,7 @@
                   {% if user.is_premium %}
                     <li>{{ gui_messages.has_premium }}</li>
                   {% else %}
-                    <li>{{ gui_messages.no_premium }} <a href="{% url 'premium' %}">{{ gui_messages.upgrade_to_premium }}</a></li>
+                    <li>{{ gui_messages.no_premium }} <a href="{% url 'accounts:premium' %}">{{ gui_messages.upgrade_to_premium }}</a></li>
                   {% endif %}
                   
                 </span>
@@ -54,7 +54,7 @@
 
             <!-- Profile -->
             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-              <form action="{% url 'deactivate_user' %}" method="post">
+              <form action="{% url 'accounts:deactivate_user' %}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-outline-danger shadow-none" onclick="return confirm('{{ gui_messages.delete_account_confirm }}')">{{ gui_messages.delete_account }}</button>
               </form>
@@ -73,7 +73,7 @@
                 <!-- Never give up badge -->
                 <div class="col">
                   <span class="tt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ gui_messages.never_give_up }}">
-                    {% if user.is_premium %}<img id="premium-badge" src="{% static 'images/badges/badge_premium.png' %}"
+                    {% if user.is_premium %}<img id="premium-badge" src="{% static 'images/badges/badge_premium.webp' %}"
                       alt="premium_badge">{% endif %}
                   </span>
                 </div>

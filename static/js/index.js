@@ -29,21 +29,26 @@ $(document).ready(function() {
 
     // Listen for changes in the dropdown
     $('.language-engine select').on('change', function() {
-        // Get the selected value
-        var selectedValue = $(this).val();
-    
-        // Hide all tooltips
+        const selectedValue = $(this).val();
         $('.tt').tooltip('hide');
-    
-        // Show the appropriate tooltip based on the selected value
-        if (selectedValue === 'GoogleTranslator') {
-          $('#tt-google-translator').tooltip('show');
-        } else if (selectedValue === 'ChatGptTranslator') {
-          $('#tt-chatgpt-translator').tooltip('show');
-        } else if (selectedValue === 'ChatGpt_Poet') {
-          $('#tt-chatgpt-poet').tooltip('show');
+        
+        switch (selectedValue) {
+          case 'GoogleTranslator':
+            $('#tt-google-translator').tooltip('show');
+            break;
+          case 'ChatGptTranslator':
+            $('#tt-chatgpt-translator').tooltip('show');
+            break;
+          case 'ChatGpt_Poet':
+            $('#tt-chatgpt-poet').tooltip('show');
+            break;
+          case 'MyMemoryTranslator':
+            $('#tt-mymemory-translator').tooltip('show');
+            break;
+          default:
+            break;
         }
-      });
+      })
 });
 
 // Activate "Sign in to save to library" tooltip for unauthenticated users

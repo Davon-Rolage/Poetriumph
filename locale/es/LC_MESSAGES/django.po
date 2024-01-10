@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-31 03:01+0400\n"
+"POT-Creation-Date: 2024-01-10 15:16+0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,27 +30,27 @@ msgstr "Activar cuenta"
 msgid "If you're having trouble clicking the Activate button, copy and paste the URL below into your web browser:"
 msgstr "Si tiene problemas para hacer clic en el botón Activar, copie y pegue el URL de abajo en su navegador web:"
 
-#: .\accounts\templates\accounts\password_reset_email.html:25
+#: .\accounts\templates\accounts\password_reset_email.html:28
 msgid "You have requested to reset your password."
 msgstr "Usted ha solicitado restablecer su contraseña."
 
-#: .\accounts\templates\accounts\password_reset_email.html:25
+#: .\accounts\templates\accounts\password_reset_email.html:28
 msgid "Please click on the button below to set a new password:"
 msgstr "Por favor, haga clic en el botón de abajo para establecer una nueva contraseña:"
 
-#: .\accounts\templates\accounts\password_reset_email.html:28
+#: .\accounts\templates\accounts\password_reset_email.html:31
 msgid "Reset Password"
 msgstr "Restablecer contraseña"
 
-#: .\accounts\templates\accounts\password_reset_email.html:29
+#: .\accounts\templates\accounts\password_reset_email.html:32
 msgid "If you're having trouble clicking the Reset Password button, copy and paste the URL below into your web browser:"
 msgstr "Si tiene problemas para hacer clic en el botón Restablecer contraseña, copie y pegue el URL de abajo en su navegador web:"
 
-#: .\accounts\templates\accounts\password_reset_email.html:32
+#: .\accounts\templates\accounts\password_reset_email.html:35
 msgid "The password reset link is valid for 3 days."
 msgstr "El enlace para restablecer la contraseña es válido por 3 días."
 
-#: .\accounts\templates\accounts\password_reset_email.html:33
+#: .\accounts\templates\accounts\password_reset_email.html:36
 msgid "If you did not request a password reset, please ignore this email."
 msgstr "Si no solicitó reiniciar la contraseña, por favor, ignore este mensaje."
 
@@ -66,177 +66,183 @@ msgstr "Traductor de ChatGPT"
 msgid "ChatGPT Poet"
 msgstr "Poeta de ChatGPT"
 
-#: .\poetry_translation\config.py:23
+#: .\poetry_translation\config.py:20
+msgid "MyMemory Translator"
+msgstr "Traductor de MyMemory"
+
+#: .\poetry_translation\config.py:24
 msgid "Detect language"
 msgstr "Detectar idioma"
 
-#: .\poetry_translation\config.py:24
+#: .\poetry_translation\config.py:25
 msgid "English"
 msgstr "Inglés"
 
-#: .\poetry_translation\config.py:25
+#: .\poetry_translation\config.py:26
 msgid "Spanish"
 msgstr "Español"
 
-#: .\poetry_translation\config.py:26
+#: .\poetry_translation\config.py:27
 msgid "Russian"
 msgstr "Ruso"
 
-#: .\poetry_translation\config.py:27
+#: .\poetry_translation\config.py:28
 msgid "Hindi"
 msgstr "Hindi"
 
-#: .\poetry_translation\config.py:28
+#: .\poetry_translation\config.py:29
 msgid "Italian"
 msgstr "Italiano"
 
-#: .\poetry_translation\config.py:29
+#: .\poetry_translation\config.py:30
 msgid "Portuguese"
 msgstr "Portugués"
 
-#: .\poetry_translation\config.py:30
+#: .\poetry_translation\config.py:31
 msgid "French"
 msgstr "Francés"
 
-#: .\poetry_translation\config.py:31
+#: .\poetry_translation\config.py:32
 msgid "German"
 msgstr "Alemán"
 
-#: .\poetry_translation\config.py:32
+#: .\poetry_translation\config.py:33
 msgid "Ukrainian"
 msgstr "Ucranio"
 
-#: .\poetry_translation\config.py:33
+#: .\poetry_translation\config.py:34
 msgid "Arabic"
 msgstr "Árabe"
 
-#: .\poetry_translation\config.py:34
+#: .\poetry_translation\config.py:35
 msgid "Japanese"
 msgstr "Japonés"
 
-#: .\poetry_translation\config.py:35
+#: .\poetry_translation\config.py:36
 msgid "Korean"
 msgstr "Coreano"
 
-#: .\poetry_translation\config.py:36
+#: .\poetry_translation\config.py:37
 msgid "Chinese Simplified"
 msgstr "Chino simpl."
 
-#: .\poetry_translation\config.py:37
+#: .\poetry_translation\config.py:38
 msgid "Chinese Traditional"
 msgstr "Chino trad."
 
-#: .\poetry_translation\config.py:38
+#: .\poetry_translation\config.py:39
 msgid "Turkish"
 msgstr "Turco"
 
-#: .\poetry_translation\config.py:39
+#: .\poetry_translation\config.py:40
 msgid "Indonesian"
 msgstr "Indonesio"
 
 #. Translators: this is a login title
 #. Translators: this is a login button
 #. Translators: this is a navbar item
-#: .\poetry_translation\config.py:56 .\poetry_translation\config.py:58
-#: .\poetry_translation\config.py:129
+#: .\poetry_translation\gui_messages.py:23
+#: .\poetry_translation\gui_messages.py:25
+#: .\poetry_translation\gui_messages.py:96
 msgid "Login"
 msgstr "Iniciar sesión"
 
 #. Translators: this is a register title
 #. Translators: this is a register button
 #. Translators: this is a navbar item
-#: .\poetry_translation\config.py:60 .\poetry_translation\config.py:62
-#: .\poetry_translation\config.py:131
+#: .\poetry_translation\gui_messages.py:27
+#: .\poetry_translation\gui_messages.py:29
+#: .\poetry_translation\gui_messages.py:98
 msgid "Register"
 msgstr "Registrarse"
 
 #. Translators: this is a reset password title
-#: .\poetry_translation\config.py:64
+#: .\poetry_translation\gui_messages.py:31
 msgid "Forgot Password"
 msgstr "Restablecer contraseña"
 
 #. Translators: this is a reset password description
-#: .\poetry_translation\config.py:66
+#: .\poetry_translation\gui_messages.py:33
 msgid "Please enter the email associated with your account."
 msgstr "Por favor, ingrese el correo electrónico asociado a su cuenta."
 
 #. Translators: this is a reset password button
-#: .\poetry_translation\config.py:68
+#: .\poetry_translation\gui_messages.py:35
 msgid "Reset password"
 msgstr "Restablecer contraseña"
 
 #. Translators: this is an "Enter new password" title
-#: .\poetry_translation\config.py:70
+#: .\poetry_translation\gui_messages.py:37
 msgid "Enter new password"
 msgstr "Ingrese la nueva contraseña"
 
 #. Translators: this is a set new password button
-#: .\poetry_translation\config.py:72
+#: .\poetry_translation\gui_messages.py:39
 msgid "Change password"
 msgstr "Cambiar contraseña"
 
 #. Translators: this is an input form element
-#: .\poetry_translation\config.py:74
+#: .\poetry_translation\gui_messages.py:41
 msgid "Username"
 msgstr "Usuario"
 
 #. Translators: this is an error message
-#: .\poetry_translation\config.py:76
+#: .\poetry_translation\gui_messages.py:43
 msgid "This username is already taken."
 msgstr "Este nombre de usuario ya está en uso."
 
 #. Translators: this is an input form element
-#: .\poetry_translation\config.py:78
+#: .\poetry_translation\gui_messages.py:45
 msgid "Password"
 msgstr "Contraseña"
 
 #. Translators: this is an input form element
-#: .\poetry_translation\config.py:80
+#: .\poetry_translation\gui_messages.py:47
 msgid "Repeat Password"
 msgstr "Repite la contraseña"
 
 #. Translators: this is an input form element
-#: .\poetry_translation\config.py:82
+#: .\poetry_translation\gui_messages.py:49
 msgid "Forgot Password?"
 msgstr "¿Olvidó su contraseña?"
 
 #. Translators: this is an input form element
-#: .\poetry_translation\config.py:84
+#: .\poetry_translation\gui_messages.py:51
 msgid "Email"
 msgstr "Correo electrónico"
 
 #. Translators:this is a checkbox on the login page
-#: .\poetry_translation\config.py:86
+#: .\poetry_translation\gui_messages.py:53
 msgid "Stay signed in"
 msgstr "Mantener la sesión iniciada"
 
 #. Translators: this appears on the login page
-#: .\poetry_translation\config.py:88
+#: .\poetry_translation\gui_messages.py:55
 msgid "Don't have an account?"
 msgstr "¿No tiene una cuenta?"
 
 #. Translators: this appears on the login page
-#: .\poetry_translation\config.py:90
+#: .\poetry_translation\gui_messages.py:57
 msgid "Register Now!"
 msgstr "Regístrese ahora"
 
 #. Translators: this appears on the register page
-#: .\poetry_translation\config.py:92
+#: .\poetry_translation\gui_messages.py:59
 msgid "Already have an account?"
 msgstr "¿Ya tiene una cuenta?"
 
 #. Translators: this appears on the register page
-#: .\poetry_translation\config.py:94
+#: .\poetry_translation\gui_messages.py:61
 msgid "Sign In Now!"
 msgstr "¡Inicie sesión ahora!"
 
 #. Translators: this appears on the register page
-#: .\poetry_translation\config.py:96
+#: .\poetry_translation\gui_messages.py:63
 msgid "Registration requirements"
 msgstr "Requisitos de registro"
 
 #. Translators: this appears on the register page
-#: .\poetry_translation\config.py:98
+#: .\poetry_translation\gui_messages.py:65
 msgid ""
 "<li>Only latin letters are allowed.</li>\n"
 "<li>Username must contain only letters, digits and . + - _</li>\n"
@@ -256,198 +262,200 @@ msgstr ""
 
 #. Translators: this is a navbar item
 #. Translators: this is the title of the index page
-#: .\poetry_translation\config.py:109 .\poetry_translation\config.py:135
+#: .\poetry_translation\gui_messages.py:76
+#: .\poetry_translation\gui_messages.py:102
 msgid "Poem Translation"
 msgstr "Traduccíon de poemas"
 
 #. Translators: this is a navbar item
 #. Translators: this is the title of the "Poem Library" page
-#: .\poetry_translation\config.py:111 .\poetry_translation\config.py:259
+#: .\poetry_translation\gui_messages.py:78
+#: .\poetry_translation\gui_messages.py:227
 msgid "Poem Library"
 msgstr "Biblioteca de poemas"
 
 #. Translators: this is a navbar item
 #. Translators: this is the title of the "My Library" page
-#: .\poetry_translation\config.py:113 .\poetry_translation\config.py:263
+#: .\poetry_translation\gui_messages.py:80
+#: .\poetry_translation\gui_messages.py:231
 msgid "My Library"
 msgstr "Mi biblioteca"
 
 #. Translators: this is a navbar item
-#: .\poetry_translation\config.py:115
+#: .\poetry_translation\gui_messages.py:82
 msgid "About"
 msgstr "Acerca del proyecto"
 
 #. Translators: this is a navbar item
 #. Translators: this is the title of the "Support Us" page
-#: .\poetry_translation\config.py:117 .\poetry_translation\config.py:299
+#: .\poetry_translation\gui_messages.py:84
+#: .\poetry_translation\gui_messages.py:267
 msgid "Support Us"
 msgstr "Apóyenos"
 
 #. Translators: this is a navbar item
 #. Translators: this is the title of the "Premium" page
-#: .\poetry_translation\config.py:119 .\poetry_translation\config.py:305
+#: .\poetry_translation\gui_messages.py:86
+#: .\poetry_translation\gui_messages.py:273
 msgid "Premium"
 msgstr "Premium"
 
 #. Translators: this appears in the navbar
-#: .\poetry_translation\config.py:121
+#: .\poetry_translation\gui_messages.py:88
 msgid "Hi"
 msgstr "Hola"
 
 #. Translators: this is a navbar item
-#: .\poetry_translation\config.py:123
-msgid "My Profile"
-msgstr "Mi perfil"
+#. Translators: this is a profile settings option
+#: .\poetry_translation\gui_messages.py:90
+#: .\poetry_translation\gui_messages.py:124
+msgid "Profile"
+msgstr "Perfil"
 
 #. Translators: this is a navbar item
-#: .\poetry_translation\config.py:125
+#: .\poetry_translation\gui_messages.py:92
 msgid "Log out"
 msgstr "Cerrar sesión"
 
 #. Translators: this is a navbar item
-#: .\poetry_translation\config.py:127
+#: .\poetry_translation\gui_messages.py:94
 msgid "Admin"
 msgstr "Admin"
 
 #. Translators: this is the description of the index page
-#: .\poetry_translation\config.py:137
+#: .\poetry_translation\gui_messages.py:104
 msgid "Insert your poem and choose translation engine."
 msgstr "Inserte su poema y eliga servicio de traducción."
 
 #. Translators: this is a translate button text
-#: .\poetry_translation\config.py:139
+#: .\poetry_translation\gui_messages.py:106
 msgid "Translate"
 msgstr "Traducir"
 
 #. Translators: this is a translate button loading text
-#: .\poetry_translation\config.py:141
+#: .\poetry_translation\gui_messages.py:108
 msgid "Translating"
 msgstr "Traduciendo"
 
 #. Translators: this is a download button text
-#: .\poetry_translation\config.py:143
+#: .\poetry_translation\gui_messages.py:110
 msgid "Download"
 msgstr "Descargar"
 
 #. Translators: this is a "save to library" button text
-#: .\poetry_translation\config.py:145
+#: .\poetry_translation\gui_messages.py:112
 msgid "Save to library"
 msgstr "Guardar en la biblioteca"
 
 #. Translators: this is a placeholder for the input textarea
-#: .\poetry_translation\config.py:147
+#: .\poetry_translation\gui_messages.py:114
 msgid "Insert your poem..."
 msgstr "Inserte su poema..."
 
 #. Translators: this is a placeholder for the translation textarea
-#: .\poetry_translation\config.py:149
+#: .\poetry_translation\gui_messages.py:116
 msgid "Your translation will be here..."
 msgstr "Su traducción estará aquí..."
 
 #. Translators: this is a profile page title
-#: .\poetry_translation\config.py:153
+#: .\poetry_translation\gui_messages.py:120
 msgid "Welcome"
 msgstr "Bienvenid@"
 
 #. Translators: this is a profile settings option
-#: .\poetry_translation\config.py:155
+#: .\poetry_translation\gui_messages.py:122
 msgid "Home"
 msgstr "Inicio"
 
 #. Translators: this is a profile settings option
-#: .\poetry_translation\config.py:157
-msgid "Profile"
-msgstr "Mi perfil"
-
-#. Translators: this is a profile settings option
-#: .\poetry_translation\config.py:159
+#: .\poetry_translation\gui_messages.py:126
 msgid "Settings"
 msgstr "Ajustes"
 
 #. Translators: this is a profile settings option
-#: .\poetry_translation\config.py:161
+#: .\poetry_translation\gui_messages.py:128
 msgid "Achievements"
 msgstr "Logros"
 
 #. Translators: this is profile info
-#: .\poetry_translation\config.py:163
+#: .\poetry_translation\gui_messages.py:130
 msgid "Total number of poems:"
 msgstr "Número total de poemas:"
 
 #. Translators: this is profile info
-#: .\poetry_translation\config.py:165
+#: .\poetry_translation\gui_messages.py:132
 msgid "Date joined"
 msgstr "Fecha de registro:"
 
 #. Translators: this is profile info
-#: .\poetry_translation\config.py:167
+#: .\poetry_translation\gui_messages.py:134
 msgid "You have premium status"
 msgstr "Tiene estado premium"
 
 #. Translators: this is profile info
-#: .\poetry_translation\config.py:169
+#: .\poetry_translation\gui_messages.py:136
 msgid "You have free status."
 msgstr "Tiene estado gratuito."
 
 #. Translators: this is profile info. Goes after 'You have free status'
-#: .\poetry_translation\config.py:171
+#: .\poetry_translation\gui_messages.py:138
 msgid "Upgrade to premium"
 msgstr "Actualizar a Premium"
 
 #. Translators: this is a profile settings option (button)
-#: .\poetry_translation\config.py:173
+#: .\poetry_translation\gui_messages.py:140
 msgid "Delete account"
 msgstr "Borrar cuenta"
 
 #. Translators: this is a confirmation text for the delete account
-#: .\poetry_translation\config.py:175
+#: .\poetry_translation\gui_messages.py:142
 msgid "Are you sure you want to delete your account?"
 msgstr "¿Está seguro de que desea eliminar su cuenta?"
 
 #. Translators: this is an achievement text
-#: .\poetry_translation\config.py:177
+#: .\poetry_translation\gui_messages.py:144
 msgid "Never give up!"
 msgstr "¡No se rinda nunca!"
 
 #. Translators: this is an achievement text
-#: .\poetry_translation\config.py:179
+#: .\poetry_translation\gui_messages.py:146
 msgid "Save your first poem to the library!"
 msgstr "¡Guarda su primer poema en la biblioteca!"
 
 #. Translators: this is an achievement text
-#: .\poetry_translation\config.py:181
+#: .\poetry_translation\gui_messages.py:148
 msgid "Poems in the library:"
 msgstr "Poemas in la biblioteca:"
 
-#: .\poetry_translation\config.py:184
+#: .\poetry_translation\gui_messages.py:151
 msgid "About Poetriumph"
 msgstr "Acerca de Poetriumph"
 
-#: .\poetry_translation\config.py:185
+#: .\poetry_translation\gui_messages.py:152
 msgid "Poetriumph is a project that allows users to translate poetry from one language to another. It is designed to provide a user-friendly platform for enhancing translation skills and exploring poetry from different cultures."
 msgstr "Poetriumph es un proyecto que permite a los usuarios traducir poesía de un idioma a otro. Está diseñado para proporcionar una plataforma amigable para mejorar sus habilidades de traducción y explorar la poesía de diferentes culturas."
 
-#: .\poetry_translation\config.py:186
+#: .\poetry_translation\gui_messages.py:153
 msgid "Source code is available on GitHub"
 msgstr "El código fuente está disponible en GitHub"
 
-#: .\poetry_translation\config.py:189
+#: .\poetry_translation\gui_messages.py:156
 msgid "Sign in to save to library!"
 msgstr "¡Inicie sesión para guardar en la biblioteca!"
 
-#: .\poetry_translation\config.py:190
-msgid "ChatGPT response may take up to 2 minutes"
-msgstr "La respuesta de ChatGPT puede tardar hasta 2 minutos"
+#: .\poetry_translation\gui_messages.py:157
+msgid "ChatGPT response may take up to a minute"
+msgstr "La respuesta de ChatGPT puede tardar hasta un minuto"
 
-#: .\poetry_translation\config.py:191
+#: .\poetry_translation\gui_messages.py:158
 msgid "Literal translation with Google Translator"
 msgstr "Traducción literal con Traductor de Google"
 
-#: .\poetry_translation\config.py:192
+#: .\poetry_translation\gui_messages.py:159
 msgid "Take the context into account and use the power of AI to translate your text"
 msgstr "Tiene en cuenta el contexto y utiliza el poder de la IA para traducir su texto"
 
-#: .\poetry_translation\config.py:193
+#: .\poetry_translation\gui_messages.py:160
 msgid ""
 "Make a rhyming poem (only English and Spanish) out of your text, preserving rhythm and rhyming patterns.\n"
 "Or make a poem using just a prompt, like `I'm happy that you're with me`"
@@ -455,256 +463,262 @@ msgstr ""
 "Realice un poema rimado (solo en inglés y español) a partir de su texto, preservando el ritmo y los patrones de rima.\n"
 "O haga un poema usando solo una sugerencia, como Estoy feliz de que estés conmigo"
 
+#: .\poetry_translation\gui_messages.py:161
+msgid "This translator uses Translation Memories from the European Union, United Nations and some of the domain specific multilingual websites. A translation memory is a database that stores previously translated texts."
+msgstr "Este traductor utiliza Memorias de Traducción de la Unión Europea, de las Naciones Unidas y de algunos sitios web específicos de múltiples idiomas. Una memoria de traducción es una base de datos que almacena textos traducidos previamente."
+
 #. Translators: this is a form placeholder
-#: .\poetry_translation\config.py:197
+#: .\poetry_translation\gui_messages.py:165
 msgid "Title..."
 msgstr "Título..."
 
 #. Translators: this is a form placeholder
-#: .\poetry_translation\config.py:199
+#: .\poetry_translation\gui_messages.py:167
 msgid "Author..."
 msgstr "Autor..."
 
 #. Translators: this is a form placeholder
-#: .\poetry_translation\config.py:201
+#: .\poetry_translation\gui_messages.py:169
 msgid "Original Text..."
 msgstr "Texto original..."
 
 #. Translators: this is a form placeholder
-#: .\poetry_translation\config.py:203
+#: .\poetry_translation\gui_messages.py:171
 msgid "Translation text..."
 msgstr "Traducción..."
 
-#: .\poetry_translation\config.py:205
+#: .\poetry_translation\gui_messages.py:173
 msgid "You must pass the reCAPTCHA test"
 msgstr "Debe pasar la prueba reCAPTCHA"
 
-#: .\poetry_translation\config.py:206
+#: .\poetry_translation\gui_messages.py:174
 msgid "Username is required"
 msgstr "Se requiere nombre de usuario"
 
-#: .\poetry_translation\config.py:207
+#: .\poetry_translation\gui_messages.py:175
 msgid "Username cannot contain spaces"
 msgstr "El nombre de usuario no puede contener espacios"
 
-#: .\poetry_translation\config.py:208
+#: .\poetry_translation\gui_messages.py:176
 msgid "Username contains invalid characters"
 msgstr "El nombre de usuario contiene caracteres inválidos"
 
-#: .\poetry_translation\config.py:209
+#: .\poetry_translation\gui_messages.py:177
 msgid "Username is too long"
 msgstr "El nombre de usuario es demasiado largo"
 
-#: .\poetry_translation\config.py:210
+#: .\poetry_translation\gui_messages.py:178
 msgid "Username is too short"
 msgstr "El nombre de usuario es demasiado corto"
 
-#: .\poetry_translation\config.py:211
+#: .\poetry_translation\gui_messages.py:179
 msgid "Email is invalid"
 msgstr "El correo electrónico es invalido"
 
-#: .\poetry_translation\config.py:212
+#: .\poetry_translation\gui_messages.py:180
 msgid "There is no user associated with this email"
 msgstr "No hay ningún usuario asociado con este correo electrónico"
 
-#: .\poetry_translation\config.py:213
+#: .\poetry_translation\gui_messages.py:181
 msgid "This email is already in use"
 msgstr "Este correo electrónico ya está en uso."
 
-#: .\poetry_translation\config.py:214
+#: .\poetry_translation\gui_messages.py:182
 msgid "Password is too short (min 8)"
 msgstr "La contraseña es demasiado corta (mín 8)"
 
-#: .\poetry_translation\config.py:215
+#: .\poetry_translation\gui_messages.py:183
 msgid "Passwords do not match"
 msgstr "Contraseñas no coinciden"
 
-#: .\poetry_translation\config.py:216
+#: .\poetry_translation\gui_messages.py:184
 msgid "Invalid username or password"
 msgstr "Nombre de usuario o contraseña inválidos"
 
-#: .\poetry_translation\config.py:217
+#: .\poetry_translation\gui_messages.py:185
 msgid "Title is required"
 msgstr "Título requerido"
 
-#: .\poetry_translation\config.py:220
+#: .\poetry_translation\gui_messages.py:188
 msgid "The poem has been successfully updated"
 msgstr "El poema ha sido actualizado exitosamente"
 
-#: .\poetry_translation\config.py:221
+#: .\poetry_translation\gui_messages.py:189
 msgid "The poem has been successfully deleted"
 msgstr "El poema ha sido eliminado exitosamente"
 
-#: .\poetry_translation\config.py:222
+#: .\poetry_translation\gui_messages.py:190
 msgid "The user has been successfully deleted"
 msgstr "El usuario ha sido eliminado exitosamente"
 
-#: .\poetry_translation\config.py:223
+#: .\poetry_translation\gui_messages.py:191
 msgid "You have earned a badge! Check out your profile!"
 msgstr "¡Ha ganado una insignia! ¡Eche un vistazo a su perfil!"
 
-#: .\poetry_translation\config.py:224
+#: .\poetry_translation\gui_messages.py:192
 msgid "Your password has been reset."
 msgstr "La contraseña ha sido restablecida."
 
-#: .\poetry_translation\config.py:226
+#: .\poetry_translation\gui_messages.py:194
 msgid "Confirm your account on Poetriumph"
 msgstr "Confirma su cuenta en Poetriumph"
 
-#: .\poetry_translation\config.py:227
+#: .\poetry_translation\gui_messages.py:195
 msgid "Reset your password on Poetriumph"
 msgstr "Restablezca su contraseña en Poetriumph"
 
-#: .\poetry_translation\config.py:229
+#: .\poetry_translation\gui_messages.py:197
 #, python-brace-format
 msgid "<b>{user}</b>, please check your email <b>{to_email}</b> to activate your account."
 msgstr "<b>{user}</b>, revise su correo electrónico <b>{to_email}</b> para activar su cuenta."
 
-#: .\poetry_translation\config.py:230
+#: .\poetry_translation\gui_messages.py:198
 #, python-brace-format
 msgid "Please check your email <b>{to_email}</b> to reset your password."
 msgstr "Por favor, revise su correo electrónico <b>{to_email}</b> para restablecer su contraseña."
 
-#: .\poetry_translation\config.py:231
+#: .\poetry_translation\gui_messages.py:199
 msgid "Thank you for confirming your email. You can now sign in to your account."
 msgstr "Gracias por confirmar su correo electrónico. Ahora puede iniciar sesión en su cuenta."
 
-#: .\poetry_translation\config.py:234
+#: .\poetry_translation\gui_messages.py:202
 #, python-brace-format
 msgid "Problem sending email to <b>{to_email}</b>, please try again."
 msgstr "Problema al enviar el correo electrónico a <b>{to_email}</b>, inténtelo de nuevo."
 
-#: .\poetry_translation\config.py:235
+#: .\poetry_translation\gui_messages.py:203
 msgid "Activation link is invalid! Please try again."
 msgstr "¡El enlace de activación no es válido! Inténtelo de nuevo."
 
-#: .\poetry_translation\config.py:236
+#: .\poetry_translation\gui_messages.py:204
 msgid "Password reset link is invalid! Please try again."
 msgstr "El enlace de restablecimiento de contraseña no es válido. Por favor, inténtelo de nuevo."
 
-#: .\poetry_translation\config.py:237
+#: .\poetry_translation\gui_messages.py:205
 msgid "Please fill out all the required fields."
 msgstr "Por favor complete todos los campos obligatorios."
 
 #. Translators: this is a table id header
-#: .\poetry_translation\config.py:241
+#: .\poetry_translation\gui_messages.py:209
 msgid "#"
 msgstr "#"
 
 #. Translators: this is a table title header
-#: .\poetry_translation\config.py:243
+#: .\poetry_translation\gui_messages.py:211
 msgid "Title"
 msgstr "Título"
 
 #. Translators: this is a table author header
-#: .\poetry_translation\config.py:245
+#: .\poetry_translation\gui_messages.py:213
 msgid "Author"
 msgstr "Autor"
 
 #. Translators: this is a table "target language" header
-#: .\poetry_translation\config.py:247
+#: .\poetry_translation\gui_messages.py:215
 msgid "Target Language"
 msgstr "Lengua meta"
 
 #. Translators: this is a table "saved by" header
 #. Translators: this is a poem detail label
-#: .\poetry_translation\config.py:249 .\poetry_translation\config.py:277
+#: .\poetry_translation\gui_messages.py:217
+#: .\poetry_translation\gui_messages.py:245
 msgid "Saved by"
 msgstr "Guardado por"
 
 #. Translators: this is a table "update at" header
 #. Translators: this is a "Poem Update" label
-#: .\poetry_translation\config.py:251 .\poetry_translation\config.py:295
+#: .\poetry_translation\gui_messages.py:219
+#: .\poetry_translation\gui_messages.py:263
 msgid "Updated at"
 msgstr "Actualizado en"
 
 #. Translators: this is a table "is hidden" header
-#: .\poetry_translation\config.py:253
+#: .\poetry_translation\gui_messages.py:221
 msgid "Is hidden"
 msgstr "Oculto"
 
 #. Translators: this is a "Hidden" poem badge
-#: .\poetry_translation\config.py:255
+#: .\poetry_translation\gui_messages.py:223
 msgid "Hidden"
 msgstr "Oculto"
 
 #. Translators: this appears if a poem is hidden
-#: .\poetry_translation\config.py:267
+#: .\poetry_translation\gui_messages.py:235
 msgid "This poem is hidden by its author"
 msgstr "Este poema está oculto por su autor."
 
 #. Translators: this is a poem detail label
-#: .\poetry_translation\config.py:269
+#: .\poetry_translation\gui_messages.py:237
 msgid "Translation Engine"
 msgstr "Modo de traducción"
 
 #. Translators: this is a "Change Poem" button
-#: .\poetry_translation\config.py:271
+#: .\poetry_translation\gui_messages.py:239
 msgid "Change Poem"
 msgstr "Cambiar poema"
 
 #. Translators: this is a poem detail label
-#: .\poetry_translation\config.py:273
+#: .\poetry_translation\gui_messages.py:241
 msgid "Title:"
 msgstr "Título:"
 
 #. Translators: this is a poem detail label
-#: .\poetry_translation\config.py:275
+#: .\poetry_translation\gui_messages.py:243
 msgid "Author:"
 msgstr "Autor:"
 
 #. Translators: this is a poem detail label
-#: .\poetry_translation\config.py:279
+#: .\poetry_translation\gui_messages.py:247
 msgid "Hide from Poem Library"
 msgstr "Ocultar de la biblioteca de poemas"
 
 #. Translators: this is a badge that appears when a poem is hidden
-#: .\poetry_translation\config.py:281
+#: .\poetry_translation\gui_messages.py:249
 msgid "Poem hidden"
 msgstr "Poema oculto"
 
 #. Translators: this is a poem detail label
-#: .\poetry_translation\config.py:283
+#: .\poetry_translation\gui_messages.py:251
 msgid "Original Text"
 msgstr "Texto original"
 
 #. Translators: this is a poem detail label
-#: .\poetry_translation\config.py:285
+#: .\poetry_translation\gui_messages.py:253
 msgid "Translation"
 msgstr "Traducción"
 
-#: .\poetry_translation\config.py:288
+#: .\poetry_translation\gui_messages.py:256
 msgid "You are not allowed to edit this poem."
 msgstr "No tiene permiso para editar este poema."
 
 #. Translators: this is a "Delete Poem" button
-#: .\poetry_translation\config.py:290
+#: .\poetry_translation\gui_messages.py:258
 #: .\venv\Lib\site-packages\django\forms\formsets.py:499
 msgid "Delete"
 msgstr "Borrar"
 
-#: .\poetry_translation\config.py:291
+#: .\poetry_translation\gui_messages.py:259
 msgid "Are you sure you want to delete this poem?"
 msgstr "¿Está seguro de que desea eliminar este poema?"
 
 #. Translators: this is a "Save Changes" button
-#: .\poetry_translation\config.py:293
+#: .\poetry_translation\gui_messages.py:261
 msgid "Save Changes"
 msgstr "Guardar cambios"
 
-#: .\poetry_translation\config.py:300
+#: .\poetry_translation\gui_messages.py:268
 msgid "Download this background image"
 msgstr "Descargar esta imagen de fondo"
 
-#: .\poetry_translation\config.py:303
+#: .\poetry_translation\gui_messages.py:271
 msgid "Premium is only available for registered users. Sign in and try again."
 msgstr "Premium solo está disponible para usuarios registrados. Inicie sesión y vuelva a intentarlo."
 
-#: .\poetry_translation\config.py:306
+#: .\poetry_translation\gui_messages.py:274
 msgid "Get access to the following premium features:"
 msgstr "Puede obtener acceso a las siguientes funciones premium:"
 
-#: .\poetry_translation\config.py:307
+#: .\poetry_translation\gui_messages.py:275
 msgid ""
 "<li>Premium users can translate poetry into more languages</li>\n"
 "<li>Character limit is increased to 2000 characters</li>\n"
@@ -717,16 +731,16 @@ msgstr ""
 "<li>Podrá ganar distintivos por guardar poemas.</li>"
 
 #. Translators: this is a "Get Premium" button
-#: .\poetry_translation\config.py:312
+#: .\poetry_translation\gui_messages.py:280
 msgid "Try out for free!"
 msgstr "¡Pruébelo gratis!"
 
-#: .\poetry_translation\config.py:313
+#: .\poetry_translation\gui_messages.py:281
 msgid "Thank you for upgrading to premium!<br>Enjoy all the features we have to offer!"
 msgstr "¡Gracias por actualizar a premium!<br>¡Disfrute de todas las características que tenemos para ofrecer!"
 
 #. Translators: this is a "Cancel Premium" button
-#: .\poetry_translation\config.py:315
+#: .\poetry_translation\gui_messages.py:283
 msgid "Cancel Premium"
 msgstr "Cancelar premium"
 

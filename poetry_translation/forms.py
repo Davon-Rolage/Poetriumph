@@ -2,9 +2,8 @@ from django import forms
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
-from poetry_translation.config import LANGUAGE_ENGINES, SUPPORTED_LANGUAGES
-
-from .config import GUI_MESSAGES
+from .config import LANGUAGE_ENGINES, SUPPORTED_LANGUAGES
+from .gui_messages import GUI_MESSAGES
 from .models import Poem
 
 

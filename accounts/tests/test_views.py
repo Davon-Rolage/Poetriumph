@@ -4,13 +4,12 @@ from unittest import mock, skipIf
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.contrib.messages import get_messages
-from django.core import signing
 from django.test import TestCase, tag
 from django.urls import reverse
 
 from accounts.models import *
 from accounts.tokens import generate_user_token
-from poetry_translation.config import GUI_MESSAGES
+from poetry_translation.gui_messages import GUI_MESSAGES
 
 
 @tag("view", "view_index")
@@ -34,7 +33,8 @@ class SignupViewTestCase(TestCase):
     
     @classmethod
     def setUpTestData(cls):
-        cls.url = reverse('signup')
+        cls.User = get_user_model()
+        cls.url = reverse('accounts:signup')
         cls.template_name = 'accounts/signup.html'
     
     def test_signup_view_GET(self):
@@ -64,6 +64,9 @@ class SignupViewTestCase(TestCase):
             user=form_data['username'], to_email=form_data['email']
         )
         self.assertEqual(str(messages[0]), success_message)
+        user = self.User.objects.get(username=form_data['username'])
+        self.assertFalse(user.is_active)
+        self.assertTrue(hasattr(user, 'profile'))
     
     def test_signup_view_form_invalid_POST(self):
         form_data = {
@@ -82,12 +85,12 @@ class SignupViewTestCase(TestCase):
 
 @tag("view", "view_login")
 class LoginViewTestCase(TestCase):
-    fixtures = ['test_users.json', 'test_profiles.json']
+    fixtures = ['test_users.json']
     
     @classmethod
     def setUpTestData(cls):
         cls.User = get_user_model()
-        cls.url = reverse('login')
+        cls.url = reverse('accounts:login')
         cls.template_name = 'accounts/login.html'
         cls.test_user = cls.User.objects.first()
         
@@ -97,6 +100,30 @@ class LoginViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, self.template_name)
         self.assertIsNotNone(response.context['form'])
+    
+    @mock.patch("captcha.fields.ReCaptchaField.clean")
+    def test_redirects_to_next_url_after_login_GET_POST(self, mock_clean):
+        from poetry_translation.models import Poem
+        Poem.objects.create(saved_by=self.test_user)
+
+        mock_clean.return_value = "testcaptcha"
+        
+        initial_url = '/en/poems/1/update/'
+        redirects_to_url = f'{self.url}?next={initial_url}'
+        form_data = {
+            'username': 'test_user',
+            'password': 'test_password',
+            'next': initial_url
+        }
+        response = self.client.get(initial_url, follow=True)
+        self.assertRedirects(response, redirects_to_url)
+        
+        response = self.client.post(redirects_to_url, data=form_data, follow=True)
+        
+        self.assertEqual(response.status_code, 200)
+        self.assertRedirects(response, initial_url)
+        self.assertTemplateUsed(response, 'poetry_translation/poem_update.html')
+        self.assertTemplateNotUsed(response, 'poetry_translation/index.html')
     
     @mock.patch("captcha.fields.ReCaptchaField.clean")
     def test_login_view_form_valid_POST(self, mock_clean):
@@ -158,7 +185,7 @@ class LogoutViewTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.User = get_user_model()
-        cls.url = reverse('logout')
+        cls.url = reverse('accounts:logout')
         cls.template_name = 'poetry_translation/index.html'
         cls.test_user = cls.User.objects.first()
         
@@ -181,12 +208,12 @@ class LogoutViewTestCase(TestCase):
 
 @tag("view", "view_profile")
 class ProfileViewTestCase(TestCase):
-    fixtures = ['test_users.json', 'test_profiles.json']
+    fixtures = ['test_users.json']
     
     @classmethod
     def setUpTestData(cls):
         cls.User = get_user_model()
-        cls.url = reverse('profile')
+        cls.url = reverse('accounts:profile')
         cls.template_name = 'accounts/profile.html'
         cls.test_user = cls.User.objects.first()
     
@@ -220,7 +247,7 @@ class DeactivateUserViewTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.User = get_user_model()
-        cls.url = reverse('deactivate_user')
+        cls.url = reverse('accounts:deactivate_user')
         cls.template_name_redirect = 'poetry_translation/index.html'
 
         cls.test_user_to_be_deactivated = cls.User.objects.create_user(
@@ -252,7 +279,7 @@ class DeactivateUserViewTestCase(TestCase):
 class PremiumViewTestCase(TestCase):    
     @classmethod
     def setUpTestData(cls):
-        cls.url = reverse('premium')
+        cls.url = reverse('accounts:premium')
         cls.template_name = 'poetry_translation/premium.html'
     
     def test_premium_view_GET(self):
@@ -268,12 +295,12 @@ class PremiumViewTestCase(TestCase):
 
 @tag("view", "view_get_premium")
 class GetPremiumViewTestCase(TestCase):
-    fixtures = ['test_users.json', 'test_profiles.json']
+    fixtures = ['test_users.json']
     
     @classmethod
     def setUpTestData(cls):
         cls.User = get_user_model()
-        cls.url = reverse('get_premium')
+        cls.url = reverse('accounts:get_premium')
         cls.template_name = 'poetry_translation/premium.html'
         
         cls.test_user = cls.User.objects.first()
@@ -307,14 +334,14 @@ class GetPremiumViewTestCase(TestCase):
 
 @tag("view", "view_cancel_premium")
 class CancelPremiumViewTestCase(TestCase):
-    fixtures = ['test_users.json', 'test_profiles.json']
+    fixtures = ['test_users.json']
     
     @classmethod
     def setUpTestData(cls):
         cls.User = get_user_model()
         
-        cls.url = reverse('cancel_premium')
-        cls.url_redirect = reverse('premium')
+        cls.url = reverse('accounts:cancel_premium')
+        cls.url_redirect = reverse('accounts:premium')
         cls.template_name_redirect = 'poetry_translation/premium.html'
         
         cls.test_user = cls.User.objects.first()
@@ -360,8 +387,8 @@ class PasswordResetViewTestCase(TestCase):
     
     @classmethod
     def setUpTestData(cls):
-        cls.url = reverse('password_reset')
-        cls.template_name = 'accounts/password_reset.html'
+        cls.url = reverse('accounts:password_reset')
+        cls.template_name = 'accounts/password_forgot.html'
         cls.template_name_redirect = 'poetry_translation/index.html'
         
     def test_password_reset_view_GET(self):
@@ -414,14 +441,14 @@ class PasswordResetCheckViewTestCase(TestCase):
         )
         
     def test_password_reset_check_view_success_GET(self):
-        url = reverse('password_reset_check', args=[self.test_token.token])
+        url = reverse('accounts:password_reset_check', args=[self.test_token.token])
         response = self.client.get(url, follow=True)
         
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, self.template_name_redirect_success)
     
     def test_password_reset_check_view_token_doesnt_exist_GET(self):
-        url = reverse('password_reset_check', args=[self.test_token.token+'fail'])
+        url = reverse('accounts:password_reset_check', args=[self.test_token.token+'fail'])
         response = self.client.get(url, follow=True)
         
         self.assertEqual(response.status_code, 200)
@@ -431,7 +458,7 @@ class PasswordResetCheckViewTestCase(TestCase):
         self.assertEqual(str(messages[0]), GUI_MESSAGES['error_messages']['password_reset_failed'])
 
     def test_password_reset_check_view_token_invalid_GET(self):
-        url = reverse('password_reset_check', args=[self.invalid_token.token])
+        url = reverse('accounts:password_reset_check', args=[self.invalid_token.token])
         response = self.client.get(url, follow=True)
         
         self.assertEqual(response.status_code, 200)
@@ -465,14 +492,14 @@ class SetPasswordViewTestCase(TestCase):
         )
     
     def test_set_password_view_GET(self):
-        url = reverse('set_password', args=[self.test_token.token])
+        url = reverse('accounts:set_password', args=[self.test_token.token])
         response = self.client.get(url, follow=True)
         
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, self.template_name)
 
     def test_set_password_view_form_valid_POST(self):
-        url = reverse('set_password', args=[self.test_token.token])
+        url = reverse('accounts:set_password', args=[self.test_token.token])
         form_data = {
             'password1': 'new_password',
             'password2': 'new_password',

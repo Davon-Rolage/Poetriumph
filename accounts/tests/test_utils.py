@@ -6,7 +6,7 @@ from django.utils import timezone
 
 from accounts.models import CustomUserToken, CustomUserTokenType
 from accounts.tokens import *
-from poetry_translation.config import GUI_MESSAGES
+from poetry_translation.gui_messages import GUI_MESSAGES
 
 
 @tag("utils", "utils_check_username_exists")
@@ -16,7 +16,7 @@ class CheckUsernameExistsTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.User = get_user_model()
-        cls.url = reverse('check_username_exists')
+        cls.url = reverse('accounts:check_username_exists')
         cls.request_data = {'username': 'test_user'}
         cls.test_user = cls.User.objects.first()
     
@@ -83,48 +83,47 @@ class ActivateUserTestCase(TestCase):
         )
     
     def test_activate_user_method_not_allowed_POST(self):
-        url = reverse('activate_user', args=['foo'])
+        url = reverse('accounts:activate_user', args=['foo'])
         response = self.client.post(url)
         
         self.assertEqual(response.status_code, 405)
     
     def test_activate_user_success_GET(self):
-        url = reverse('activate_user', args=[self.test_token_success])
+        url = reverse('accounts:activate_user', args=[self.test_token_success])
         response = self.client.get(url)
         
         self.test_user_act_success.refresh_from_db()
         
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('login'))
+        self.assertRedirects(response, reverse('accounts:login'))
         self.assertEqual(self.test_user_act_success.is_active, True)
         
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), 'Thank you for confirming your email. You can now sign in to your account.')
+        self.assertEqual(str(messages[0]), GUI_MESSAGES['messages']['activation_successful'])
         
         login = self.client.login(username='test_user_activation_success', password='test_password')
         self.assertTrue(login)
         
     def test_activate_user_failed_invalid_token_GET(self):
-        url = reverse('activate_user', args=['InVaLiD_TokEn'])
+        url = reverse('accounts:activate_user', args=['InVaLiD_TokEn'])
         response = self.client.get(url)
         
         self.test_user_invalid.refresh_from_db()
         
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('signup'))
+        self.assertRedirects(response, reverse('accounts:signup'))
         self.assertFalse(self.test_user_invalid.is_active)
         self.assertTrue(self.test_token_invalid)
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
         self.assertEqual(str(messages[0]), GUI_MESSAGES['error_messages']['activation_failed'])
-
         
         login = self.client.login(username='test_user_invalid', password='test_password')
         self.assertFalse(login)
     
     def test_activate_user_failed_expired_token_GET(self):
-        url = reverse('activate_user', args=[self.test_token_expired])
+        url = reverse('accounts:activate_user', args=[self.test_token_expired])
         response = self.client.get(url)
         
         self.test_user_expired.refresh_from_db()

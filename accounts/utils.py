@@ -7,9 +7,9 @@ from django.urls import reverse
 from django.utils.timezone import timedelta
 from django.views.generic import View
 
-from poetry_translation.config import GUI_MESSAGES
+from poetry_translation.gui_messages import GUI_MESSAGES
 
-from .models import CustomUserToken, Profile
+from .models import CustomUserToken
 from .tokens import verify_user_token
 
 
@@ -37,16 +37,15 @@ class ActivateUserView(View):
             user = get_user_model().objects.get(id=user_id)
             user.is_active = True
             user.save()
-            Profile.objects.create(user=user)
             user_token_instance.delete()
             messages.success(request, GUI_MESSAGES['messages']['activation_successful'])
-            return HttpResponseRedirect(reverse('login'))
+            return HttpResponseRedirect(reverse('accounts:login'))
         
         except CustomUserToken.DoesNotExist:
             messages.error(request, GUI_MESSAGES['error_messages']['activation_failed'])
-            return HttpResponseRedirect(reverse('signup'))
+            return HttpResponseRedirect(reverse('accounts:signup'))
 
         except signing.BadSignature: # pragma: no cover
             messages.error(request, GUI_MESSAGES['error_messages']['activation_failed'])
             user_token_instance.user.delete()
-            return HttpResponseRedirect(reverse('signup'))
+            return HttpResponseRedirect(reverse('accounts:signup'))

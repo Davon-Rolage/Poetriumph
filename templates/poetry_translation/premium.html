@@ -20,7 +20,7 @@
                 <p>{{ gui_messages.premium_description }}</p>
                 <ol>{{ gui_messages.premium_features|safe }}</ol>
 
-                <form id="form-premium" action="{% url 'get_premium' %}" method="post">
+                <form id="form-premium" action="{% url 'accounts:get_premium' %}" method="post">
                     {% csrf_token %}
                     <button class="btn-get-premium" type="submit">{{ gui_messages.button_get_premium }}</button>
                 </form>
@@ -42,7 +42,7 @@
                         <div class="thank-you-premium">{{ gui_messages.thank_you_premium|safe }}</div>
 
                         <!-- Cancel premium form -->
-                        <form id="form-cancel-premium" action="{% url 'cancel_premium' %}" method="post">
+                        <form id="form-cancel-premium" action="{% url 'accounts:cancel_premium' %}" method="post">
                             {% csrf_token %}
                             <button class="btn btn-outline-danger shadow-none my-3" type="submit">{{ gui_messages.button_cancel_premium }}</button>
                         </form>

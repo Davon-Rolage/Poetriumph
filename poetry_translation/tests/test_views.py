@@ -1,11 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AnonymousUser
+from django.contrib.messages import get_messages
 from django.test import RequestFactory, TestCase, tag
 from django.urls import reverse
 
 from poetry_translation.config import *
+from poetry_translation.gui_messages import GUI_MESSAGES
 from poetry_translation.views import *
-from django.contrib.messages import get_messages
 
 
 @tag('views', 'views_poetry', 'views_poetry_index')
@@ -131,7 +132,7 @@ class GetTranslationViewTestCase(TestCase):
 
 @tag('views', 'views_poetry_save_translation')
 class SaveTranslationViewTestCase(TestCase):
-    fixtures = ['test_users.json', 'test_profiles.json', 'test_poems.json']
+    fixtures = ['test_users.json', 'test_poems.json']
     
     @classmethod
     def setUpTestData(cls):
@@ -235,7 +236,7 @@ class PoemUpdateViewTestCase(TestCase):
         response = self.client.get(self.url, follow=True)
         
         self.assertEqual(response.status_code, 200)
-        self.assertRedirects(response, reverse('login') + '?next=' + self.url)
+        self.assertRedirects(response, reverse('accounts:login') + '?next=' + self.url)
         self.assertTemplateUsed(response, 'accounts/login.html')
     
     def test_poem_update_view_get_context_data(self):
@@ -270,7 +271,7 @@ class PoemUpdateViewTestCase(TestCase):
         self.assertEqual(self.test_poem.language_engine, 'ChatGptTranslator')
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), 'The poem has been successfully updated')
+        self.assertEqual(str(messages[0]), GUI_MESSAGES['messages']['poem_updated'])
     
     def test_poem_update_form_invalid(self):
         self.client.force_login(self.test_user)
@@ -285,7 +286,7 @@ class PoemUpdateViewTestCase(TestCase):
         self.assertIn('gui_messages', response.context)
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), 'Please fill out all the required fields.')
+        self.assertEqual(str(messages[0]), GUI_MESSAGES['error_messages']['all_fields_required'])
 
 
 @tag('views', 'views_poetry_poem_delete')
@@ -382,7 +383,7 @@ class MyLibraryListViewTestCase(TestCase):
         response = self.client.get(self.url, follow=True)
         
         self.assertEqual(response.status_code, 200)
-        self.assertRedirects(response, reverse('login') + '?next=' + self.url)
+        self.assertRedirects(response, reverse('accounts:login') + '?next=' + self.url)
         self.assertTemplateUsed(response, 'accounts/login.html')
         self.assertTemplateNotUsed(response, self.template_name)
     

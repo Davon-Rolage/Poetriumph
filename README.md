@@ -29,7 +29,7 @@ SQL_ENGINE=django.db.backends.postgresql
 SQL_DATABASE=poetriumph
 SQL_USER=poetriumph
 SQL_PASSWORD="your_postgresql_password"
-SQL_HOST=postgres
+SQL_HOST=localhost
 SQL_PORT=5432
 PGDATA=/data/poetry-postgres
 PG_CONTAINER_NAME=poetriumph-postgres
@@ -41,7 +41,7 @@ WEB_CONTAINER_NAME=poetriumph
 REDIS_CONTAINER_NAME=poetriumph-redis
 CELERY_BEAT_CONTAINER_NAME=poetriumph-celery-beat
 CELERY_WORKER_CONTAINER_NAME=poetriumph-celery-worker
-WORKERS_RUNNING=1
+WORKERS_RUNNING=
 
 EMAIL_FROM=example@gmail.com
 EMAIL_HOST_USER=example@gmail.com
@@ -58,12 +58,10 @@ DEBUG=1
 ```
 * Create a `.env.dev` with the same values as `.env` except `SQL_HOST` and `WORKERS_RUNNING`:
 ```
-SQL_HOST=localhost
-WORKERS_RUNNING=
-
-# You may remove these variables at all
+SQL_HOST=postgres
+WORKERS_RUNNING=1
 ```
-`.env.dev` is utilized in conjunction with `docker-compose-lite.yml`, which includes only a PostgreSQL container with port 5432 exposed. The `WORKERS_RUNNING` environment variable is employed to skip tests involving Celery workers, such as sending emails during account activation.
+`.env.dev` is used in combination with `docker-compose.yml`, which includes Redis and Celery containers. The `WORKERS_RUNNING` environment variable is used to run tests involving Celery workers which would otherwise be skipped, such as sending emails during account activation and password reset.
 
 > By default, `django-admin startproject` creates an insecure `SECRET_KEY` (see [Django docs](https://docs.djangoproject.com/en/5.0/ref/checks/#:~:text=connections%20to%20HTTPS.-,security.W009,-%3A%20Your%20SECRET_KEY%20has)). Generate a secure Django secret key for your project:
 ```
@@ -89,10 +87,14 @@ ___
 ```
 docker volume create postgres_data_poetry
 ```
-* Build and start Docker containers with Redis, Celery, and PostgreSQL:
+* Build and start docker containers with Redis, Celery, and PostgreSQL:
 ```
 docker-compose up -d --build
 ```
+
+> [!TIP]
+> It is easier and less time consuming to *develop* with `docker-compose-lite.yml` up instead of `docker-compose.yml`, because it doesn't require Redis and Celery containers and it reloads automatically when any changes are made.
+
 
 > [!NOTE]  
 > Celery [doesn't support](https://docs.celeryq.dev/en/stable/faq.html#does-celery-support-windows) Windows since version 4, so you can either run Celery in Docker containers (our case) or use a UNIX system to run each Celery process manually, each from a different terminal window:
@@ -101,6 +103,14 @@ celery -A poetriumph worker -l INFO
 celery -A poetriumph beat -l INFO
 ```
 
+* Enter the `poetriumph` container:
+```
+docker exec -it poetriumph bash
+
+# OR
+
+docker-compose exec -it web bash
+```
 * Make migrations and migrate:
 ```
 python manage.py makemigrations && python manage.py migrate
@@ -112,19 +122,6 @@ python manage.py loaddata accounts/fixtures/token_types.json
 * Create a super user:
 ```
 python manage.py createsuperuser
-```
-* Manually create a profile for the super user:
-```
-python manage.py shell
-```
-```
-from django.contrib.auth import get_user_model
-from accounts.models import Profile
-
-User = get_user_model()
-Profile.objects.create(user=User.objects.get(is_superuser=True))
-
-exit()
 ```
 * Collect all the static files into a single static directory:
 ```
@@ -142,18 +139,20 @@ python manage.py runserver
 
 
 ## Tests
-Current code coverage is 98% (only Celery tasks are not tested). `coverage` tool is used to measure code coverage.
+There are 132 test functions which cover 98% of code (only Celery tasks are not tested). `coverage` tool is used to measure code coverage.
+<br>
+You will get correct results if you run `coverage` tool within `poetriumph` docker container:
 ```
-coverage run manage.py test
-```
-You will get correct results if you run `coverage` tool in `docker-compose.yml`'s web container:
-```
+docker exec -it poetriumph bash
+
+# OR
+
 docker-compose exec -it web bash
 ```
 ```
 coverage run manage.py test
 ```
-Additionally, to run tests faster, you can use `poetriumph.test_settings`. It includes a simpler password hashing algorithm:
+To run tests faster, you can use `poetriumph.test_settings` which includes a simpler password hashing algorithm:
 ```
 coverage run manage.py test --settings=poetriumph.test_settings
 ```
@@ -216,7 +215,7 @@ python manage.py compilemessages
 ```html
 ...
 {% elif request.LANGUAGE_CODE == '<language_code>' %}
-<img class="image-flag me-1" src="{% static 'images/flags/<country>.png' %}" alt="flag_<country>">Some Language
+<img class="image-flag me-1" src="{% static 'images/flags/<country>.webp' %}" alt="flag_<country>">Some Language
 ...
-<a class="dropdown-item" href="/<lang_code>/{{ request.path|remove_language }}"><img class="image-flag me-1" src="{% static 'images/flags/<country>.png' %}" alt="flag_<country>">Some Language</a>
+<a class="dropdown-item" href="/<lang_code>/{{ request.path|remove_language }}"><img class="image-flag me-1" src="{% static 'images/flags/<country>.webp' %}" alt="flag_<country>">Some Language</a>
 ```

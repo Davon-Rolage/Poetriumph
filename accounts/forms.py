@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.forms import ValidationError
 from django.utils.translation import gettext as _
 
-from poetry_translation.config import GUI_MESSAGES
+from poetry_translation.gui_messages import GUI_MESSAGES
 
 from .tasks import *
 

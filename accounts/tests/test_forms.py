@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, tag
 
 from accounts.forms import *
-from poetry_translation.config import GUI_MESSAGES
+from poetry_translation.gui_messages import GUI_MESSAGES
 
 
 GUI_MESSAGES_FORMS = GUI_MESSAGES['forms']

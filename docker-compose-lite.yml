@@ -5,7 +5,7 @@ services:
     image: postgres:15
     container_name: poetriumph-postgres-dev
     restart: unless-stopped
-    env_file: ./.env.dev
+    env_file: ./.env
     volumes:
       - postgres_data_poetry:/data/poetry-postgres
     ports:
@@ -13,4 +13,4 @@ services:
 
 volumes:
   postgres_data_poetry:
-    external: true  
+    external: true

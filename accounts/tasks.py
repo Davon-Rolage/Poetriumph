@@ -5,7 +5,7 @@ from django.core.management import call_command
 from django.template.loader import render_to_string
 from django.utils import translation
 
-from poetry_translation.config import GUI_MESSAGES
+from poetry_translation.gui_messages import GUI_MESSAGES
 
 from .models import CustomUserToken, CustomUserTokenType
 

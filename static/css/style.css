@@ -191,6 +191,28 @@
 	border: #dee2e6;     
 }
 
+.alert-danger {
+  font-size: 18px;
+  top: 70px;
+  position: absolute;
+  z-index: 1000;
+  animation: fadeOutDanger 3s forwards;
+  box-shadow: 2px 3px 5px 0 rgba(0, 0, 0, 0.5);
+}
+
+@keyframes fadeOutDanger {
+  0% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
 .alert-warning {
   font-size: 26px;
   top: 60px;

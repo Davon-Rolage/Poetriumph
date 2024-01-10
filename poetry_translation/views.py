@@ -10,6 +10,8 @@ from django.utils.translation import gettext as _
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView, View)
 
+from poetry_translation.gui_messages import get_gui_messages
+
 from .config import *
 from .forms import *
 from .models import Poem
@@ -65,22 +67,23 @@ class GetTranslation(View):
             character_limit = CHARACTER_LIMIT
             
         if language_engine == 'ChatGpt_Poet': # pragma: no cover
-            translation = translate_gpt(original_text, target_lang, character_limit)
-        
+            translation = translate_gpt(
+                original_text, target_lang, character_limit
+            )
         else:
             translation = translate(
             language_engine,
             source_lang,
             target_lang,
             original_text,
-            proxies=None
         )
-        return JsonResponse({
+        data = {
             'success': True,
             'translation': translation
-        }, safe=False)
+        }
+        return JsonResponse(data, safe=False)
     
-    
+
 class SaveTranslation(LoginRequiredMixin, CreateView):
     template_name = 'poetry_translation/index.html'
     model = Poem
@@ -110,7 +113,7 @@ class PoemDetailView(DetailView):
         return context
     
     
-class PoemUpdateView(LoginRequiredMixin, UpdateView):
+class PoemUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     template_name = 'poetry_translation/poem_update.html'
     model = Poem
     form_class = PoemUpdateForm
@@ -122,18 +125,12 @@ class PoemUpdateView(LoginRequiredMixin, UpdateView):
         context['gui_messages'] = get_gui_messages(['base', 'poem_detail', 'poem_update'])
         return context
     
-    def form_valid(self, form):
-        form.save()
-        messages.success(self.request, self.success_message)
-        return super().form_valid(form)
-    
-    def form_invalid(self, form):
-        context = self.get_context_data(form=form)
-        messages.error(self.request, self.error_message)
-        return render(self.request, self.template_name, context)
-    
     def get_success_url(self):
         return reverse('poem_detail', args=[self.object.pk])
+    
+    def form_invalid(self, form):
+        messages.error(self.request, self.error_message)
+        return super().form_invalid(form)
 
 
 class PoemDeleteView(SuccessMessageMixin, DeleteView):
@@ -141,10 +138,6 @@ class PoemDeleteView(SuccessMessageMixin, DeleteView):
     success_url = reverse_lazy('my_library')
     success_message = GUI_MESSAGES['messages']['poem_deleted']
     
-    def form_valid(self, form):
-        messages.success(self.request, self.success_message)
-        return super().form_valid(form)
-
 
 class PoemLibraryListView(ListView):
     template_name = 'poetry_translation/poem_library.html'
